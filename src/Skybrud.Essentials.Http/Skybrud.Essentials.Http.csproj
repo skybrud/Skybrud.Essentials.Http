@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.3;netstandard2.0;net45;net46;net47</TargetFrameworks>
+    <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <RunBuildTargets>true</RunBuildTargets>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <RootNamespace>Skybrud.Essentials.Http</RootNamespace>
+    <Version>1.0.0-beta001</Version>
+    <Company>Skybrud.dk a/s</Company>
+    <Product>Skybrud.Essentials</Product>
+    <Authors>Anders Bjerner</Authors>
+    <Copyright>Copyright © 2018</Copyright>
+    <Description>.NET library for making HTTP requests.</Description>
+    <RepositoryUrl>https://github.com/skybrud/Skybrud.Essentials.Http</RepositoryUrl>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
+    <DefineConstants>NET_STANDARD</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
+    <DefineConstants>NET_STANDARD,NET_STANDARD2</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='net45' OR '$(TargetFramework)'=='net46' OR '$(TargetFramework)'=='net47'">
+    <DefineConstants>NET_FRAMEWORK,NET_STANDARD2</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Skybrud.Essentials" Version="1.1.5" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
+    <PackageReference Include="System.Net.Requests" Version="4.3.0" />
+  </ItemGroup>
+
+</Project>
