@@ -1,0 +1,10 @@
+{
+  "title": "Skybrud.Essentials.Http",
+  "description": ".NET library for making HTTP requests.",
+  "company": "Skybrud.dk a/s",
+  "product": "Skybrud.Essentials",
+  "copyright": "Copyright © 2018",
+  "version": "1.0.0.0",
+  "informationalVersion": "1.0.0-beta001",
+  "fileVersion": "1.0.0.0"
+}

@@ -17,6 +17,13 @@
     <RepositoryUrl>https://github.com/skybrud/Skybrud.Essentials.Http</RepositoryUrl>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageTags>Skybrud, HTTP, OAuth</PackageTags>
+    <PackageLicenseUrl>https://github.com/skybrud/Skybrud.Essentials.Http/blob/master/LICENSE.md</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/skybrud/Skybrud.Essentials.Http</PackageProjectUrl>
+    <PackageIconUrl>https://www.skybrud.dk/img/5431sk/icon/favicon.ico</PackageIconUrl>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
     <DefineConstants>NET_STANDARD</DefineConstants>
   </PropertyGroup>
