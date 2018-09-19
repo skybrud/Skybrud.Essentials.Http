@@ -4,20 +4,21 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Strings.Extensions;
 
 namespace Skybrud.Essentials.Http {
 
     /// <summary>
     /// Wrapper class for <see cref="HttpWebResponse"/>.
     /// </summary>
-    public class HttpRequest {
+    public class HttpRequest : IHttpRequest {
 
         #region Private fields
 
-        private HttpHeaderCollection _headers = new HttpHeaderCollection();
+        private IHttpHeaderCollection _headers = new HttpHeaderCollection();
         private IHttpQueryString _queryString = new HttpQueryString();
         private IHttpPostData _postData = new HttpPostData();
-        private CookieContainer _cookies = new CookieContainer();
+        private IHttpCookieCollection _cookies = new HttpCookieCollection();
 
         #endregion
 
@@ -62,7 +63,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets or sets the collection of headers.
         /// </summary>
-        public HttpHeaderCollection Headers {
+        public IHttpHeaderCollection Headers {
             get => _headers;
             set => _headers = value ?? new HttpHeaderCollection();
         }
@@ -84,11 +85,11 @@ namespace Skybrud.Essentials.Http {
         }
 
         /// <summary>
-        /// Gets or sets the <see cref="CookieContainer"/> to be used for the request.
+        /// Gets or sets the <see cref="IHttpCookieCollection"/> to be used for the request.
         /// </summary>
-        public CookieContainer Cookies {
+        public IHttpCookieCollection Cookies {
             get => _cookies;
-            set => _cookies = value ?? new CookieContainer();
+            set => _cookies = value ?? new HttpCookieCollection();
         }
 
         /// <summary>
@@ -213,7 +214,6 @@ namespace Skybrud.Essentials.Http {
 #if NET_FRAMEWORK
             Timeout = TimeSpan.FromSeconds(100);
 #endif
-            PostData = new HttpPostData();
         }
 
         #endregion
@@ -223,8 +223,8 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Executes the request and returns the corresponding response as an instance of <see cref="HttpResponse"/>.
         /// </summary>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public HttpResponse GetResponse() {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse GetResponse() {
             return GetResponse(null);
         }
 
@@ -233,7 +233,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="callback">Lets you specify a callback method for modifying the underlying <see cref="HttpWebRequest"/>.</param>
         /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public HttpResponse GetResponse(Action<HttpWebRequest> callback) {
+        public virtual IHttpResponse GetResponse(Action<HttpWebRequest> callback) {
 
             // Build the URL
             string url = Url;
@@ -243,11 +243,11 @@ namespace Skybrud.Essentials.Http {
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
 
             // Misc
-            request.Method = Method.ToString().ToUpper();
+            request.Method = Method.ToUpper();
             request.Credentials = Credentials;
-            request.Headers = Headers.Headers;
+            if (Headers != null) request.Headers = Headers.Headers;
             request.Accept = Accept;
-            request.CookieContainer = Cookies;
+            if (Cookies != null) request.CookieContainer = Cookies.Container;
             if (!String.IsNullOrWhiteSpace(ContentType)) request.ContentType = ContentType;
 
 #if NET_FRAMEWORK

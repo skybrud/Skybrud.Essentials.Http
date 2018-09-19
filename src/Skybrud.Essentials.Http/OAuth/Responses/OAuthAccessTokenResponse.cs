@@ -24,7 +24,7 @@ namespace Skybrud.Essentials.Http.OAuth.Responses {
         /// </summary>
         /// <param name="response">The raw response.</param>
         /// <param name="body">The object representing the response body.</param>
-        protected OAuthAccessTokenResponse(HttpResponse response, OAuthAccessToken body) : base(response) {
+        protected OAuthAccessTokenResponse(IHttpResponse response, OAuthAccessToken body) : base(response) {
             Body = body;
         }
 
@@ -38,7 +38,7 @@ namespace Skybrud.Essentials.Http.OAuth.Responses {
         /// <param name="response">The raw response.</param>
         /// <param name="body">The object representing the response body.</param>
         /// <returns>An instance of <see cref="OAuthAccessTokenResponse"/>.</returns>
-        public static OAuthAccessTokenResponse ParseResponse(HttpResponse response, OAuthAccessToken body) {
+        public static OAuthAccessTokenResponse ParseResponse(IHttpResponse response, OAuthAccessToken body) {
             if (response == null) throw new ArgumentNullException(nameof(response));
             return new OAuthAccessTokenResponse(response, body);
         }

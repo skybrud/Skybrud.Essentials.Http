@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
-namespace Skybrud.Essentials.Http {
+namespace Skybrud.Essentials.Http.Client {
     
     /// <summary>
     /// Class representing a client for making HTTP requests.
@@ -18,8 +18,8 @@ namespace Skybrud.Essentials.Http {
         /// Makes a HTTP GET request to the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpGetRequest(string url) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpGetRequest(string url) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Get, url, default(IHttpQueryString));
         }
@@ -29,8 +29,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpGetRequest(string url, IHttpGetOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpGetRequest(string url, IHttpGetOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Get, url, options.GetQueryString());
@@ -41,8 +41,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpGetRequest(string url, IHttpQueryString queryString) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpGetRequest(string url, IHttpQueryString queryString) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Get, url, queryString);
         }
@@ -50,13 +50,13 @@ namespace Skybrud.Essentials.Http {
         #endregion
 
         #region DoHttpPostRequest
-        
+
         /// <summary>
         /// Makes a POST request to the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Post, url, default(IHttpQueryString), default(IHttpPostData));
         }
@@ -66,8 +66,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpGetOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpGetOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Post, url, options.GetQueryString(), default(IHttpPostData));
@@ -78,8 +78,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpPostOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpPostOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Post, url, options.GetQueryString(), options.GetPostData());
@@ -90,8 +90,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString) {
             return DoHttpRequest(HttpMethod.Post, url, queryString, default(IHttpPostData));
         }
 
@@ -100,19 +100,19 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="postData">The POST data.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpPostData postData) {
             return DoHttpRequest(HttpMethod.Post, url, null, postData);
         }
-        
+
         /// <summary>
         /// Makes a POST request to the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, IHttpPostData postData) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Post, url, queryString, postData);
         }
@@ -124,8 +124,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, string contentType, string body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, string contentType, string body) {
             return DoHttpRequest(HttpMethod.Post, url, queryString, contentType, body);
         }
 
@@ -134,8 +134,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, default(IHttpQueryString), body);
         }
@@ -146,8 +146,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, default(IHttpQueryString), body);
         }
@@ -158,8 +158,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, queryString, body);
         }
@@ -171,8 +171,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, queryString, body);
         }
@@ -182,8 +182,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, default(IHttpQueryString), body);
         }
@@ -194,8 +194,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, default(IHttpQueryString), body);
         }
@@ -206,8 +206,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, queryString, body);
         }
@@ -219,8 +219,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPostRequest(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, queryString, body, options);
         }
@@ -233,8 +233,8 @@ namespace Skybrud.Essentials.Http {
         /// Makes a PUT request to the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), default(IHttpPostData));
         }
@@ -244,8 +244,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpGetOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpGetOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Put, url, options.GetQueryString(), default(IHttpPostData));
@@ -256,8 +256,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpPostOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpPostOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Put, url, options.GetQueryString(), options.GetPostData());
@@ -268,8 +268,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString) {
             return DoHttpRequest(HttpMethod.Put, url, queryString, default(IHttpPostData));
         }
 
@@ -278,8 +278,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="postData">The POST data.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpPostData postData) {
             return DoHttpRequest(HttpMethod.Put, url, null, postData);
         }
 
@@ -289,8 +289,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, IHttpPostData postData) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Put, url, queryString, postData);
         }
@@ -302,8 +302,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, string contentType, string body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, string contentType, string body) {
             return DoHttpRequest(HttpMethod.Put, url, queryString, contentType, body);
         }
 
@@ -312,8 +312,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
         }
@@ -324,8 +324,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
         }
@@ -336,8 +336,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, queryString, body);
         }
@@ -349,8 +349,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, queryString, body);
         }
@@ -360,8 +360,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
         }
@@ -372,8 +372,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
         }
@@ -384,8 +384,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, queryString, body);
         }
@@ -397,22 +397,22 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPutRequest(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Put, url, queryString, body, options);
         }
 
         #endregion
-        
+
         #region DoHttpPatchRequest
 
         /// <summary>
         /// Makes a PATCH request to the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Patch, url, default(IHttpQueryString), default(IHttpPostData));
         }
@@ -422,8 +422,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpGetOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpGetOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Patch, url, options.GetQueryString(), default(IHttpPostData));
@@ -434,8 +434,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpPostOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpPostOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Patch, url, options.GetQueryString(), options.GetPostData());
@@ -446,8 +446,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString) {
             return DoHttpRequest(HttpMethod.Patch, url, queryString, default(IHttpPostData));
         }
 
@@ -456,8 +456,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="postData">The POST data.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpPostData postData) {
             return DoHttpRequest(HttpMethod.Patch, url, null, postData);
         }
 
@@ -467,8 +467,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, IHttpPostData postData) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, postData);
         }
@@ -480,8 +480,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, string contentType, string body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, string contentType, string body) {
             return DoHttpRequest(HttpMethod.Patch, url, queryString, contentType, body);
         }
 
@@ -490,8 +490,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, default(IHttpQueryString), body);
         }
@@ -502,8 +502,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, default(IHttpQueryString), body);
         }
@@ -514,8 +514,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, body);
         }
@@ -527,8 +527,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, body);
         }
@@ -538,8 +538,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, default(IHttpQueryString), body);
         }
@@ -550,8 +550,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, default(IHttpQueryString), body);
         }
@@ -562,8 +562,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, body);
         }
@@ -575,8 +575,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, body, options);
         }
@@ -589,8 +589,8 @@ namespace Skybrud.Essentials.Http {
         /// Makes a HTTP DELETE request to the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpDeleteRequest(string url) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpDeleteRequest(string url) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Delete, url, default(IHttpQueryString));
         }
@@ -600,8 +600,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpDeleteRequest(string url, IHttpGetOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpDeleteRequest(string url, IHttpGetOptions options) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
             return DoHttpRequest(HttpMethod.Delete, url, options.GetQueryString());
@@ -612,8 +612,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual HttpResponse DoHttpDeleteRequest(string url, IHttpQueryString queryString) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        public virtual IHttpResponse DoHttpDeleteRequest(string url, IHttpQueryString queryString) {
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Delete, url, queryString);
         }
@@ -627,8 +627,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="method">The HTTP method of the request.</param>
         /// <param name="url">The base URL of the request (no query string).</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url) {
             return DoHttpRequest(method, url, default(IHttpQueryString), default(IHttpPostData));
         }
 
@@ -638,8 +638,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="method">The HTTP method of the request.</param>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="options">The options for the call to the API.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpGetOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpGetOptions options) {
             IHttpQueryString queryString = options?.GetQueryString();
             return DoHttpRequest(method, url, queryString);
         }
@@ -650,8 +650,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="method">The HTTP method of the request.</param>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString) {
             return DoHttpRequest(method, url, queryString, default(IHttpPostData));
         }
 
@@ -661,8 +661,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="method">The HTTP method of the request.</param>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="postData">The POST data.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpPostData postData) {
             return DoHttpRequest(method, url, null, postData);
         }
 
@@ -673,8 +673,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="postData">The POST data.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, IHttpPostData postData) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, IHttpPostData postData) {
 
             // Some input validation
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
@@ -704,8 +704,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, string contentType, string body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, string contentType, string body) {
 
             // Some input validation
             if (String.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
@@ -733,8 +733,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="method">The HTTP method of the request.</param>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, default(IHttpQueryString), "application/json", body.ToString(Formatting.None));
         }
@@ -746,8 +746,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, default(IHttpQueryString), "application/json", body.ToString(formatting));
         }
@@ -759,8 +759,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, "application/json", body.ToString(Formatting.None));
         }
@@ -773,8 +773,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, "application/json", body.ToString(formatting));
         }
@@ -785,8 +785,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="method">The HTTP method of the request.</param>
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, default(IHttpQueryString), "text/xml", body.ToString(SaveOptions.None));
         }
@@ -798,8 +798,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, default(IHttpQueryString), "text/xml", body.ToString(options));
         }
@@ -811,8 +811,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, "text/xml", body.ToString(SaveOptions.None));
         }
@@ -825,8 +825,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        public virtual HttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, "text/xml", body.ToString(options));
         }
@@ -839,7 +839,7 @@ namespace Skybrud.Essentials.Http {
         /// Virtual method that can be used for configuring a request.
         /// </summary>
         /// <param name="request">The request.</param>
-        protected virtual void PrepareHttpRequest(HttpRequest request) { }
+        protected virtual void PrepareHttpRequest(IHttpRequest request) { }
 
         #endregion
 

@@ -10,7 +10,7 @@ namespace Skybrud.Essentials.Http.Collections {
     /// <summary>
     /// Collection of HTTP headers.
     /// </summary>
-    public class HttpHeaderCollection : IEnumerable<KeyValuePair<string, string>> {
+    public class HttpHeaderCollection : IHttpHeaderCollection {
 
         #region Properties
 
@@ -83,8 +83,8 @@ namespace Skybrud.Essentials.Http.Collections {
 
         #endregion
 
-        #region Constructor
-        
+        #region Constructors
+
         /// <summary>
         /// Creates an empty collection of headers.
         /// </summary>

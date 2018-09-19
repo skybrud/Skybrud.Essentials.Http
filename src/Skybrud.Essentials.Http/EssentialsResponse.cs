@@ -20,7 +20,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets a reference to the underlying raw response.
         /// </summary>
-        public HttpResponse Response { get; }
+        public IHttpResponse Response { get; }
 
         /// <summary>
         /// Gets the status code returned by the server.
@@ -45,7 +45,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets a collection of headers returned by the server.
         /// </summary>
-        public HttpHeaderCollection Headers => Response.Headers;
+        public IHttpHeaderCollection Headers => Response.Headers;
 
         #endregion
 
@@ -54,8 +54,8 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Initializes a new instance based on the specified raw <paramref name="response"/>.
         /// </summary>
-        /// <param name="response">The instance of <see cref="HttpResponse"/> representing the raw response.</param>
-        protected EssentialsResponse(HttpResponse response) {
+        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+        protected EssentialsResponse(IHttpResponse response) {
             Response = response;
         }
 

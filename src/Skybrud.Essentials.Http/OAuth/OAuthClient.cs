@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Skybrud.Essentials.Common;
+using Skybrud.Essentials.Http.Client;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.OAuth.Models;
 using Skybrud.Essentials.Http.OAuth.Responses;
@@ -258,7 +259,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         public virtual OAuthRequestTokenResponse GetRequestToken() {
 
             // Make the call to the API/provider
-            HttpResponse response = GetRequestTokenResponse();
+            IHttpResponse response = GetRequestTokenResponse();
 
             // Parse the response body
             OAuthRequestToken body = OAuthRequestToken.Parse(this, response.Body);
@@ -268,8 +269,8 @@ namespace Skybrud.Essentials.Http.OAuth {
 
         }
 
-        /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        protected virtual HttpResponse GetRequestTokenResponse() {
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        protected virtual IHttpResponse GetRequestTokenResponse() {
 
             // Some error checking
             if (String.IsNullOrWhiteSpace(RequestTokenUrl)) throw new PropertyNotSetException(nameof(RequestTokenUrl));
@@ -295,7 +296,7 @@ namespace Skybrud.Essentials.Http.OAuth {
             if (String.IsNullOrWhiteSpace(verifier)) throw new ArgumentNullException(nameof(verifier));
 
             // Make the call to the API/provider
-            HttpResponse response = GetAccessTokenResponse(verifier);
+            IHttpResponse response = GetAccessTokenResponse(verifier);
 
             // Parse the response body
             OAuthAccessToken body = OAuthAccessToken.Parse(this, response.Body);
@@ -306,7 +307,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         }
 
         /// <returns>An instance of <see cref="HttpResponse"/> representing the raw response.</returns>
-        protected virtual HttpResponse GetAccessTokenResponse(string verifier) {
+        protected virtual IHttpResponse GetAccessTokenResponse(string verifier) {
 
             // Some error checking
             if (String.IsNullOrWhiteSpace(AccessTokenUrl)) throw new PropertyNotSetException(nameof(AccessTokenUrl));
@@ -321,11 +322,11 @@ namespace Skybrud.Essentials.Http.OAuth {
         }
 
         /// <summary>
-        /// Helper method for generating the OAuth signature for an instance of <see cref="HttpRequest"/>.
+        /// Helper method for generating the OAuth signature for an instance of <see cref="IHttpRequest"/>.
         /// </summary>
-        /// <param name="request">The instance of <see cref="HttpRequest"/> the signature should be based on.</param>
+        /// <param name="request">The instance of <see cref="IHttpRequest"/> the signature should be based on.</param>
         /// <returns>The generated OAuth signature.</returns>
-        protected virtual string GenerateSignature(HttpRequest request) {
+        protected virtual string GenerateSignature(IHttpRequest request) {
             if (request == null) throw new ArgumentNullException(nameof(request));
             if (String.IsNullOrWhiteSpace(request.Url)) throw new PropertyNotSetException(nameof(request.Url));
             return GenerateSignature(request.Method, request.Url, request.QueryString, request.PostData);
@@ -335,7 +336,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// Adds the OAuth 1.0a authorization header to the request
         /// </summary>
         /// <param name="request"></param>
-        protected override void PrepareHttpRequest(HttpRequest request) {
+        protected override void PrepareHttpRequest(IHttpRequest request) {
 
             // Generate the signature
             string signature = GenerateSignature(request);

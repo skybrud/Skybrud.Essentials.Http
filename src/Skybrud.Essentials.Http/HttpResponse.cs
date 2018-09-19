@@ -9,7 +9,7 @@ namespace Skybrud.Essentials.Http {
     /// <summary>
     /// Wrapper class for <see cref="HttpWebResponse"/>.
     /// </summary>
-    public class HttpResponse {
+    public class HttpResponse : IHttpResponse {
 
         private HttpHeaderCollection _headers;
         private byte[] _binary;
@@ -20,7 +20,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets a reference to the <see cref="HttpRequest"/> that resulted in the response.
         /// </summary>
-        public HttpRequest Request { get; }
+        public IHttpRequest Request { get; }
 
         /// <summary>
         /// Gets a reference to the underlying <see cref="HttpWebResponse"/>.
@@ -43,14 +43,14 @@ namespace Skybrud.Essentials.Http {
         public string Method => Response.Method;
 
         /// <summary>
-        /// Gets the content type of the request.
+        /// Gets the content type of the response.
         /// </summary>
         public string ContentType => Response.ContentType;
 
         /// <summary>
         /// Gets a collections of headers returned by the server.
         /// </summary>
-        public HttpHeaderCollection Headers => _headers ?? (_headers = new HttpHeaderCollection(Response.Headers));
+        public IHttpHeaderCollection Headers => _headers ?? (_headers = new HttpHeaderCollection(Response.Headers));
 
         /// <summary>
         /// Gets a reference to the <see cref="Encoding"/>. The underlying <see cref="HttpWebResponse"/> doesn't
@@ -83,7 +83,7 @@ namespace Skybrud.Essentials.Http {
 
         #region Constructor
 
-        private HttpResponse(HttpRequest request, HttpWebResponse response) {
+        private HttpResponse(IHttpRequest request, HttpWebResponse response) {
             Request = request;
             Response = response;
             Encoding = DetectResponseEncoding();
