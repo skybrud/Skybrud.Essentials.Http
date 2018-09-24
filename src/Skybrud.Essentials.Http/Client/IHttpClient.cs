@@ -7,7 +7,7 @@ using Skybrud.Essentials.Http.Options;
 namespace Skybrud.Essentials.Http.Client {
     
     /// <summary>
-    /// Interface representing a client for making HTTP requests.
+    /// Interface describing a client for making HTTP requests.
     /// </summary>
     public interface IHttpClient {
 

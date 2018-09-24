@@ -21,12 +21,12 @@ namespace Skybrud.Essentials.Http.OAuth {
         #region Properties
 
         /// <summary>
-        /// Gets or sets the consumer key of your application.
+        /// Gets or sets the consumer key of your OAuth application.
         /// </summary>
         public string ConsumerKey { get; set; }
 
         /// <summary>
-        /// Gets or sets the consumer secret of your application. The consumer secret is sensitive information used to
+        /// Gets or sets the consumer secret of your OAuth application. The consumer secret is sensitive information used to
         /// identify your application. Users should never be shown this value.
         /// </summary>
         public string ConsumerSecret { get; set; }
@@ -35,13 +35,16 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// Gets or sets a unique/random value specifying the <c>oauth_nonce</c> parameter in the OAuth protocol.
         /// Along with <c>oauth_timestamp</c>, it will make sure each request is only sent once to the OAuth
         /// server (provider).
+        /// 
+        /// If <see cref="AutoReset"/> is enabled (default), the value for this property will automatically be updated for each request.
         /// </summary>
         public string Nonce { get; set; }
 
         /// <summary>
-        /// Gets or sets the current UNIX timestamp specifying the <c>oauth_timestamp</c> in the OAuth protocol.
-        /// Along with <c>oauth_nonce</c>, it will make sure each request is only sent once to the OAuth server
-        /// (provider).
+        /// Gets or sets the current Unix timestamp specifying the <c>oauth_timestamp</c> parameter in the OAuth
+        /// protocol. Along with <see cref="Nonce"/>, it will make sure each request is only sent once to the OAuth server (provider).
+        /// 
+        /// If <see cref="AutoReset"/> is enabled (default), the value for this property will automatically be updated for each request.
         /// </summary>
         public string Timestamp { get; set; }
 
@@ -57,12 +60,12 @@ namespace Skybrud.Essentials.Http.OAuth {
         public string TokenSecret { get; set; }
 
         /// <summary>
-        /// Gets or sets the version of the OAuth protocol.
+        /// Gets or sets the version of the OAuth protocol. Default is <c>1.0</c>.
         /// </summary>
         public string Version { get; set; }
 
         /// <summary>
-        /// Gets or sets the callback URL. This property specified the <c>oauth_callback</c> parameter and is
+        /// Gets or sets the callback URL. This property specifies the <c>oauth_callback</c> parameter and is
         /// used for 3-legged logins. You only need to specify this property for authentication - it is not necessary
         /// toset this property when just making calls to the API. 
         /// </summary>
@@ -88,8 +91,8 @@ namespace Skybrud.Essentials.Http.OAuth {
         public string AccessTokenUrl { get; set; }
 
         /// <summary>
-        /// If <c>true</c>, new requests will automatically reset the <c>oauth_timestamp</c> and
-        /// <c>oauth_nonce</c> with new values. It should only be disabled for testing purposes.
+        /// If <c>true</c>, new requests will automatically reset the <see cref="Timestamp"/> and <see cref="Nonce"/>
+        /// properties with new values. It should only be disabled for testing purposes.
         /// </summary>
         public bool AutoReset { get; set; }
 
@@ -144,7 +147,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         #region Member methods
 
         /// <summary>
-        /// Updates the <c>oauth_timestamp</c> and <c>oauth_nonce</c> OAuth parameters with new values for another
+        /// Updates the <see cref="Timestamp"/> and <see cref="Nonce"/> properties with new values for another
         /// request. If the <see cref="AutoReset"/> property is <c>true</c>, this method will be called automatically
         /// before each request to the underlying API.
         /// </summary>
@@ -333,7 +336,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         }
 
         /// <summary>
-        /// Adds the OAuth 1.0a authorization header to the request
+        /// Adds the OAuth 1.0a authorization header to the request.
         /// </summary>
         /// <param name="request"></param>
         protected override void PrepareHttpRequest(IHttpRequest request) {

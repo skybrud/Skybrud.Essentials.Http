@@ -3,7 +3,7 @@ using Skybrud.Essentials.Http.Collections;
 namespace Skybrud.Essentials.Http.OAuth.Models {
 
     /// <summary>
-    /// Class representing the response body of a call to get an OAuth 1.0a refresh token.
+    /// Class representing the response body of a call to get an OAuth 1.0a request token.
     /// </summary>
     public class OAuthRequestToken {
 

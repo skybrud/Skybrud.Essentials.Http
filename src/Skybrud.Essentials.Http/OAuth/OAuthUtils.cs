@@ -9,15 +9,15 @@ namespace Skybrud.Essentials.Http.OAuth {
     public static class OAuthUtils {
 
         /// <summary>
-        /// Generates a nonce (random value) used for creating the authorization header.
+        /// Generates a nonce (random value) used for creating the OAuth authorization header.
         /// </summary>
-        /// <returns>A random value to be used for creating the authorization header.</returns>
+        /// <returns>A random value to be used for creating the OAuth authorization header.</returns>
         public static string GenerateNonce() {
             return Guid.NewGuid().ToString().Replace("-", "");
         }
 
         /// <summary>
-        /// Returns the current UNIX timestamp as a string.
+        /// Returns the current Unix timestamp as a string.
         /// </summary>
         /// <returns>The current Unix timestamp as a string.</returns>
         public static string GetTimestamp() {

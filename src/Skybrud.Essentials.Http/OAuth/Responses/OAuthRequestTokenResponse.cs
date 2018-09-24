@@ -4,7 +4,7 @@ using Skybrud.Essentials.Http.OAuth.Models;
 namespace Skybrud.Essentials.Http.OAuth.Responses {
     
     /// <summary>
-    /// Class representing the response of a call to get an OAuth 1.0a refresh token.
+    /// Class representing the response of a call to get an OAuth 1.0a request token.
     /// </summary>
     public class OAuthRequestTokenResponse : HttpResponseBase {
 

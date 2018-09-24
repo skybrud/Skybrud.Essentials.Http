@@ -3,7 +3,7 @@ using System;
 namespace Skybrud.Essentials.Http.OAuth.Exceptions {
     
     /// <summary>
-    /// Class representing an OAuth exception
+    /// Class representing an OAuth exception.
     /// </summary>
     public class OAuthException : Exception {
 
