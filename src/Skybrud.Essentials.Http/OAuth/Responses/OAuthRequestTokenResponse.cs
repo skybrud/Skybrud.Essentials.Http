@@ -6,7 +6,7 @@ namespace Skybrud.Essentials.Http.OAuth.Responses {
     /// <summary>
     /// Class representing the response of a call to get an OAuth 1.0a refresh token.
     /// </summary>
-    public class OAuthRequestTokenResponse : EssentialsResponse {
+    public class OAuthRequestTokenResponse : HttpResponseBase {
 
         #region Properties
 

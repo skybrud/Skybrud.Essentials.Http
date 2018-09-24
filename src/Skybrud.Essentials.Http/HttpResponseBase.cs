@@ -13,7 +13,7 @@ namespace Skybrud.Essentials.Http {
     /// this class) should be used to represent the object oriented (parsed) response wrapping an instance of
     /// <see cref="HttpResponse"/> (raw response).
     /// </summary>
-    public class EssentialsResponse {
+    public class HttpResponseBase {
 
         #region Properties
 
@@ -55,7 +55,7 @@ namespace Skybrud.Essentials.Http {
         /// Initializes a new instance based on the specified raw <paramref name="response"/>.
         /// </summary>
         /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
-        protected EssentialsResponse(IHttpResponse response) {
+        protected HttpResponseBase(IHttpResponse response) {
             Response = response;
         }
 
