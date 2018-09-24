@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 
-namespace Skybrud.Essentials.Http {
+namespace Skybrud.Essentials.Http.Collections {
 
     /// <summary>
-    /// Interface decribing the request body of a HTTP POST request.
+    /// Interface describing the request body of a HTTP POST request.
     /// </summary>
     public interface IHttpPostData : IEnumerable<KeyValuePair<string, string>> {
 

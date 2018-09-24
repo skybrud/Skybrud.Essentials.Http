@@ -1,4 +1,6 @@
-﻿namespace Skybrud.Essentials.Http.Options {
+﻿using Skybrud.Essentials.Http.Collections;
+
+namespace Skybrud.Essentials.Http.Options {
 
     /// <summary>
     /// Interface representing the options of a HTTP POST request.
