@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <RootNamespace>Skybrud.Essentials.Http</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Company>Skybrud.dk a/s</Company>
     <Product>Skybrud.Essentials</Product>
     <Authors>Anders Bjerner</Authors>
