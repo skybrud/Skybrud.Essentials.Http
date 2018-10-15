@@ -172,7 +172,7 @@ namespace Skybrud.Essentials.Http {
 
         #endregion
 
-#if NET_STANDARD2
+#if NET_FRAMEWORK_OR_NET_STANDARD_2
 
         /// <summary>
         /// Gets or sets the type of decompression that is used.
