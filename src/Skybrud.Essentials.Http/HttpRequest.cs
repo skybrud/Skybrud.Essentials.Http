@@ -273,14 +273,17 @@ namespace Skybrud.Essentials.Http {
 
             // Handle various POST scenarios
             if (!String.IsNullOrWhiteSpace(Body)) {
+                
+                // Get the bytes for the request body
+                byte[] bytes = Encoding.UTF8.GetBytes(Body);
 
                 // Set the length of the request body
-                SetRequestContentLength(request, Body.Length);
+                SetRequestContentLength(request, bytes.Length);
 
                 // Write the body to the request stream
                 Task<Stream> hest = request.GetRequestStreamAsync();
                 using (Stream stream = hest.Result) {
-                    stream.Write(Encoding.UTF8.GetBytes(Body), 0, Body.Length);
+                    stream.Write(bytes, 0, Body.Length);
                 }
 
             } else if (Method == HttpMethod.Post || Method == HttpMethod.Put || Method == HttpMethod.Patch || Method == HttpMethod.Delete) {
@@ -308,17 +311,20 @@ namespace Skybrud.Essentials.Http {
                     // Convert the POST data to an URL encoded string
                     string dataString = PostData.ToString();
                     
+                    // Get the bytes for the request body
+                    byte[] bytes = Encoding.UTF8.GetBytes(dataString);
+
                     // Set the content type
                     request.ContentType = "application/x-www-form-urlencoded";
 
                     // Set the length of the request body
-                    SetRequestContentLength(request, dataString.Length);
+                    SetRequestContentLength(request, bytes.Length);
 
                     // Write the body to the request stream
                     Task<Stream> hest = request.GetRequestStreamAsync();
                     hest.Wait();
                     using (Stream stream = hest.Result) {
-                        stream.Write(Encoding.UTF8.GetBytes(dataString), 0, dataString.Length);
+                        stream.Write(bytes, 0, bytes.Length);
                     }
 
                 }
