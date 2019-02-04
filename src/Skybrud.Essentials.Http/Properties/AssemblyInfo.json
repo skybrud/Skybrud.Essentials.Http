@@ -3,8 +3,8 @@
   "description": ".NET library for making HTTP requests.",
   "company": "Skybrud.dk a/s",
   "product": "Skybrud.Essentials",
-  "copyright": "Copyright © 2018",
-  "version": "1.0.1.0",
-  "informationalVersion": "1.0.1",
-  "fileVersion": "1.0.1.0"
+  "copyright": "Copyright © 2019",
+  "version": "1.0.2.0",
+  "informationalVersion": "1.0.2",
+  "fileVersion": "1.0.2.0"
 }
