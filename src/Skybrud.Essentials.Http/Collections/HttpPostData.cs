@@ -198,7 +198,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <returns>The POST data as an URL encoded string.</returns>
         public override string ToString() {
-            return String.Join("&", _data.Select(pair => StringUtils.UrlEncode(pair.Key) + "=" + StringUtils.UrlEncode(pair.Value.ToString())));
+            return String.Join("&", _data.Select(pair => Uri.EscapeDataString(pair.Key) + "=" + Uri.EscapeDataString(pair.Value.ToString())));
         }
 
         /// <summary>
