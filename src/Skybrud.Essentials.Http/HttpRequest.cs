@@ -283,7 +283,7 @@ namespace Skybrud.Essentials.Http {
                 // Write the body to the request stream
                 Task<Stream> hest = request.GetRequestStreamAsync();
                 using (Stream stream = hest.Result) {
-                    stream.Write(bytes, 0, Body.Length);
+                    stream.Write(bytes, 0, bytes.Length);
                 }
 
             } else if (Method == HttpMethod.Post || Method == HttpMethod.Put || Method == HttpMethod.Patch || Method == HttpMethod.Delete) {
