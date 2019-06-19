@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using Skybrud.Essentials.Http.Collections;
 
 namespace Skybrud.Essentials.Http {
@@ -37,6 +38,11 @@ namespace Skybrud.Essentials.Http {
         /// Gets a collections of headers returned by the server.
         /// </summary>
         IHttpHeaderCollection Headers { get; }
+
+        /// <summary>
+        /// Gets the URI of the response (eg. if the request was redirected).
+        /// </summary>
+        Uri ResponseUri { get; }
 
         /// <summary>
         /// Gets the response body as a raw string.

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -51,6 +52,11 @@ namespace Skybrud.Essentials.Http {
         /// Gets a collections of headers returned by the server.
         /// </summary>
         public IHttpHeaderCollection Headers => _headers ?? (_headers = new HttpHeaderCollection(Response.Headers));
+
+        /// <summary>
+        /// Gets the URI of the response (eg. if the request was redirected).
+        /// </summary>
+        public Uri ResponseUri => Response.ResponseUri;
 
         /// <summary>
         /// Gets a reference to the <see cref="Encoding"/>. The underlying <see cref="HttpWebResponse"/> doesn't
