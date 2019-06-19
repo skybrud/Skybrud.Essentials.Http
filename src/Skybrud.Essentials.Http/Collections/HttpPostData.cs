@@ -6,7 +6,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
-using Skybrud.Essentials.Strings;
 
 namespace Skybrud.Essentials.Http.Collections {
 
@@ -49,10 +48,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the item.</param>
         /// <returns>The <see cref="string"/> value of the item, or <c>null</c> if not found.</returns>
         public string this[string key] {
-            get {
-                IHttpPostValue value;
-                return _data.TryGetValue(key, out value) ? value.ToString() : null;
-            }
+            get => _data.TryGetValue(key, out IHttpPostValue value) ? value.ToString() : null;
             set => _data[key] = new HttpPostValue(key, value);
         }
 
@@ -112,7 +108,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
         public void Add(string key, object value) {
-            _data.Add(key, new HttpPostValue(key, String.Format(CultureInfo.InvariantCulture, "{0}", value)));
+            _data.Add(key, new HttpPostValue(key, string.Format(CultureInfo.InvariantCulture, "{0}", value)));
         }
 
         /// <summary>
@@ -153,7 +149,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
         public void Set(string key, object value) {
-            _data[key] = new HttpPostValue(key, String.Format(CultureInfo.InvariantCulture, "{0}", value));
+            _data[key] = new HttpPostValue(key, string.Format(CultureInfo.InvariantCulture, "{0}", value));
         }
 
         /// <summary>
@@ -172,8 +168,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <returns><c>true</c> if the item with the specified <paramref name="key"/> is an instance of
         /// <see cref="HttpPostFileValue"/>, otherwise <c>false</c>.</returns>
         public bool IsFile(string key) {
-            IHttpPostValue value;
-            return _data.TryGetValue(key, out value) && value is HttpPostFileValue;
+            return _data.TryGetValue(key, out IHttpPostValue value) && value is HttpPostFileValue;
         }
 
         internal static void Write(Stream stream, string str) {
@@ -198,7 +193,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <returns>The POST data as an URL encoded string.</returns>
         public override string ToString() {
-            return String.Join("&", _data.Select(pair => Uri.EscapeDataString(pair.Key) + "=" + Uri.EscapeDataString(pair.Value.ToString())));
+            return string.Join("&", _data.Select(pair => Uri.EscapeDataString(pair.Key) + "=" + Uri.EscapeDataString(pair.Value.ToString())));
         }
 
         /// <summary>
