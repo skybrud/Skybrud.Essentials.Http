@@ -1,4 +1,3 @@
-using System;
 using Skybrud.Essentials.Http.Collections;
 
 namespace Skybrud.Essentials.Http.OAuth.Models {
@@ -40,18 +39,10 @@ namespace Skybrud.Essentials.Http.OAuth.Models {
         /// <param name="client">The parent OAuth client.</param>
         /// <param name="query">The query string as specified by the response body.</param>
         protected OAuthAccessToken(OAuthClient client, IHttpQueryString query) {
-
             Client = client;
-
-            // Get the user ID
-            long userId;
-            Int64.TryParse(query["user_id"], out userId);
-
-            // Populate the properties
             Token = query["oauth_token"];
             TokenSecret = query["oauth_token_secret"];
             Query = query;
-
         }
 
         #endregion

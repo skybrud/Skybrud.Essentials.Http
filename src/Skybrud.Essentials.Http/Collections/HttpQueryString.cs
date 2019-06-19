@@ -101,8 +101,8 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
         public void Add(string key, object value) {
-            if (String.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            _values.Add(key, String.Format(CultureInfo.InvariantCulture, "{0}", value));
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
+            _values.Add(key, string.Format(CultureInfo.InvariantCulture, "{0}", value));
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
         public void Set(string key, object value) {
-            if (String.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            _values[key] = String.Format(CultureInfo.InvariantCulture, "{0}", value);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
+            _values[key] = string.Format(CultureInfo.InvariantCulture, "{0}", value);
         }
 
         /// <summary>
@@ -120,7 +120,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <returns>The query string as an URL encoded string.</returns>
         public override string ToString() {
-            return String.Join("&", from pair in _values select StringUtils.UrlEncode(pair.Key) + "=" + StringHelper.UrlEncode(pair.Value));
+            return string.Join("&", from pair in _values select StringUtils.UrlEncode(pair.Key) + "=" + StringHelper.UrlEncode(pair.Value));
         }
 
         /// <summary>
@@ -130,7 +130,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <returns><c>true</c> if the query string contains the specified <paramref name="key"/>, otherwise
         /// <c>false</c>.</returns>
         public bool ContainsKey(string key) {
-            if (String.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
             return _values.ContainsKey(key);
         }
 
@@ -140,7 +140,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <returns>The <see cref="System.String"/> value of the entry, or <c>null</c> if not found.</returns>
         public string GetString(string key) {
-            if (String.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
             return _values.TryGetValue(key, out string value) ? value : null;
         }
 
@@ -195,10 +195,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <returns>The <typeparamref name="T"/> value of the entry, or the default value of <typeparamref name="T"/> if not found.</returns>
         private T GetValue<T>(string key) {
-            if (String.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            string value;
-            if (!_values.TryGetValue(key, out value)) return default(T);
-            return String.IsNullOrWhiteSpace(value) ? default(T) : (T) Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+            if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
+            if (!_values.TryGetValue(key, out string value)) return default(T);
+            return string.IsNullOrWhiteSpace(value) ? default(T) : (T) Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -242,7 +241,7 @@ namespace Skybrud.Essentials.Http.Collections {
         public static HttpQueryString ParseQueryString(string str, bool urlencoded) {
 
             // Return an empty instance if "str" is NULL or empty
-            if (String.IsNullOrWhiteSpace(str)) return new HttpQueryString();
+            if (string.IsNullOrWhiteSpace(str)) return new HttpQueryString();
 
             Dictionary<string, string> values = new Dictionary<string, string>();
             
@@ -290,7 +289,7 @@ namespace Skybrud.Essentials.Http.Collections {
 
                 // trailing '&'
                 if (i == length - 1 && str[i] == '&') {
-                    values.Add("", String.Empty);
+                    values.Add(string.Empty, string.Empty);
                 }
 
                 i++;

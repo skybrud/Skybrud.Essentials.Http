@@ -163,13 +163,13 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// <returns>The generated header string.</returns>
         public virtual string GenerateHeaderString(string signature) {
             string oauthHeaders = "OAuth realm=\"\",";
-            if (!String.IsNullOrEmpty(Callback)) oauthHeaders += "oauth_callback=\"" + Uri.EscapeDataString(Callback) + "\",";
-            oauthHeaders += "oauth_consumer_key=\"" + Uri.EscapeDataString(ConsumerKey) + "\",";
-            oauthHeaders += "oauth_nonce=\"" + Uri.EscapeDataString(Nonce) + "\",";
-            oauthHeaders += "oauth_signature=\"" + Uri.EscapeDataString(signature) + "\",";
+            if (string.IsNullOrEmpty(Callback) == false) oauthHeaders += "oauth_callback=\"" + EscapeDataString(Callback) + "\",";
+            oauthHeaders += "oauth_consumer_key=\"" + EscapeDataString(ConsumerKey) + "\",";
+            oauthHeaders += "oauth_nonce=\"" + EscapeDataString(Nonce) + "\",";
+            //oauthHeaders += "oauth_signature=\"" + EscapeDataString(signature) + "\",";
             oauthHeaders += "oauth_signature_method=\"HMAC-SHA1\",";
             oauthHeaders += "oauth_timestamp=\"" + Timestamp + "\",";
-            if (!String.IsNullOrEmpty(Token)) oauthHeaders += "oauth_token=\"" + Uri.EscapeDataString(Token) + "\",";
+            if (string.IsNullOrEmpty(Token) == false) oauthHeaders += "oauth_token=\"" + EscapeDataString(Token) + "\",";
             oauthHeaders += "oauth_version=\"" + Version + "\"";
             return oauthHeaders;
         }
@@ -189,7 +189,7 @@ namespace Skybrud.Essentials.Http.OAuth {
             if (queryString != null) {
                 foreach (string key in queryString.Keys) {
                     //if (key.StartsWith("oauth_")) continue;
-                    sorted.Add(Uri.EscapeDataString(key), Uri.EscapeDataString(queryString[key]));
+                    sorted.Add(EscapeDataString(key), EscapeDataString(queryString[key]));
                 }
             }
 
@@ -197,18 +197,18 @@ namespace Skybrud.Essentials.Http.OAuth {
             if (body != null) {
                 foreach (string key in body.Keys) {
                     //if (key.StartsWith("oauth_")) continue;
-                    sorted.Add(Uri.EscapeDataString(key), Uri.EscapeDataString(body[key]));
+                    sorted.Add(EscapeDataString(key), EscapeDataString(body[key]));
                 }
             }
 
             // Add OAuth values
-            if (!String.IsNullOrEmpty(Callback)) sorted.Add("oauth_callback", Uri.EscapeDataString(Callback));
-            sorted.Add("oauth_consumer_key", Uri.EscapeDataString(ConsumerKey));
-            sorted.Add("oauth_nonce", Uri.EscapeDataString(Nonce));
+            if (string.IsNullOrEmpty(Callback) == false) sorted.Add("oauth_callback", EscapeDataString(Callback));
+            sorted.Add("oauth_consumer_key", EscapeDataString(ConsumerKey));
+            sorted.Add("oauth_nonce", EscapeDataString(Nonce));
             sorted.Add("oauth_signature_method", "HMAC-SHA1");
-            sorted.Add("oauth_timestamp", Uri.EscapeDataString(Timestamp));
-            if (!String.IsNullOrEmpty(Token)) sorted.Add("oauth_token", Uri.EscapeDataString(Token));
-            sorted.Add("oauth_version", Uri.EscapeDataString(Version));
+            sorted.Add("oauth_timestamp", EscapeDataString(Timestamp));
+            if (string.IsNullOrEmpty(Token) == false) sorted.Add("oauth_token", EscapeDataString(Token));
+            sorted.Add("oauth_version", EscapeDataString(Version));
 
             // Merge all parameters
             return sorted.Aggregate("", (current, pair) => current + ("&" + pair.Key + "=" + pair.Value)).Substring(1);
@@ -220,7 +220,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// </summary>
         /// <returns>The generated signature key.</returns>
         public virtual string GenerateSignatureKey() {
-            return Uri.EscapeDataString(ConsumerSecret ?? "") + "&" + Uri.EscapeDataString(TokenSecret ?? "");
+            return EscapeDataString(ConsumerSecret ?? "") + "&" + EscapeDataString(TokenSecret ?? "");
         }
 
         /// <summary>
@@ -232,11 +232,11 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// <param name="body">The POST data.</param>
         /// <returns>The generated signature value.</returns>
         public virtual string GenerateSignatureValue(HttpMethod method, string url, IHttpQueryString queryString, IHttpPostData body) {
-            return String.Format(
+            return string.Format(
                 "{0}&{1}&{2}",
                 method.ToString().ToUpper(),
-                Uri.EscapeDataString(url.Split('#')[0].Split('?')[0]),
-                Uri.EscapeDataString(GenerateParameterString(queryString, body))
+                EscapeDataString(url.Split('#')[0].Split('?')[0]),
+                EscapeDataString(GenerateParameterString(queryString, body))
             );
         }
 
@@ -276,8 +276,8 @@ namespace Skybrud.Essentials.Http.OAuth {
         protected virtual IHttpResponse GetRequestTokenResponse() {
 
             // Some error checking
-            if (String.IsNullOrWhiteSpace(RequestTokenUrl)) throw new PropertyNotSetException(nameof(RequestTokenUrl));
-            if (String.IsNullOrWhiteSpace(AuthorizeUrl)) throw new PropertyNotSetException(nameof(AuthorizeUrl));
+            if (string.IsNullOrWhiteSpace(RequestTokenUrl)) throw new PropertyNotSetException(nameof(RequestTokenUrl));
+            if (string.IsNullOrWhiteSpace(AuthorizeUrl)) throw new PropertyNotSetException(nameof(AuthorizeUrl));
 
             // Make the call to the API/provider
             return DoHttpPostRequest(RequestTokenUrl);
@@ -296,7 +296,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         public virtual OAuthAccessTokenResponse GetAccessToken(string verifier) {
 
             // Some error checking
-            if (String.IsNullOrWhiteSpace(verifier)) throw new ArgumentNullException(nameof(verifier));
+            if (string.IsNullOrWhiteSpace(verifier)) throw new ArgumentNullException(nameof(verifier));
 
             // Make the call to the API/provider
             IHttpResponse response = GetAccessTokenResponse(verifier);
@@ -313,7 +313,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         protected virtual IHttpResponse GetAccessTokenResponse(string verifier) {
 
             // Some error checking
-            if (String.IsNullOrWhiteSpace(AccessTokenUrl)) throw new PropertyNotSetException(nameof(AccessTokenUrl));
+            if (string.IsNullOrWhiteSpace(AccessTokenUrl)) throw new PropertyNotSetException(nameof(AccessTokenUrl));
 
             // Initialize the POST data
             IHttpPostData postData = new HttpPostData();
@@ -331,7 +331,8 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// <returns>The generated OAuth signature.</returns>
         protected virtual string GenerateSignature(IHttpRequest request) {
             if (request == null) throw new ArgumentNullException(nameof(request));
-            if (String.IsNullOrWhiteSpace(request.Url)) throw new PropertyNotSetException(nameof(request.Url));
+            if (string.IsNullOrWhiteSpace(request.Url)) throw new PropertyNotSetException(nameof(request.Url));
+            //throw new Exception(request.Method + " => " + request.Url + " => " + request.QueryString + " => " + request.PostData);
             return GenerateSignature(request.Method, request.Url, request.QueryString, request.PostData);
         }
 
@@ -353,6 +354,15 @@ namespace Skybrud.Essentials.Http.OAuth {
             // Make sure we reset the client (timestamp and nonce)
             if (AutoReset) Reset();
 
+        }
+
+        /// <summary>
+        /// Escapes the string with the specified <paramref name="value"/>.
+        /// </summary>
+        /// <param name="value">The value to be escaped.</param>
+        /// <returns>The escaped string.</returns>
+        public virtual string EscapeDataString(string value) {
+            return Uri.EscapeDataString(value);
         }
 
         #endregion

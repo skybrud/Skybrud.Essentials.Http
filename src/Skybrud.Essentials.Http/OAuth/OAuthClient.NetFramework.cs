@@ -33,7 +33,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// <param name="body">The POST data.</param>
         /// <returns>The generated signature value.</returns>
         public virtual string GenerateSignatureValue(HttpMethod method, string url, NameValueCollection queryString, NameValueCollection body) {
-            return String.Format(
+            return string.Format(
                 "{0}&{1}&{2}",
                 method.ToString().ToUpper(),
                 Uri.EscapeDataString(url.Split('#')[0].Split('?')[0]),
@@ -70,12 +70,12 @@ namespace Skybrud.Essentials.Http.OAuth {
             }
 
             // Add OAuth values
-            if (!String.IsNullOrEmpty(Callback)) sorted.Add("oauth_callback", Uri.EscapeDataString(Callback));
+            if (string.IsNullOrEmpty(Callback) == false) sorted.Add("oauth_callback", Uri.EscapeDataString(Callback));
             sorted.Add("oauth_consumer_key", Uri.EscapeDataString(ConsumerKey));
             sorted.Add("oauth_nonce", Uri.EscapeDataString(Nonce));
             sorted.Add("oauth_signature_method", "HMAC-SHA1");
             sorted.Add("oauth_timestamp", Uri.EscapeDataString(Timestamp));
-            if (!String.IsNullOrEmpty(Token)) sorted.Add("oauth_token", Uri.EscapeDataString(Token));
+            if (string.IsNullOrEmpty(Token) == false) sorted.Add("oauth_token", Uri.EscapeDataString(Token));
             sorted.Add("oauth_version", Uri.EscapeDataString(Version));
 
             // Merge all parameters

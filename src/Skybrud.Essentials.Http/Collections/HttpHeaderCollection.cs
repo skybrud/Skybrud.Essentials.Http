@@ -118,7 +118,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="name">The name of the header.</param>
         /// <param name="value">The value of the header.</param>
         public void Add(string name, object value) {
-            Headers[name] = String.Format(CultureInfo.InvariantCulture, "{0}", value);
+            Headers[name] = string.Format(CultureInfo.InvariantCulture, "{0}", value);
         }
 
         

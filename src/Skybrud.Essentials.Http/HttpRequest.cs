@@ -248,13 +248,13 @@ namespace Skybrud.Essentials.Http {
             if (Headers != null) request.Headers = Headers.Headers;
             request.Accept = Accept;
             if (Cookies != null) request.CookieContainer = Cookies.Container;
-            if (!String.IsNullOrWhiteSpace(ContentType)) request.ContentType = ContentType;
+            if (string.IsNullOrWhiteSpace(ContentType) == false) request.ContentType = ContentType;
 
 #if NET_FRAMEWORK
             request.Timeout = (int) Timeout.TotalMilliseconds;
-            if (!String.IsNullOrWhiteSpace(Host)) request.Host = Host;
-            if (!String.IsNullOrWhiteSpace(UserAgent)) request.UserAgent = UserAgent;
-            if (!String.IsNullOrWhiteSpace(Referer)) request.Referer = Referer;
+            if (string.IsNullOrWhiteSpace(Host) == false) request.Host = Host;
+            if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
+            if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
 #endif
 
 #if NET_STANDARD2
@@ -266,13 +266,13 @@ namespace Skybrud.Essentials.Http {
 #endif
 
 #if NET_STANDARD
-            if (!String.IsNullOrWhiteSpace(Host)) request.Headers["Host"] = Host;
-            if (!String.IsNullOrWhiteSpace(UserAgent)) request.Headers["User-Agent"] = UserAgent;
-            if (!String.IsNullOrWhiteSpace(Referer)) request.Headers["Referer"] = Referer;
+            if (string.IsNullOrWhiteSpace(Host) == false) request.Headers["Host"] = Host;
+            if (string.IsNullOrWhiteSpace(UserAgent) == false) request.Headers["User-Agent"] = UserAgent;
+            if (string.IsNullOrWhiteSpace(Referer) == false) request.Headers["Referer"] = Referer;
 #endif
 
             // Handle various POST scenarios
-            if (!String.IsNullOrWhiteSpace(Body)) {
+            if (string.IsNullOrWhiteSpace(Body) == false) {
                 
                 // Get the bytes for the request body
                 byte[] bytes = Encoding.UTF8.GetBytes(Body);
