@@ -17,17 +17,6 @@ To install the Skybrud.Essentials.Http, simply pick one of the methods below:
 
   - [**Json.NET**](https://github.com/jamesnk/newtonsoft.json)<br />Used for searializing/deserializing JSON.
 
-  
-
-
-
-
-
-
-
-
-
-
 
 
 ### Found a bug? Have a question?
@@ -39,6 +28,119 @@ To install the Skybrud.Essentials.Http, simply pick one of the methods below:
 ### Changelog
 
 The [**releases page**][GitHubReleases] lists the relevant changes from each release.
+
+
+### Usage
+
+## HttpUtils class
+
+### Making a GET request
+
+Basic request with a URL:
+
+```csharp
+IHttpResponse response = HttpUtils.Requests.Get("http://example.org/");
+```
+
+Same request, but with a query string:
+
+```csharp
+IHttpResponse response = HttpUtils.Requests.Get("http://example.org/", new HttpQueryString {
+    {"query", "string"}
+});
+```
+
+### Making a POST request
+
+Make a POST request with URL encoded body:
+
+```csharp
+IHttpResponse response = HttpUtils.Requests.Post("http://example.org/", new HttpPostData {
+    {"hello", "world"}
+});
+```
+
+Make a POST request with a JSON body:
+
+```csharp
+IHttpResponse response = HttpUtils.Requests.Post("http://example.org/", new JObject {
+    {"hello", "world"}
+});
+```
+
+## HttpRequest class
+
+### Making a GET request
+
+Basic request with a URL:
+
+```csharp
+IHttpRequest request = new HttpRequest {
+    Method = HttpMethod.Get,
+    Url = "http://example.org/"
+};
+
+IHttpResponse response = request.GetResponse();
+```
+
+Same request, but with a query string:
+
+```csharp
+IHttpRequest request = new HttpRequest {
+    Method = HttpMethod.Get,
+    Url = "http://example.org/",
+    QueryString = new HttpQueryString {
+        {"query", "string"}
+    }
+};
+
+IHttpResponse response = request.GetResponse();
+```
+
+### Making a POST request
+
+Make a POST request with URL encoded body:
+
+```csharp
+IHttpRequest request = new HttpRequest {
+    Method = HttpMethod.Post,
+    Url = "http://example.org/",
+    PostData = new HttpPostData {
+        {"hello", "world"}
+    }
+};
+
+IHttpResponse response = request.GetResponse();
+```
+
+Make a POST request with a JSON body:
+
+```csharp
+IHttpRequest request = new HttpRequest {
+    Method = HttpMethod.Post,
+    Url = "http://example.org/",
+    Body = new JObject {
+        {"hello", "world"}
+    }.ToString()
+};
+
+IHttpResponse response = request.GetResponse();
+```
+
+Make an authenticated GET request:
+
+```csharp
+IHttpRequest request = new HttpRequest {
+    Method = HttpMethod.Get,
+    Url = "http://example.org/",
+    Authorization = "Bearer 123"
+};
+
+IHttpResponse response = request.GetResponse();
+```
+
+
+
 
 
    
