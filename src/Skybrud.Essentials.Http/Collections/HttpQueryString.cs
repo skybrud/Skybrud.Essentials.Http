@@ -120,7 +120,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <returns>The query string as an URL encoded string.</returns>
         public override string ToString() {
-            return string.Join("&", from pair in _values select StringUtils.UrlEncode(pair.Key) + "=" + StringHelper.UrlEncode(pair.Value));
+            return string.Join("&", from pair in _values select StringUtils.UrlEncode(pair.Key) + "=" + StringUtils.UrlEncode(pair.Value));
         }
 
         /// <summary>
