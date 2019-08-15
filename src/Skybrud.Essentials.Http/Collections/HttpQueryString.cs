@@ -196,8 +196,8 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <returns>The <typeparamref name="T"/> value of the entry, or the default value of <typeparamref name="T"/> if not found.</returns>
         private T GetValue<T>(string key) {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            if (!_values.TryGetValue(key, out string value)) return default(T);
-            return string.IsNullOrWhiteSpace(value) ? default(T) : (T) Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
+            if (!_values.TryGetValue(key, out string value)) return default;
+            return string.IsNullOrWhiteSpace(value) ? default : (T) Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
         /// <summary>
@@ -268,8 +268,8 @@ namespace Skybrud.Essentials.Http.Collections {
                 }
 
                 // extract the name / value pair
-                String name = null;
-                String value;
+                string name = null;
+                string value;
 
                 if (ti >= 0) {
                     name = str.Substring(si, ti - si);
