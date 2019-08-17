@@ -10,8 +10,7 @@
             "destination": "bin/",
             "patterns": [
               "**/*.dll",
-              "**/*.xml",
-              "**/*.json"
+              "**/*.xml"
             ]
           },
           {
