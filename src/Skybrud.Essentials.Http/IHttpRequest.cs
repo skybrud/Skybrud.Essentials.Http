@@ -60,7 +60,22 @@ namespace Skybrud.Essentials.Http {
         /// Gets or sets the POST data of the request.
         /// </summary>
         IHttpPostData PostData { get; set; }
-        
+
+        /// <summary>
+        /// Gets or sets the <see cref="IHttpCookieCollection"/> to be used for the request.
+        /// </summary>
+        IHttpCookieCollection Cookies { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content type of the request.
+        /// </summary>
+        string ContentType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the body of the request.
+        /// </summary>
+        string Body { get; set; }
+
         /// <summary>
         /// Gets a or sets a list of content types that are acceptable for the response - eg. <c>text/html</c>,
         /// <c>text/html,application/xhtml+xml</c> or <c>application/json</c>. This property corresponds to the
@@ -143,6 +158,12 @@ namespace Skybrud.Essentials.Http {
         string Expect { get; set; }
 
 #endif
+
+        /// <summary>
+        /// Executes the request and returns the corresponding response as an instance of <see cref="IHttpResponse"/>.
+        /// </summary>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        IHttpResponse GetResponse();
 
     }
 
