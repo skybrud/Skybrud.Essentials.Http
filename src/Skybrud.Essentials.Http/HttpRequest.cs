@@ -3,6 +3,8 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Strings.Extensions;
 
@@ -214,6 +216,86 @@ namespace Skybrud.Essentials.Http {
 #if NET_FRAMEWORK
             Timeout = TimeSpan.FromSeconds(100);
 #endif
+        }
+
+        /// <summary>
+        /// Initializes a new request based on the specified <paramref name="method"/> and <paramref name="url"/>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request. The query string may be part of the specified URL or via the <see cref="QueryString"/> property.</param>
+        public HttpRequest(HttpMethod method, string url) : this() {
+            Method = method;
+            Url = url;
+        }
+
+        /// <summary>
+        /// Initializes a new request based on the specified <paramref name="method"/>, <paramref name="url"/> and <paramref name="queryString"/>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString) : this() {
+            Method = method;
+            Url = url;
+            QueryString = queryString;
+        }
+
+        /// <summary>
+        /// Initializes a new request on the specified <paramref name="method"/>, <paramref name="url"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="postData">The HTTP POST data of the request.</param>
+        public HttpRequest(HttpMethod method, string url, IHttpPostData postData) : this() {
+            Method = method;
+            Url = url;
+            PostData = postData;
+        }
+
+        /// <summary>
+        /// Initializes a new request on the specified <paramref name="method"/>, <paramref name="url"/>, <paramref name="queryString"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="postData">The HTTP POST data of the request.</param>
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString, IHttpPostData postData) : this() {
+            Method = method;
+            Url = url;
+            QueryString = queryString;
+            PostData = postData;
+        }
+
+        /// <summary>
+        /// Initializes a new request based on the specified <paramref name="method"/>, <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this constructor, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public HttpRequest(HttpMethod method, string url, JToken body) : this() {
+            Method = method;
+            Url = url;
+            ContentType = "application/json";
+            Body = body?.ToString(Formatting.None);
+        }
+
+        /// <summary>
+        /// Initializes a new request based on the specified <paramref name="method"/>, <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this constructor, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body) : this() {
+            Method = method;
+            Url = url;
+            QueryString = queryString;
+            ContentType = "application/json";
+            Body = body?.ToString(Formatting.None);
         }
 
         #endregion
