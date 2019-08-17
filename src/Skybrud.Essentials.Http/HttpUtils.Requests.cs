@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
@@ -114,6 +115,31 @@ namespace Skybrud.Essentials.Http {
             public static IHttpResponse Post(string url, IHttpQueryString queryString, IHttpPostData postData) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 return DoHttpRequest(HttpMethod.Post, url, queryString, postData);
+            }
+
+            /// <summary>
+            /// Makes a POST request to the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+            /// </summary>
+            /// <param name="url">The URL of the request.</param>
+            /// <param name="body">The <see cref="JToken"/> representing the POST body.</param>
+            /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            public static IHttpResponse Post(string url, JToken body) {
+                if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+                if (body == null) throw new ArgumentNullException(nameof(body));
+                return new HttpRequest(HttpMethod.Post, url, body).GetResponse();
+            }
+
+            /// <summary>
+            /// Makes a POST request to the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+            /// </summary>
+            /// <param name="url">The URL of the request.</param>
+            /// <param name="queryString">The query string of the request.</param>
+            /// <param name="body">The <see cref="JToken"/> representing the POST body.</param>
+            /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            public static IHttpResponse Post(string url, IHttpQueryString queryString, JToken body) {
+                if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+                if (body == null) throw new ArgumentNullException(nameof(body));
+                return new HttpRequest(HttpMethod.Post, url, queryString, body).GetResponse();
             }
 
             #endregion

@@ -453,6 +453,78 @@ namespace Skybrud.Essentials.Http {
 
         #endregion
 
+        #region Static methods
+
+        /// <summary>
+        /// Initializes a new GET request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request. The query string may be part of the specified URL or via the <see cref="QueryString"/> property.</param>
+        public static HttpRequest Get(string url) {
+            return new HttpRequest(HttpMethod.Get, url);
+        }
+
+        /// <summary>
+        /// Initializes a new GET request based on the specified <paramref name="url"/> and <paramref name="queryString"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        public static HttpRequest Get(string url, IHttpQueryString queryString) {
+            return new HttpRequest(HttpMethod.Get, url, queryString);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        public static HttpRequest Post(string url, IHttpQueryString queryString) {
+            return new HttpRequest(HttpMethod.Post, url, queryString);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="postData">The HTTP POST data of the request.</param>
+        public static HttpRequest Post(string url, IHttpPostData postData) {
+            return new HttpRequest(HttpMethod.Post, url, postData);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="postData">The HTTP POST data of the request.</param>
+        public static HttpRequest Post(string url, IHttpQueryString queryString, IHttpPostData postData) {
+            return new HttpRequest(HttpMethod.Post, url, queryString, postData);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Post(string url, JToken body) {
+            return new HttpRequest(HttpMethod.Post, url, body);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Post(string url, IHttpQueryString queryString, JToken body) {
+            return new HttpRequest(HttpMethod.Post, url, queryString, body);
+        }
+
+        #endregion
+
     }
 
 }
