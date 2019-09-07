@@ -280,7 +280,7 @@ namespace Skybrud.Essentials.Http.OAuth {
             if (string.IsNullOrWhiteSpace(AuthorizeUrl)) throw new PropertyNotSetException(nameof(AuthorizeUrl));
 
             // Make the call to the API/provider
-            return DoHttpPostRequest(RequestTokenUrl);
+            return Post(RequestTokenUrl);
 
         }
 
@@ -320,7 +320,7 @@ namespace Skybrud.Essentials.Http.OAuth {
             postData.Add("oauth_verifier", verifier);
 
             // Make the call to the API/provider
-            return DoHttpPostRequest(AccessTokenUrl, null, postData);
+            return Post(AccessTokenUrl, null, postData);
 
         }
 
