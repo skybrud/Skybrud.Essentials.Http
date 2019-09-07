@@ -476,6 +476,14 @@ namespace Skybrud.Essentials.Http {
         /// Initializes a new POST request based on the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request.</param>
+        public static HttpRequest Post(string url) {
+            return new HttpRequest(HttpMethod.Post, url);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         public static HttpRequest Post(string url, IHttpQueryString queryString) {
             return new HttpRequest(HttpMethod.Post, url, queryString);
