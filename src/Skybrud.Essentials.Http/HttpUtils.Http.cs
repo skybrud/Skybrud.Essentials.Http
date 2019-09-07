@@ -9,6 +9,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Static class with utility methods related to HTTP requests and responses.
         /// </summary>
+        [Obsolete("use Requests class instead.")]
         public static partial class Http {
 
             #region DoHttpGetRequest
