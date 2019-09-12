@@ -3,3 +3,6 @@ src/Skybrud.Essentials.Http/obj/
 src/.vs/
 node_modules/
 releases/github/*/
+src/packages/
+src/UnitTestProject1/bin/
+src/UnitTestProject1/obj/
