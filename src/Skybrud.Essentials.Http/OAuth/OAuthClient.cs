@@ -166,7 +166,7 @@ namespace Skybrud.Essentials.Http.OAuth {
             if (string.IsNullOrEmpty(Callback) == false) oauthHeaders += "oauth_callback=\"" + EscapeDataString(Callback) + "\",";
             oauthHeaders += "oauth_consumer_key=\"" + EscapeDataString(ConsumerKey) + "\",";
             oauthHeaders += "oauth_nonce=\"" + EscapeDataString(Nonce) + "\",";
-            //oauthHeaders += "oauth_signature=\"" + EscapeDataString(signature) + "\",";
+            oauthHeaders += "oauth_signature=\"" + EscapeDataString(signature) + "\",";
             oauthHeaders += "oauth_signature_method=\"HMAC-SHA1\",";
             oauthHeaders += "oauth_timestamp=\"" + Timestamp + "\",";
             if (string.IsNullOrEmpty(Token) == false) oauthHeaders += "oauth_token=\"" + EscapeDataString(Token) + "\",";
