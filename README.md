@@ -1,5 +1,7 @@
 # Skybrud.Essentials.Http [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE.md) [![NuGet](https://img.shields.io/nuget/v/Skybrud.Essentials.Http.svg)](https://www.nuget.org/packages/Skybrud.Essentials) [![NuGet](https://img.shields.io/nuget/dt/Skybrud.Essentials.Http.svg)](https://www.nuget.org/packages/Skybrud.Essentials)
 
+Skybrud.Essentials.Http is a small .NET library for making HTTP requests, as well as working with OAuth 1.0a and OAuth 2 service providers.
+
 ### Installation
 
 To install the Skybrud.Essentials.Http, simply pick one of the methods below:
