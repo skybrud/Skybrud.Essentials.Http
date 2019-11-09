@@ -5,7 +5,7 @@ namespace Skybrud.Essentials.Http.Exceptions {
     /// <summary>
     /// Interface representing an error response as the result of a HTTP request.
     /// </summary>
-    interface IHttpException {
+    public interface IHttpException {
 
         /// <summary>
         /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
