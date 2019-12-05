@@ -62,6 +62,19 @@ namespace Skybrud.Essentials.Http.Collections {
         void Set(string key, object value);
 
         /// <summary>
+        /// Removes the value with the specified <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The key of the element to remove.</param>
+        /// <returns><c>true</c> if the element is successfully found and removed; otherwise, <c>false</c>. This method returns <c>false</c> if <paramref name="key"/> is not found.</returns>
+        bool Remove(string key);
+
+        /// <summary>
+        /// Creates a copy of the <see cref="IHttpQueryString"/>.
+        /// </summary>
+        /// <returns>A copy of the <see cref="IHttpQueryString"/>.</returns>
+        IHttpQueryString Clone();
+
+        /// <summary>
         /// Gets a string representation of the query string.
         /// </summary>
         /// <returns>The query string as an URL encoded string.</returns>

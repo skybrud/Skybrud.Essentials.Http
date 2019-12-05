@@ -116,6 +116,31 @@ namespace Skybrud.Essentials.Http.Collections {
         }
 
         /// <summary>
+        /// Removes the value with the specified <paramref name="key"/>.
+        /// </summary>
+        /// <param name="key">The key of the element to remove.</param>
+        /// <returns><c>true</c> if the element is successfully found and removed; otherwise, <c>false</c>. This method returns <c>false</c> if <paramref name="key"/> is not found.</returns>
+        public bool Remove(string key) {
+            return _values.Remove(key);
+        }
+
+        /// <summary>
+        /// Creates a copy of the <see cref="HttpQueryString"/>.
+        /// </summary>
+        /// <returns>A copy of the <see cref="HttpQueryString"/>.</returns>
+        public HttpQueryString Clone() {
+            return new HttpQueryString(new Dictionary<string, string>(_values));
+        }
+        
+        /// <summary>
+        /// Creates a copy of the <see cref="IHttpQueryString"/>.
+        /// </summary>
+        /// <returns>A copy of the <see cref="IHttpQueryString"/>.</returns>
+        IHttpQueryString IHttpQueryString.Clone() {
+            return Clone();
+        }
+
+        /// <summary>
         /// Gets a string representation of the query string.
         /// </summary>
         /// <returns>The query string as an URL encoded string.</returns>
@@ -226,7 +251,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="str">The query string to parse.</param>
         /// <returns>An instance of <see cref="HttpQueryString"/>.</returns>
         public static HttpQueryString ParseQueryString(string str) {
-            return ParseQueryString(str, false);
+            return ParseQueryString(str, true);
         }
 
         /// <summary>
