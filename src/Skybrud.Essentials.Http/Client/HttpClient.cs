@@ -887,6 +887,18 @@ namespace Skybrud.Essentials.Http.Client {
         #region Other
 
         /// <summary>
+        /// Returns the response of the request identified by the specified <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The options for the request to the API.</param>
+        /// <returns>An instanceo of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse GetResponse(IHttpRequestOptions options) {
+            if (options == null) throw new ArgumentNullException(nameof(options));
+            IHttpRequest request = options.GetRequest();
+            PrepareHttpRequest(request);
+            return request.GetResponse();
+        }
+
+        /// <summary>
         /// Virtual method that can be used for configuring a request.
         /// </summary>
         /// <param name="request">The request.</param>

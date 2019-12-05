@@ -11,6 +11,13 @@ namespace Skybrud.Essentials.Http.Client {
     /// </summary>
     public interface IHttpClient {
 
+        /// <summary>
+        /// Returns the response of the request identified by the specified <paramref name="options"/>.
+        /// </summary>
+        /// <param name="options">The options for the request to the API.</param>
+        /// <returns>An instanceo of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        IHttpResponse GetResponse(IHttpRequestOptions options);
+
         #region DoHttpGetRequest
 
         /// <summary>
