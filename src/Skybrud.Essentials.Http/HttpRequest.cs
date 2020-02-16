@@ -516,7 +516,9 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         public static HttpRequest Post(string url, JToken body) {
-            return new HttpRequest(HttpMethod.Post, url, body);
+            return new HttpRequest(HttpMethod.Post, url, body) {
+                ContentType = "application/json"
+            };
         }
 
         /// <summary>
@@ -528,7 +530,9 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         public static HttpRequest Post(string url, IHttpQueryString queryString, JToken body) {
-            return new HttpRequest(HttpMethod.Post, url, queryString, body);
+            return new HttpRequest(HttpMethod.Post, url, queryString, body) {
+                ContentType = "application/json"
+            };
         }
 
         #endregion
