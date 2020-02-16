@@ -535,6 +535,149 @@ namespace Skybrud.Essentials.Http {
             };
         }
 
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        public static HttpRequest Put(string url) {
+            return new HttpRequest(HttpMethod.Put, url);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        public static HttpRequest Put(string url, IHttpQueryString queryString) {
+            return new HttpRequest(HttpMethod.Put, url, queryString);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="postData">The HTTP PUT data of the request.</param>
+        public static HttpRequest Put(string url, IHttpPostData postData) {
+            return new HttpRequest(HttpMethod.Put, url, postData);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="postData">The HTTP PUT data of the request.</param>
+        public static HttpRequest Put(string url, IHttpQueryString queryString, IHttpPostData postData) {
+            return new HttpRequest(HttpMethod.Put, url, queryString, postData);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the PUT body.</param>
+        public static HttpRequest Put(string url, JToken body) {
+            return new HttpRequest(HttpMethod.Put, url, body) {
+                ContentType = "application/json"
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the PUT body.</param>
+        public static HttpRequest Put(string url, IHttpQueryString queryString, JToken body) {
+            return new HttpRequest(HttpMethod.Put, url, queryString, body) {
+                ContentType = "application/json"
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        public static HttpRequest Patch(string url) {
+            return new HttpRequest(HttpMethod.Patch, url);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        public static HttpRequest Patch(string url, IHttpQueryString queryString) {
+            return new HttpRequest(HttpMethod.Patch, url, queryString);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="postData">The HTTP PATCH data of the request.</param>
+        public static HttpRequest Patch(string url, IHttpPostData postData) {
+            return new HttpRequest(HttpMethod.Patch, url, postData);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and <paramref name="postData"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="postData">The HTTP PATCH data of the request.</param>
+        public static HttpRequest Patch(string url, IHttpQueryString queryString, IHttpPostData postData) {
+            return new HttpRequest(HttpMethod.Patch, url, queryString, postData);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the PATCH body.</param>
+        public static HttpRequest Patch(string url, JToken body) {
+            return new HttpRequest(HttpMethod.Patch, url, body) {
+                ContentType = "application/json"
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the PATCH body.</param>
+        public static HttpRequest Patch(string url, IHttpQueryString queryString, JToken body) {
+            return new HttpRequest(HttpMethod.Patch, url, queryString, body) {
+                ContentType = "application/json"
+            };
+        }
+
+        /// <summary>
+        /// Initializes a new DELETE request based on the specified <paramref name="url"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request. The query string may be part of the specified URL or via the <see cref="QueryString"/> property.</param>
+        public static HttpRequest Delete(string url) {
+            return new HttpRequest(HttpMethod.Delete, url);
+        }
+
+        /// <summary>
+        /// Initializes a new DELETE request based on the specified <paramref name="url"/> and <paramref name="queryString"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        public static HttpRequest Delete(string url, IHttpQueryString queryString) {
+            return new HttpRequest(HttpMethod.Delete, url, queryString);
+        }
+
         #endregion
 
     }
