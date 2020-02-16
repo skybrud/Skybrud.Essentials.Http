@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.12</Version>
+    <Version>1.0.13</Version>
     <Company>Skybrud.dk a/s</Company>
     <Product>Skybrud.Essentials</Product>
     <Authors>Anders Bjerner</Authors>
-    <Copyright>Copyright © 2019</Copyright>
+    <Copyright>Copyright © 2020</Copyright>
     <Description>.NET library for making HTTP requests.</Description>
   </PropertyGroup>
 
