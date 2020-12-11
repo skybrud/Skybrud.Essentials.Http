@@ -456,6 +456,14 @@ namespace Skybrud.Essentials.Http {
         #region Static methods
 
         /// <summary>
+        /// Initializes a new request with default options.
+        /// </summary>
+        /// <returns>A new instance of <see cref="HttpRequest"/>.</returns>
+        public static HttpRequest New() {
+            return new HttpRequest();
+        }
+
+        /// <summary>
         /// Initializes a new GET request based on the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The URL of the request. The query string may be part of the specified URL or via the <see cref="QueryString"/> property.</param>
