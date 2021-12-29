@@ -10,23 +10,21 @@
 
   <PropertyGroup>
     <Version>1.0.14</Version>
-    <Company>Skybrud.dk a/s</Company>
+    <Company>Limbo</Company>
     <Product>Skybrud.Essentials</Product>
     <Authors>Anders Bjerner</Authors>
-    <Copyright>Copyright © 2020</Copyright>
+    <Copyright>Copyright © 2021</Copyright>
     <Description>.NET library for making HTTP requests.</Description>
   </PropertyGroup>
 
   <PropertyGroup>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/skybrud/Skybrud.Essentials.Http</RepositoryUrl>
-  </PropertyGroup>
-
-  <PropertyGroup>
+    <!-- Information for the NuGet package -->
     <PackageTags>Skybrud, HTTP, OAuth</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://packages.skybrud.dk/skybrud.essentials.http/</PackageProjectUrl>
-    <PackageIconUrl>https://www.skybrud.dk/img/5431sk/icon/favicon.ico</PackageIconUrl>
+    <PackageIcon>Limbo.png</PackageIcon>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/skybrud/Skybrud.Essentials.Http</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
@@ -48,9 +46,15 @@
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <!-- Include package icon for NuGet -->
+    <Content Include="../build/Limbo.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
   <PropertyGroup>
-    <DocumentationFile>bin\$(ConfigurationName)\$(TargetFramework)\Skybrud.Essentials.Http.xml</DocumentationFile>
+    <!-- Generate XML documentation -->
+    <DocumentationFile>bin\$(ConfigurationName)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
   
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent" Condition="'$(TargetFramework)'=='netstandard1.3'">
