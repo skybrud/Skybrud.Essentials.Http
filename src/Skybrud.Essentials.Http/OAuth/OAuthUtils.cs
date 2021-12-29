@@ -1,5 +1,5 @@
 using System;
-using Skybrud.Essentials.Time;
+using Skybrud.Essentials.Time.UnixTime;
 
 namespace Skybrud.Essentials.Http.OAuth {
 
@@ -21,7 +21,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// </summary>
         /// <returns>The current Unix timestamp as a string.</returns>
         public static string GetTimestamp() {
-            return TimeUtils.GetCurrentUnixTimestamp().ToString();
+            return ((int) UnixTimeUtils.CurrentSeconds).ToString();
         }
 
     }
