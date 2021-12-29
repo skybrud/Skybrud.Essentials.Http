@@ -131,7 +131,7 @@ namespace Skybrud.Essentials.Http.Collections {
         public HttpQueryString Clone() {
             return new HttpQueryString(new Dictionary<string, string>(_values));
         }
-        
+
         /// <summary>
         /// Creates a copy of the <see cref="IHttpQueryString"/>.
         /// </summary>
@@ -269,7 +269,7 @@ namespace Skybrud.Essentials.Http.Collections {
             if (string.IsNullOrWhiteSpace(str)) return new HttpQueryString();
 
             Dictionary<string, string> values = new Dictionary<string, string>();
-            
+
             int length = str.Length;
 
             int i = 0;

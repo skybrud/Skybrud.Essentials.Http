@@ -322,7 +322,7 @@ namespace Skybrud.Essentials.Http {
             #endregion
 
             #region DoHttpRequest
-            
+
             /// <summary>
             /// Makes a HTTP request using the specified <paramref name="url"/> and <paramref name="method"/>.
             /// </summary>

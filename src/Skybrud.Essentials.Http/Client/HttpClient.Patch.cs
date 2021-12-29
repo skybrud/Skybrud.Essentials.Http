@@ -195,7 +195,7 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse Patch(string url, NameValueCollection queryString) {
             return DoHttpRequest(HttpMethod.Patch, url, queryString, default(NameValueCollection));
         }
-        
+
         /// <summary>
         /// Makes a PATCH request to the specified <paramref name="url"/>.
         /// </summary>
@@ -219,7 +219,7 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse Patch(string url, NameValueCollection queryString, string contentType, string body) {
             return DoHttpRequest(HttpMethod.Patch, url, queryString, contentType, body);
         }
-        
+
         /// <summary>
         /// Makes a HTTP PATCH request based on the specified parameters.
         /// </summary>
@@ -244,7 +244,7 @@ namespace Skybrud.Essentials.Http.Client {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, body);
         }
-        
+
         /// <summary>
         /// Makes a HTTP PATCH request based on the specified parameters.
         /// </summary>

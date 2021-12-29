@@ -318,7 +318,7 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, NameValueCollection queryString) {
             return DoHttpRequest(method, url, queryString == null ? null : new HttpQueryString(queryString), default(IHttpPostData));
         }
-        
+
         /// <summary>
         /// Makes a HTTP request to the underlying API based on the specified parameters.
         /// </summary>
@@ -343,7 +343,7 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, NameValueCollection queryString, string contentType, string body) {
             return DoHttpRequest(method, url, queryString == null ? null : new HttpQueryString(queryString), contentType, body);
         }
-        
+
         /// <summary>
         /// Makes a HTTP request based on the specified parameters.
         /// </summary>
@@ -370,7 +370,7 @@ namespace Skybrud.Essentials.Http.Client {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, "application/json", body.ToString(formatting));
         }
-        
+
         /// <summary>
         /// Makes a HTTP request based on the specified parameters.
         /// </summary>

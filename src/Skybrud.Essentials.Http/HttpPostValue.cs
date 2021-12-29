@@ -2,7 +2,7 @@
 using Skybrud.Essentials.Http.Collections;
 
 namespace Skybrud.Essentials.Http {
-    
+
     /// <summary>
     /// Class representing a string HTTP POST value.
     /// </summary>

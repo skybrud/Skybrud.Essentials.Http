@@ -1,5 +1,5 @@
 ﻿namespace Skybrud.Essentials.Http {
-    
+
     /// <summary>
     /// Enum class representing the HTTP method to be used for a HTTP request.
     /// </summary>

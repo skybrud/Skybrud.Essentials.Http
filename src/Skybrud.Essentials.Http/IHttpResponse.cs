@@ -13,7 +13,7 @@ namespace Skybrud.Essentials.Http {
         /// Gets a reference to the <see cref="HttpRequest"/> that resulted in the response.
         /// </summary>
         IHttpRequest Request { get; }
-        
+
         /// <summary>
         /// Gets the status code returned by the server.
         /// </summary>

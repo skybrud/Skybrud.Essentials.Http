@@ -5,7 +5,7 @@ using Skybrud.Essentials.Http;
 using Skybrud.Essentials.Http.Collections;
 
 namespace UnitTestProject1 {
-    
+
     [TestClass]
     public class HttpRequestTests {
 
@@ -123,7 +123,7 @@ namespace UnitTestProject1 {
 
             IHttpRequest request = HttpRequest
                 .New()
-                .SetAcceptHeader(new []{ "application/json", "text/xml" });
+                .SetAcceptHeader(new[] { "application/json", "text/xml" });
 
             Assert.AreEqual("application/json,text/xml", request.Accept);
 

@@ -74,7 +74,7 @@ namespace Skybrud.Essentials.Http {
                 return _body;
             }
         }
-        
+
         /// <summary>
         /// Gets the response body as an array of <see cref="byte"/>.
         /// </summary>
@@ -143,7 +143,7 @@ namespace Skybrud.Essentials.Http {
 
             // Get a reference to the response stream (and dispose it once we're done)
             using (Stream stream = Response.GetResponseStream()) {
-                
+
                 // The stream really shouldn't be NULL, but just to be sure
                 if (stream == null) return;
 

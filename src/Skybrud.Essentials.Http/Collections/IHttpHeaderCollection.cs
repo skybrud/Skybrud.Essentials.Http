@@ -44,7 +44,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <c>Authorization</c> HTTP header.
         /// </summary>
         string Authorization { get; set; }
-        
+
         /// <summary>
         /// Gets amount of headers added to the collection.
         /// </summary>

@@ -50,14 +50,14 @@ namespace Skybrud.Essentials.Http {
         /// <param name="contentType">The content type of the file.</param>
         /// <param name="filename">The name of the file.</param>
         public HttpPostFileValue(string name, string path, string contentType, string filename) {
-        
+
             Name = name;
             Data = File.ReadAllBytes(path);
             ContentType = contentType;
             FileName = filename ?? Path.GetFileName(path);
 
             if (ContentType != null) return;
-            
+
             switch (Path.GetExtension(path).ToLower()) {
                 case ".jpg":
                 case ".jpeg":
@@ -73,7 +73,7 @@ namespace Skybrud.Essentials.Http {
                     ContentType = "image/tiff";
                     break;
             }
-        
+
         }
 
         #endregion

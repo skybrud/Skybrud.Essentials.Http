@@ -6,7 +6,7 @@ namespace Skybrud.Essentials.Http {
     /// Class representing a value of a HTTP POST request body.
     /// </summary>
     public interface IHttpPostValue {
-        
+
         /// <summary>
         /// Gets the name/key of the value.
         /// </summary>

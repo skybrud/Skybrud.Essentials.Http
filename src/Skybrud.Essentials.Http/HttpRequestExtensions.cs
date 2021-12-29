@@ -69,7 +69,7 @@ namespace Skybrud.Essentials.Http {
             if (request != null) request.Body = body;
             return request;
         }
-        
+
         /// <summary>
         /// Sets the <see cref="IHttpRequest.Body"/> property of <paramref name="request"/>.
         /// </summary>

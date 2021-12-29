@@ -195,7 +195,7 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse Post(string url, NameValueCollection queryString) {
             return DoHttpRequest(HttpMethod.Post, url, queryString, default(NameValueCollection));
         }
-        
+
         /// <summary>
         /// Makes a POST request to the specified <paramref name="url"/>.
         /// </summary>
@@ -244,7 +244,7 @@ namespace Skybrud.Essentials.Http.Client {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Post, url, queryString, body);
         }
-        
+
         /// <summary>
         /// Makes a HTTP POST request based on the specified parameters.
         /// </summary>

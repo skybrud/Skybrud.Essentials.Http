@@ -7,7 +7,7 @@ using Skybrud.Essentials.Json;
 using Skybrud.Essentials.Xml;
 
 namespace Skybrud.Essentials.Http {
-    
+
     /// <summary>
     /// Class representing a response from a call to a server. Generally this class (or other classes inheriting from
     /// this class) should be used to represent the object oriented (parsed) response wrapping an instance of

@@ -60,7 +60,7 @@ namespace Skybrud.Essentials.Http.Collections {
             get => Headers["Authorization"];
             set => Headers["Authorization"] = value;
         }
-        
+
         /// <summary>
         /// Gets amount of headers added to the collection.
         /// </summary>
@@ -121,7 +121,7 @@ namespace Skybrud.Essentials.Http.Collections {
             Headers[name] = string.Format(CultureInfo.InvariantCulture, "{0}", value);
         }
 
-        
+
         /// <summary>
         /// Returns an enumerator that iterates through the collection.
         /// </summary>

@@ -101,7 +101,7 @@ namespace Skybrud.Essentials.Http.Collections {
         public void Add(string key, string value) {
             _data.Add(key, new HttpPostValue(key, value));
         }
-        
+
         /// <summary>
         /// Adds an entry with the specified <paramref name="key"/> and <paramref name="value"/>.
         /// </summary>

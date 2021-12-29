@@ -6,7 +6,7 @@ using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Essentials.Http.Client {
-    
+
     /// <summary>
     /// Class representing a client for making HTTP requests.
     /// </summary>

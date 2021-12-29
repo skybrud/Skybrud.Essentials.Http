@@ -30,7 +30,7 @@ namespace Skybrud.Essentials.Http {
         /// Gets or sets the HTTP method of the request.
         /// </summary>
         public HttpMethod Method { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the credentials (username and password) of the request.
         /// </summary>
@@ -115,7 +115,7 @@ namespace Skybrud.Essentials.Http {
         ///     <cref>https://en.wikipedia.org/wiki/Content_negotiation</cref>
         /// </see>
         public string Accept { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the character sets that are acceptable - eg. <c>utf8</c>. This property corresponds to
         /// the <c>Accept-Charset</c> HTTP header.
@@ -355,7 +355,7 @@ namespace Skybrud.Essentials.Http {
 
             // Handle various POST scenarios
             if (string.IsNullOrWhiteSpace(Body) == false) {
-                
+
                 // Get the bytes for the request body
                 byte[] bytes = Encoding.UTF8.GetBytes(Body);
 
@@ -369,7 +369,7 @@ namespace Skybrud.Essentials.Http {
                 }
 
             } else if (Method == HttpMethod.Post || Method == HttpMethod.Put || Method == HttpMethod.Patch || Method == HttpMethod.Delete) {
-                
+
                 // Make sure we have a POST data instance
                 PostData = PostData ?? new HttpPostData();
 
@@ -389,10 +389,10 @@ namespace Skybrud.Essentials.Http {
                     }
 
                 } else {
-                    
+
                     // Convert the POST data to an URL encoded string
                     string dataString = PostData.ToString();
-                    
+
                     // Get the bytes for the request body
                     byte[] bytes = Encoding.UTF8.GetBytes(dataString);
 
@@ -410,16 +410,16 @@ namespace Skybrud.Essentials.Http {
                     }
 
                 }
-                
+
             }
-            
+
             // Call the callback
             callback?.Invoke(request);
 
             // Get the response
             try {
 
-                #if NET_STANDARD
+#if NET_STANDARD
 
                 Task<WebResponse> responseTask = request.GetResponseAsync();
 
@@ -427,13 +427,13 @@ namespace Skybrud.Essentials.Http {
 
                 return HttpResponse.GetFromWebResponse(responseTask.Result as HttpWebResponse, this);
 
-                #endif
+#endif
 
-                #if NET_FRAMEWORK
+#if NET_FRAMEWORK
                 
                 return HttpResponse.GetFromWebResponse(request.GetResponse() as HttpWebResponse, this);
 
-                #endif
+#endif
 
             } catch (WebException ex) {
                 if (ex.Status != WebExceptionStatus.ProtocolError) throw;
