@@ -13,7 +13,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// </summary>
         /// <returns>A random value to be used for creating the OAuth authorization header.</returns>
         public static string GenerateNonce() {
-            return Guid.NewGuid().ToString().Replace("-", "");
+            return Guid.NewGuid().ToString("N");
         }
 
         /// <summary>
