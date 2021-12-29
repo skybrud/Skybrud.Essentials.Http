@@ -5,7 +5,7 @@ using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 
 namespace Skybrud.Essentials.Http.Client {
-    
+
     /// <summary>
     /// Interface describing a client for making HTTP requests.
     /// </summary>
@@ -17,6 +17,13 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="options">The options for the request to the API.</param>
         /// <returns>An instanceo of <see cref="IHttpResponse"/> representing the raw response.</returns>
         IHttpResponse GetResponse(IHttpRequestOptions options);
+
+        /// <summary>
+        /// Sends a new request as described by <paramref name="request"/> and returns the response.
+        /// </summary>
+        /// <param name="request">An instance of <see cref="IHttpRequest"/> describing the request.</param>
+        /// <returns>An instanceo of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        IHttpResponse GetResponse(IHttpRequest request);
 
         #region DoHttpGetRequest
 

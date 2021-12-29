@@ -899,6 +899,17 @@ namespace Skybrud.Essentials.Http.Client {
         }
 
         /// <summary>
+        /// Sends a new request as described by <paramref name="request"/> and returns the response.
+        /// </summary>
+        /// <param name="request">An instance of <see cref="IHttpRequest"/> describing the request.</param>
+        /// <returns>An instanceo of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        public virtual IHttpResponse GetResponse(IHttpRequest request) {
+            if (request == null) throw new ArgumentNullException(nameof(request));
+            PrepareHttpRequest(request);
+            return request.GetResponse();
+        }
+
+        /// <summary>
         /// Virtual method that can be used for configuring a request.
         /// </summary>
         /// <param name="request">The request.</param>
