@@ -64,6 +64,36 @@ namespace Skybrud.Essentials.Http {
         #region Member methods
 
         /// <summary>
+        /// Parses the specified <paramref name="json"/> string into an instance <see cref="JToken"/>.
+        /// </summary>
+        /// <param name="json">The JSON string to be parsed.</param>
+        /// <returns>An instance of <see cref="JObject"/> parsed from the specified <paramref name="json"/> string.</returns>
+        protected static JToken ParseJsonToken(string json) {
+            return JsonUtils.ParseJsonToken(json);
+        }
+
+        /// <summary>
+        /// Parses the specified <paramref name="json"/> string into an instance <typeparamref name="T"/>.
+        /// </summary>
+        /// <param name="json">The JSON string to be parsed.</param>
+        /// <returns>An instance of <typeparamref name="T"/> parsed from the specified <paramref name="json"/> string.</returns>
+        protected static T ParseJsonToken<T>(string json) {
+            return JsonUtils.ParseJsonToken<T>(json);
+        }
+
+        /// <summary>
+        /// Parses the specified <paramref name="json"/> string into an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to be returned.</typeparam>
+        /// <param name="json">The JSON string to be parsed.</param>
+        /// <param name="func">A callback function/method used for converting an instance of <see cref="JToken"/> into
+        /// an instance of <typeparamref name="T"/>.</param>
+        /// <returns>An instance of <typeparamref name="T"/> parsed from the specified <paramref name="json"/> string.</returns>
+        protected static T ParseJsonToken<T>(string json, Func<JToken, T> func) {
+            return JsonUtils.ParseJsonToken(json, func);
+        }
+
+        /// <summary>
         /// Parses the specified <paramref name="json"/> string into an instance of <see cref="JObject"/>.
         /// </summary>
         /// <param name="json">The JSON string to be parsed.</param>
@@ -100,6 +130,117 @@ namespace Skybrud.Essentials.Http {
         /// <returns>An array of <typeparamref name="T"/> parsed from the specified <paramref name="json"/> string.</returns>
         protected static T[] ParseJsonArray<T>(string json, Func<JObject, T> func) {
             return JsonUtils.ParseJsonArray(json, func);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <see cref="JToken"/>.
+        /// </summary>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="result">When this method returns, holds the parsed <see cref="JToken"/> if successful; otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonToken(string json, out JToken result) {
+            return JsonUtils.TryParseJsonToken(json, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the output object.</typeparam>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="result">When this method returns, holds the parsed <see cref="JToken"/> if successful; otherwise, the default value of <typeparamref name="T"/>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonToken<T>(string json, out T result) {
+            return JsonUtils.TryParseJsonToken(json, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the output object.</typeparam>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="callback">A callback function used for converting a <see cref="JToken"/> into an instance of <typeparamref name="T"/>.</param>
+        /// <param name="result">When this method returns, holds the parsed <see cref="JToken"/> if successful; otherwise, the default value of <typeparamref name="T"/>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonToken<T>(string json, Func<JToken, T> callback, out T result) {
+            return JsonUtils.TryParseJsonToken(json, callback, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <see cref="JObject"/>.
+        /// </summary>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="result">When this method returns, holds the parsed <see cref="JObject"/> if successful; otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonObject(string json, out JObject result) {
+            return JsonUtils.TryParseJsonObject(json, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the output object.</typeparam>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="result">When this method returns, holds the parsed <see cref="JObject"/> if successful; otherwise, the default value of <typeparamref name="T"/>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonObject<T>(string json, out T result) {
+            return JsonUtils.TryParseJsonObject(json, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the output object.</typeparam>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="callback">A callback function used for converting a <see cref="JObject"/> into an instance of <typeparamref name="T"/>.</param>
+        /// <param name="result">When this method returns, holds the parsed <see cref="JObject"/> if successful; otherwise, the default value of <typeparamref name="T"/>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonObject<T>(string json, Func<JObject, T> callback, out T result) {
+            return JsonUtils.TryParseJsonObject(json, callback, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <see cref="JArray"/>.
+        /// </summary>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="result">When this method returns, holds the parsed <see cref="JArray"/> if successful; otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonArray(string json, out JArray result) {
+            return JsonUtils.TryParseJsonArray(json, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the output Array.</typeparam>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="result">When this method returns, holds the parsed array of <typeparamref name="T"/> if successful; otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonArray<T>(string json, out T[] result) {
+            return JsonUtils.TryParseJsonArray(json, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an instance of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the output array.</typeparam>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="callback">A callback function used for converting a <see cref="JArray"/> into an instance of <typeparamref name="T"/>.</param>
+        /// <param name="result">When this method returns, holds the parsed array of <typeparamref name="T"/> if successful; otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonArray<T>(string json, Func<JArray, T[]> callback, out T[] result) {
+            return JsonUtils.TryParseJsonArray(json, callback, out result);
+        }
+
+        /// <summary>
+        /// Attempts to parse the specified <paramref name="json"/> string into an array of <typeparamref name="T"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the output array.</typeparam>
+        /// <param name="json">The JSON string to parse.</param>
+        /// <param name="callback">A callback function used for converting the individual <see cref="JObject"/> of the parsed array into instances of <typeparamref name="T"/>.</param>
+        /// <param name="result">When this method returns, holds the parsed array of <typeparamref name="T"/> if successful; otherwise, <c>null</c>.</param>
+        /// <returns><c>true</c> if the parsing was successful; otherwise, <c>false</c>.</returns>
+        protected static bool TryParseJsonArray<T>(string json, Func<JObject, T> callback, out T[] result) {
+            return JsonUtils.TryParseJsonArray(json, callback, out result);
         }
 
         /// <summary>
