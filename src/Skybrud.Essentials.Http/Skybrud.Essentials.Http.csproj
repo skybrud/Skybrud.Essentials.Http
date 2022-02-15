@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Version>1.0.15</Version>
+    <Version>1.0.16</Version>
     <Company>Limbo</Company>
     <Product>Skybrud.Essentials</Product>
     <Authors>Anders Bjerner</Authors>
-    <Copyright>Copyright © 2021</Copyright>
+    <Copyright>Copyright © 2022</Copyright>
     <Description>.NET library for making HTTP requests.</Description>
   </PropertyGroup>
 
