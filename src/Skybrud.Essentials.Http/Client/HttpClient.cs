@@ -890,7 +890,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// Returns the response of the request identified by the specified <paramref name="options"/>.
         /// </summary>
         /// <param name="options">The options for the request to the API.</param>
-        /// <returns>An instanceo of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse GetResponse(IHttpRequestOptions options) {
             if (options == null) throw new ArgumentNullException(nameof(options));
             IHttpRequest request = options.GetRequest();
@@ -902,7 +902,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// Sends a new request as described by <paramref name="request"/> and returns the response.
         /// </summary>
         /// <param name="request">An instance of <see cref="IHttpRequest"/> describing the request.</param>
-        /// <returns>An instanceo of <see cref="IHttpResponse"/> representing the raw response.</returns>
+        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse GetResponse(IHttpRequest request) {
             if (request == null) throw new ArgumentNullException(nameof(request));
             PrepareHttpRequest(request);
