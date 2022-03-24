@@ -342,6 +342,45 @@ namespace Skybrud.Essentials.Http.Collections {
 
         }
 
+        /// <summary>
+        /// Converts the specified string representation of a query string to its <see cref="HttpQueryString"/>
+        /// equivalent and returns a value that indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="str">A string containing a query string to convert.</param>
+        /// <param name="result">When this method returns, contains the <see cref="HttpQueryString"/> value equivalent
+        /// to query string contained in <paramref name="str"/>, if the conversion succeeded, or <c>null</c> if the
+        /// conversion failed. This parameter is passed uninitialized.</param>
+        /// <returns><c>true</c> if the <paramref name="str"/> parameter was converted successfully; otherwise, <c>false</c>.</returns>
+        public bool TryParse(string str, out HttpQueryString result) {
+            try {
+                result = ParseQueryString(str);
+                return true;
+            } catch {
+                result = null;
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Converts the specified string representation of a query string to its <see cref="HttpQueryString"/>
+        /// equivalent and returns a value that indicates whether the conversion succeeded.
+        /// </summary>
+        /// <param name="str">A string containing a query string to convert.</param>
+        /// <param name="result">When this method returns, contains the <see cref="HttpQueryString"/> value equivalent
+        /// to query string contained in <paramref name="str"/>, if the conversion succeeded, or <c>null</c> if the
+        /// conversion failed. This parameter is passed uninitialized.</param>
+        /// <param name="urlencoded">Whether the query string is URL encoded</param>
+        /// <returns><c>true</c> if the <paramref name="str"/> parameter was converted successfully; otherwise, <c>false</c>.</returns>
+        public bool TryParse(string str, bool urlencoded, out HttpQueryString result) {
+            try {
+                result = ParseQueryString(str, urlencoded);
+                return true;
+            } catch {
+                result = null;
+                return false;
+            }
+        }
+
         #endregion
 
         #region Operator overloading
