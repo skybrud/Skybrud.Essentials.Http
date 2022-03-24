@@ -24,7 +24,7 @@ namespace UnitTestProject1 {
 
             string str = "a=r%c3%b8d&b=gr%c3%b8d";
 
-            HttpQueryString query = HttpQueryString.ParseQueryString(str);
+            HttpQueryString query = HttpQueryString.Parse(str);
 
             Assert.AreEqual("rød", query["a"]);
             Assert.AreEqual("grød", query["b"]);

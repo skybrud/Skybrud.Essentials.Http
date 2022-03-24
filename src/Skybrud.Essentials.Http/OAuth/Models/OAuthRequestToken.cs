@@ -63,7 +63,7 @@ namespace Skybrud.Essentials.Http.OAuth.Models {
         public static OAuthRequestToken Parse(OAuthClient client, string str) {
 
             // Convert the query string to an IHttpQueryString
-            IHttpQueryString query = HttpQueryString.ParseQueryString(str);
+            IHttpQueryString query = HttpQueryString.Parse(str);
 
             // Initialize a new instance
             return new OAuthRequestToken(client, query);
