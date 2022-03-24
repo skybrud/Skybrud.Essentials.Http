@@ -267,8 +267,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="str">The query string to parse.</param>
         /// <returns>An instance of <see cref="HttpQueryString"/>.</returns>
+        [Obsolete("Use the 'Parse' method instead.")]
         public static HttpQueryString ParseQueryString(string str) {
-            return ParseQueryString(str, true);
+            return Parse(str, true);
         }
 
         /// <summary>
@@ -280,7 +281,31 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <see>
         ///     <cref>https://referencesource.microsoft.com/#System.Web/HttpValueCollection.cs,222f9a1bfd1f9a98,references</cref>
         /// </see>
+        [Obsolete("Use the 'Parse' method instead.")]
         public static HttpQueryString ParseQueryString(string str, bool urlencoded) {
+            return Parse(str, urlencoded);
+        }
+
+
+        /// <summary>
+        /// Parses the specified query string into an instance of <see cref="HttpQueryString"/>.
+        /// </summary>
+        /// <param name="str">The query string to parse.</param>
+        /// <returns>An instance of <see cref="HttpQueryString"/>.</returns>
+        public static HttpQueryString Parse(string str) {
+            return Parse(str, true);
+        }
+
+        /// <summary>
+        /// Parses the specified query string into an instance of <see cref="HttpQueryString"/>.
+        /// </summary>
+        /// <param name="str">The query string to parse.</param>
+        /// <param name="urlencoded">Whether the query string is URL encoded</param>
+        /// <returns>An instance of <see cref="HttpQueryString"/> representing the parsed query string.</returns>
+        /// <see>
+        ///     <cref>https://referencesource.microsoft.com/#System.Web/HttpValueCollection.cs,222f9a1bfd1f9a98,references</cref>
+        /// </see>
+        public static HttpQueryString Parse(string str, bool urlencoded) {
 
             // Return an empty instance if "str" is NULL or empty
             if (string.IsNullOrWhiteSpace(str)) return new HttpQueryString();
@@ -342,6 +367,7 @@ namespace Skybrud.Essentials.Http.Collections {
 
         }
 
+
         /// <summary>
         /// Converts the specified string representation of a query string to its <see cref="HttpQueryString"/>
         /// equivalent and returns a value that indicates whether the conversion succeeded.
@@ -353,7 +379,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <returns><c>true</c> if the <paramref name="str"/> parameter was converted successfully; otherwise, <c>false</c>.</returns>
         public bool TryParse(string str, out HttpQueryString result) {
             try {
-                result = ParseQueryString(str);
+                result = Parse(str);
                 return true;
             } catch {
                 result = null;
@@ -373,7 +399,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <returns><c>true</c> if the <paramref name="str"/> parameter was converted successfully; otherwise, <c>false</c>.</returns>
         public bool TryParse(string str, bool urlencoded, out HttpQueryString result) {
             try {
-                result = ParseQueryString(str, urlencoded);
+                result = Parse(str, urlencoded);
                 return true;
             } catch {
                 result = null;
