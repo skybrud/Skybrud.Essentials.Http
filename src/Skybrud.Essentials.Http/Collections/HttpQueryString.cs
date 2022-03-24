@@ -101,8 +101,15 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
         public void Add(string key, object value) {
+            
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
+            
+            // Abort if "value" is null
+            if (value == null) return;
+            
+            // Convert the value to a culture invariant string and add it to the dictionary
             _values.Add(key, string.Format(CultureInfo.InvariantCulture, "{0}", value));
+
         }
 
         /// <summary>
@@ -111,8 +118,18 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
         public void Set(string key, object value) {
+            
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
+            
+            // Specifying a null value should result in the item being removed
+            if (value == null) {
+                _values.Remove(key);
+                return;
+            }
+
+            // Convert the value to a culture invariant string and set it in the dictionary
             _values[key] = string.Format(CultureInfo.InvariantCulture, "{0}", value);
+
         }
 
         /// <summary>
