@@ -435,6 +435,14 @@ namespace Skybrud.Essentials.Http {
 
 #endif
 
+            } catch (AggregateException ex) {
+
+                if (ex.InnerException is WebException web && web.Status == WebExceptionStatus.ProtocolError) {
+                    return HttpResponse.GetFromWebResponse(web.Response as HttpWebResponse, this);
+                }
+
+                throw;
+
             } catch (WebException ex) {
                 if (ex.Status != WebExceptionStatus.ProtocolError) throw;
                 return HttpResponse.GetFromWebResponse(ex.Response as HttpWebResponse, this);
