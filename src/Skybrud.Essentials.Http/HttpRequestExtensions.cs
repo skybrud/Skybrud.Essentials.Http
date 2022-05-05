@@ -87,7 +87,7 @@ namespace Skybrud.Essentials.Http {
         /// <typeparam name="T">The type of the request - eg. <see cref="HttpRequest"/>.</typeparam>
         /// <param name="request">The request.</param>
         /// <param name="body">The new body of the request.</param>
-        /// <param name="formatting"></param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
         public static T SetBody<T>(this T request, JToken body, Formatting formatting) where T : IHttpRequest {
             if (request == null) return default;
