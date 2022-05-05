@@ -205,7 +205,7 @@ namespace Skybrud.Essentials.Http {
 
         #endregion
 
-        #region Constructor
+        #region Constructors
 
         /// <summary>
         /// Initializes a new request with default options.
@@ -282,6 +282,22 @@ namespace Skybrud.Essentials.Http {
         }
 
         /// <summary>
+        /// Initializes a new request based on the specified <paramref name="method"/>, <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this constructor, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public HttpRequest(HttpMethod method, string url, JToken body, Formatting formatting) : this() {
+            Method = method;
+            Url = url;
+            ContentType = "application/json";
+            Body = body?.ToString(formatting);
+        }
+
+        /// <summary>
         /// Initializes a new request based on the specified <paramref name="method"/>, <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
         ///
         /// With this constructor, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
@@ -296,6 +312,24 @@ namespace Skybrud.Essentials.Http {
             QueryString = queryString;
             ContentType = "application/json";
             Body = body?.ToString(Formatting.None);
+        }
+
+        /// <summary>
+        /// Initializes a new request based on the specified <paramref name="method"/>, <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this constructor, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body, Formatting formatting) : this() {
+            Method = method;
+            Url = url;
+            QueryString = queryString;
+            ContentType = "application/json";
+            Body = body?.ToString(formatting);
         }
 
         #endregion
