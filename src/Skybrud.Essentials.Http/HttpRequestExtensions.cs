@@ -2,7 +2,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
-using System.Xml.Linq;
 
 namespace Skybrud.Essentials.Http {
 
