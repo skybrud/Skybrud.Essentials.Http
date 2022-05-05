@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
+using System.Xml.Linq;
 
 namespace Skybrud.Essentials.Http {
 
@@ -67,6 +68,20 @@ namespace Skybrud.Essentials.Http {
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
         public static T SetBody<T>(this T request, string body) where T : IHttpRequest {
             if (request != null) request.Body = body;
+            return request;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="IHttpRequest.Body"/> property of <paramref name="request"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the request - eg. <see cref="HttpRequest"/>.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="body">The new body of the request.</param>
+        /// <param name="contentType">The new content type of the request.</param>
+        /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
+        public static T SetBody<T>(this T request, string body, string contentType) where T : IHttpRequest {
+            if (request != null) request.Body = body;
+            if (request != null) request.ContentType = contentType;
             return request;
         }
 
