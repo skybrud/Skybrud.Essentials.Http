@@ -278,7 +278,7 @@ namespace Skybrud.Essentials.Http {
         public HttpRequest(HttpMethod method, string url, JToken body) : this() {
             Method = method;
             Url = url;
-            ContentType = "application/json";
+            ContentType = HttpConstants.ApplicationJson;
             Body = body?.ToString(Formatting.None);
         }
 
@@ -294,7 +294,7 @@ namespace Skybrud.Essentials.Http {
         public HttpRequest(HttpMethod method, string url, JToken body, Formatting formatting) : this() {
             Method = method;
             Url = url;
-            ContentType = "application/json";
+            ContentType = HttpConstants.ApplicationJson;
             Body = body?.ToString(formatting);
         }
 
@@ -311,7 +311,7 @@ namespace Skybrud.Essentials.Http {
             Method = method;
             Url = url;
             QueryString = queryString;
-            ContentType = "application/json";
+            ContentType = HttpConstants.ApplicationJson;
             Body = body?.ToString(Formatting.None);
         }
 
@@ -329,7 +329,7 @@ namespace Skybrud.Essentials.Http {
             Method = method;
             Url = url;
             QueryString = queryString;
-            ContentType = "application/json";
+            ContentType = HttpConstants.ApplicationJson;
             Body = body?.ToString(formatting);
         }
 
@@ -432,7 +432,7 @@ namespace Skybrud.Essentials.Http {
                     byte[] bytes = Encoding.UTF8.GetBytes(dataString);
 
                     // Set the content type
-                    request.ContentType = request.ContentType ?? "application/x-www-form-urlencoded";
+                    request.ContentType = request.ContentType ?? HttpConstants.ApplicationFormEncoded;
 
                     // Set the length of the request body
                     SetRequestContentLength(request, bytes.Length);

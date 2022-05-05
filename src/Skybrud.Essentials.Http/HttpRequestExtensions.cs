@@ -106,7 +106,7 @@ namespace Skybrud.Essentials.Http {
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
         public static T SetBody<T>(this T request, JToken body, Formatting formatting) where T : IHttpRequest {
             if (request == null) return default;
-            request.ContentType = "application/json";
+            request.ContentType = HttpConstants.ApplicationJson;
             request.Body = body?.ToString(formatting);
             return request;
         }

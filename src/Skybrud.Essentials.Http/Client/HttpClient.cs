@@ -788,7 +788,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, default(IHttpQueryString), "application/json", body.ToString(Formatting.None));
+            return DoHttpRequest(method, url, default(IHttpQueryString), HttpConstants.ApplicationJson, body.ToString(Formatting.None));
         }
 
         /// <summary>
@@ -801,7 +801,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, default(IHttpQueryString), "application/json", body.ToString(formatting));
+            return DoHttpRequest(method, url, default(IHttpQueryString), HttpConstants.ApplicationJson, body.ToString(formatting));
         }
 
         /// <summary>
@@ -814,7 +814,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, queryString, "application/json", body.ToString(Formatting.None));
+            return DoHttpRequest(method, url, queryString, HttpConstants.ApplicationJson, body.ToString(Formatting.None));
         }
 
         /// <summary>
@@ -828,7 +828,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, queryString, "application/json", body.ToString(formatting));
+            return DoHttpRequest(method, url, queryString, HttpConstants.ApplicationJson, body.ToString(formatting));
         }
 
         /// <summary>
@@ -840,7 +840,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, default(IHttpQueryString), "text/xml", body.ToString(SaveOptions.None));
+            return DoHttpRequest(method, url, default(IHttpQueryString), HttpConstants.TextXml, body.ToString(SaveOptions.None));
         }
 
         /// <summary>
@@ -853,7 +853,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, default(IHttpQueryString), "text/xml", body.ToString(options));
+            return DoHttpRequest(method, url, default(IHttpQueryString), HttpConstants.TextXml, body.ToString(options));
         }
 
         /// <summary>
@@ -866,7 +866,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, queryString, "text/xml", body.ToString(SaveOptions.None));
+            return DoHttpRequest(method, url, queryString, HttpConstants.TextXml, body.ToString(SaveOptions.None));
         }
 
         /// <summary>
@@ -880,7 +880,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(method, url, queryString, "text/xml", body.ToString(options));
+            return DoHttpRequest(method, url, queryString, HttpConstants.TextXml, body.ToString(options));
         }
 
         #endregion

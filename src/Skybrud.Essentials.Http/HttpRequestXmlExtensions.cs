@@ -28,7 +28,7 @@ namespace Skybrud.Essentials.Http {
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
         public static T SetBody<T>(this T request, XNode body, SaveOptions options) where T : IHttpRequest {
             if (request == null) return default;
-            request.ContentType = "text/xml";
+            request.ContentType = HttpConstants.TextXml;
             request.Body = body?.ToString(options);
             return request;
         }

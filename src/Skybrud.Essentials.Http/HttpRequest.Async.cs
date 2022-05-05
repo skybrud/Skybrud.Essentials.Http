@@ -105,7 +105,7 @@ namespace Skybrud.Essentials.Http {
                     byte[] bytes = Encoding.UTF8.GetBytes(dataString);
 
                     // Set the content type
-                    request.ContentType = request.ContentType ?? "application/x-www-form-urlencoded";
+                    request.ContentType = request.ContentType ?? HttpConstants.ApplicationFormEncoded;
 
                     // Set the length of the request body
                     SetRequestContentLength(request, bytes.Length);
