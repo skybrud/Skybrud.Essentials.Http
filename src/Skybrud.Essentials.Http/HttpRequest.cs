@@ -13,7 +13,7 @@ namespace Skybrud.Essentials.Http {
     /// <summary>
     /// Wrapper class for <see cref="HttpWebResponse"/>.
     /// </summary>
-    public class HttpRequest : IHttpRequest {
+    public partial class HttpRequest : IHttpRequest {
 
         #region Private fields
 

@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text;
 using Skybrud.Essentials.Http.Collections;
+using System.Threading.Tasks;
 
 namespace Skybrud.Essentials.Http {
 
@@ -164,6 +165,12 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         IHttpResponse GetResponse();
+
+        /// <summary>
+        /// Executes the request and returns the corresponding response as an instance of <see cref="IHttpResponse"/>.
+        /// </summary>
+        /// <returns>An instance of <see cref="Task"/> representing the response.</returns>
+        Task<IHttpResponse> GetResponseAsync();
 
     }
 
