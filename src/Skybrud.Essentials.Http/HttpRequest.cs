@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Strings.Extensions;
+using System.Xml.Linq;
 
 namespace Skybrud.Essentials.Http {
 
@@ -559,6 +560,18 @@ namespace Skybrud.Essentials.Http {
         }
 
         /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/>, <paramref name="queryString"/>, <paramref name="contentType"/> and <paramref name="body"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
+        /// <param name="body">The body of the request.</param>
+        /// <returns>An instance of <see cref="HttpRequest"/>.</returns>
+        public static HttpRequest Post(string url, IHttpQueryString queryString, string contentType, string body) {
+            return new HttpRequest(HttpMethod.Post, url, queryString).SetContentType(contentType).SetBody(body);
+        }
+
+        /// <summary>
         /// Initializes a new POST request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
         ///
         /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
@@ -566,9 +579,19 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         public static HttpRequest Post(string url, JToken body) {
-            return new HttpRequest(HttpMethod.Post, url, body) {
-                ContentType = "application/json"
-            };
+            return new HttpRequest(HttpMethod.Post, url, body);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Post(string url, JToken body, Formatting formatting) {
+            return new HttpRequest(HttpMethod.Post, url, body, formatting);
         }
 
         /// <summary>
@@ -580,9 +603,68 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         public static HttpRequest Post(string url, IHttpQueryString queryString, JToken body) {
-            return new HttpRequest(HttpMethod.Post, url, queryString, body) {
-                ContentType = "application/json"
-            };
+            return new HttpRequest(HttpMethod.Post, url, queryString, body);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Post(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+            return new HttpRequest(HttpMethod.Post, url, queryString, body, formatting);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Post(string url, XNode body) {
+            return new HttpRequest(HttpMethod.Post, url).SetBody(body);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Post(string url, XNode body, SaveOptions options) {
+            return new HttpRequest(HttpMethod.Post, url).SetBody(body, options);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Post(string url, IHttpQueryString queryString, XNode body) {
+            return new HttpRequest(HttpMethod.Post, url, queryString).SetBody(body);
+        }
+
+        /// <summary>
+        /// Initializes a new POST request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Post(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+            return new HttpRequest(HttpMethod.Post, url, queryString).SetBody(body, options);
         }
 
         /// <summary>
@@ -622,6 +704,18 @@ namespace Skybrud.Essentials.Http {
         }
 
         /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/>, <paramref name="queryString"/>, <paramref name="contentType"/> and <paramref name="body"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
+        /// <param name="body">The body of the request.</param>
+        /// <returns>An instance of <see cref="HttpRequest"/>.</returns>
+        public static HttpRequest Put(string url, IHttpQueryString queryString, string contentType, string body) {
+            return new HttpRequest(HttpMethod.Put, url, queryString).SetContentType(contentType).SetBody(body);
+        }
+
+        /// <summary>
         /// Initializes a new PUT request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
         ///
         /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
@@ -629,9 +723,19 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the PUT body.</param>
         public static HttpRequest Put(string url, JToken body) {
-            return new HttpRequest(HttpMethod.Put, url, body) {
-                ContentType = "application/json"
-            };
+            return new HttpRequest(HttpMethod.Put, url, body);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Put(string url, JToken body, Formatting formatting) {
+            return new HttpRequest(HttpMethod.Put, url, body, formatting);
         }
 
         /// <summary>
@@ -643,9 +747,68 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the PUT body.</param>
         public static HttpRequest Put(string url, IHttpQueryString queryString, JToken body) {
-            return new HttpRequest(HttpMethod.Put, url, queryString, body) {
-                ContentType = "application/json"
-            };
+            return new HttpRequest(HttpMethod.Put, url, queryString, body);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Put(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+            return new HttpRequest(HttpMethod.Put, url, queryString, body, formatting);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Put(string url, XNode body) {
+            return new HttpRequest(HttpMethod.Put, url).SetBody(body);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Put(string url, XNode body, SaveOptions options) {
+            return new HttpRequest(HttpMethod.Put, url).SetBody(body, options);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Put(string url, IHttpQueryString queryString, XNode body) {
+            return new HttpRequest(HttpMethod.Put, url, queryString).SetBody(body);
+        }
+
+        /// <summary>
+        /// Initializes a new PUT request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Put(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+            return new HttpRequest(HttpMethod.Put, url, queryString).SetBody(body, options);
         }
 
         /// <summary>
@@ -685,6 +848,18 @@ namespace Skybrud.Essentials.Http {
         }
 
         /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/>, <paramref name="queryString"/>, <paramref name="contentType"/> and <paramref name="body"/>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
+        /// <param name="body">The body of the request.</param>
+        /// <returns>An instance of <see cref="HttpRequest"/>.</returns>
+        public static HttpRequest Patch(string url, IHttpQueryString queryString, string contentType, string body) {
+            return new HttpRequest(HttpMethod.Patch, url, queryString).SetContentType(contentType).SetBody(body);
+        }
+
+        /// <summary>
         /// Initializes a new PATCH request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
         ///
         /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
@@ -692,9 +867,19 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the PATCH body.</param>
         public static HttpRequest Patch(string url, JToken body) {
-            return new HttpRequest(HttpMethod.Patch, url, body) {
-                ContentType = "application/json"
-            };
+            return new HttpRequest(HttpMethod.Patch, url, body);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Patch(string url, JToken body, Formatting formatting) {
+            return new HttpRequest(HttpMethod.Patch, url, body, formatting);
         }
 
         /// <summary>
@@ -706,9 +891,68 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the PATCH body.</param>
         public static HttpRequest Patch(string url, IHttpQueryString queryString, JToken body) {
-            return new HttpRequest(HttpMethod.Patch, url, queryString, body) {
-                ContentType = "application/json"
-            };
+            return new HttpRequest(HttpMethod.Patch, url, queryString, body);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/>, <paramref name="queryString"/> and JSON <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>application/json</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Patch(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+            return new HttpRequest(HttpMethod.Patch, url, queryString, body, formatting);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Patch(string url, XNode body) {
+            return new HttpRequest(HttpMethod.Patch, url).SetBody(body);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Patch(string url, XNode body, SaveOptions options) {
+            return new HttpRequest(HttpMethod.Patch, url).SetBody(body, options);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        public static HttpRequest Patch(string url, IHttpQueryString queryString, XNode body) {
+            return new HttpRequest(HttpMethod.Patch, url, queryString).SetBody(body);
+        }
+
+        /// <summary>
+        /// Initializes a new PATCH request based on the specified <paramref name="url"/> and XML <paramref name="body"/>.
+        ///
+        /// With this method, the <see cref="ContentType"/> property is automatically set to <c>text/xml</c>.
+        /// </summary>
+        /// <param name="url">The URL of the request.</param>
+        /// <param name="queryString">The query string.</param>
+        /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
+        /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
+        public static HttpRequest Patch(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+            return new HttpRequest(HttpMethod.Patch, url, queryString).SetBody(body, options);
         }
 
         /// <summary>
