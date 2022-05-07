@@ -14,7 +14,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Delete(string url) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Delete, url, default(IHttpQueryString));
+            return GetResponse(HttpRequest.Delete(url));
         }
 
         /// <summary>
@@ -23,10 +23,11 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
         public virtual IHttpResponse Delete(string url, IHttpGetOptions options) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return DoHttpRequest(HttpMethod.Delete, url, options.GetQueryString());
+            return GetResponse(HttpRequest.Delete(url, options.GetQueryString()));
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Delete(string url, IHttpQueryString queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Delete, url, queryString);
+            return GetResponse(HttpRequest.Delete(url, queryString));
         }
 
 #if NET_FRAMEWORK
@@ -50,7 +51,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Delete(string url, NameValueCollection queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Delete, url, queryString);
+            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Delete(url, query));
         }
 
 #endif

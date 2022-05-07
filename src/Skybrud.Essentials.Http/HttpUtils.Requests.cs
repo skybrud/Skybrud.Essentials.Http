@@ -30,6 +30,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Get(string url, IHttpGetOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));
@@ -67,6 +68,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Post(string url, IHttpGetOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));
@@ -79,6 +81,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Post(string url, IHttpPostOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));
@@ -162,6 +165,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Put(string url, IHttpGetOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));
@@ -174,6 +178,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Put(string url, IHttpPostOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));
@@ -232,6 +237,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Patch(string url, IHttpGetOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));
@@ -244,6 +250,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Patch(string url, IHttpPostOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));
@@ -302,6 +309,7 @@ namespace Skybrud.Essentials.Http {
             /// <param name="url">The URL of the request.</param>
             /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
             /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+            [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
             public static IHttpResponse Delete(string url, IHttpGetOptions options) {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 if (options == null) throw new ArgumentNullException(nameof(options));

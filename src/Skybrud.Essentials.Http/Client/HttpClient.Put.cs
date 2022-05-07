@@ -17,7 +17,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Put(string url) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), default(IHttpPostData));
+            return GetResponse(HttpRequest.Put(url));
         }
 
         /// <summary>
@@ -26,10 +26,11 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
         public virtual IHttpResponse Put(string url, IHttpGetOptions options) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return DoHttpRequest(HttpMethod.Put, url, options.GetQueryString(), default(IHttpPostData));
+            return GetResponse(HttpRequest.Put(url, options.GetQueryString()));
         }
 
         /// <summary>
@@ -38,10 +39,11 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
         public virtual IHttpResponse Put(string url, IHttpPostOptions options) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return DoHttpRequest(HttpMethod.Put, url, options.GetQueryString(), options.GetPostData());
+            return GetResponse(HttpRequest.Put(url, options.GetQueryString(), options.GetPostData()));
         }
 
         /// <summary>
@@ -51,17 +53,19 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, IHttpQueryString queryString) {
-            return DoHttpRequest(HttpMethod.Put, url, queryString, default(IHttpPostData));
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+            return GetResponse(HttpRequest.Put(url, queryString));
         }
 
         /// <summary>
         /// Makes a PUT request to the specified <paramref name="url"/>.
         /// </summary>
         /// <param name="url">The base URL of the request (no query string).</param>
-        /// <param name="postData">The POST data.</param>
+        /// <param name="postData">The PUT data.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, IHttpPostData postData) {
-            return DoHttpRequest(HttpMethod.Put, url, null, postData);
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+            return GetResponse(HttpRequest.Put(url, postData));
         }
 
         /// <summary>
@@ -69,11 +73,11 @@ namespace Skybrud.Essentials.Http.Client {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        /// <param name="postData">The POST data of the request.</param>
+        /// <param name="postData">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Put(string url, IHttpQueryString queryString, IHttpPostData postData) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, postData);
+            return GetResponse(HttpRequest.Put(url, postData));
         }
 
         /// <summary>
@@ -85,7 +89,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Put(string url, IHttpQueryString queryString, string contentType, string body) {
-            return DoHttpRequest(HttpMethod.Put, url, queryString, contentType, body);
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+            return GetResponse(HttpRequest.Put(url, queryString).SetContentType(contentType).SetBody(body));
         }
 
         /// <summary>
@@ -95,8 +100,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, JToken body) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
+            return GetResponse(HttpRequest.Put(url, body));
         }
 
         /// <summary>
@@ -107,8 +113,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, JToken body, Formatting formatting) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
+            return GetResponse(HttpRequest.Put(url, body, formatting));
         }
 
         /// <summary>
@@ -119,8 +126,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, IHttpQueryString queryString, JToken body) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body);
+            return GetResponse(HttpRequest.Put(url, body));
         }
 
         /// <summary>
@@ -132,8 +140,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body);
+            return GetResponse(HttpRequest.Put(url, body, formatting));
         }
 
         /// <summary>
@@ -143,8 +152,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, XNode body) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
+            return GetResponse(HttpRequest.Put(url, body));
         }
 
         /// <summary>
@@ -155,8 +165,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, XNode body, SaveOptions options) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, default(IHttpQueryString), body);
+            return GetResponse(HttpRequest.Put(url, body, options));
         }
 
         /// <summary>
@@ -167,8 +178,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, IHttpQueryString queryString, XNode body) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body);
+            return GetResponse(HttpRequest.Put(url, queryString, body));
         }
 
         /// <summary>
@@ -180,8 +192,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body, options);
+            return GetResponse(HttpRequest.Put(url, queryString, body, options));
         }
 
 #if NET_FRAMEWORK
@@ -193,7 +206,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, NameValueCollection queryString) {
-            return DoHttpRequest(HttpMethod.Put, url, queryString, default(NameValueCollection));
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Put(url, query));
         }
 
         /// <summary>
@@ -201,11 +216,13 @@ namespace Skybrud.Essentials.Http.Client {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        /// <param name="postData">The POST data of the request.</param>
+        /// <param name="postData">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Put(string url, NameValueCollection queryString, NameValueCollection postData) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, postData);
+            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpPostData post = postData == null ? null : new HttpPostData(postData);
+            return GetResponse(HttpRequest.Put(url, query, post));
         }
 
         /// <summary>
@@ -217,7 +234,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Put(string url, NameValueCollection queryString, string contentType, string body) {
-            return DoHttpRequest(HttpMethod.Put, url, queryString, contentType, body);
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Put(url, query).SetContentType(contentType).SetBody(body));
         }
 
         /// <summary>
@@ -228,8 +247,10 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, NameValueCollection queryString, JToken body) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body);
+            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Put(url, query, body));
         }
 
         /// <summary>
@@ -241,8 +262,10 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, NameValueCollection queryString, JToken body, Formatting formatting) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body);
+            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Put(url, query, body, formatting));
         }
 
         /// <summary>
@@ -253,8 +276,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, NameValueCollection queryString, XNode body) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body);
+            return GetResponse(HttpRequest.Put(url, body));
         }
 
         /// <summary>
@@ -266,8 +290,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public virtual IHttpResponse Put(string url, NameValueCollection queryString, XNode body, SaveOptions options) {
+            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, body, options);
+            return GetResponse(HttpRequest.Put(url, body, options));
         }
 
 #endif

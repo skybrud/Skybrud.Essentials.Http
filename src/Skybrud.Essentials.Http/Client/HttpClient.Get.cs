@@ -14,7 +14,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Get(string url) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Get, url, default(IHttpQueryString));
+            return GetResponse(HttpRequest.Get(url));
         }
 
         /// <summary>
@@ -23,10 +23,11 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+        [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
         public virtual IHttpResponse Get(string url, IHttpGetOptions options) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (options == null) throw new ArgumentNullException(nameof(options));
-            return DoHttpRequest(HttpMethod.Get, url, options.GetQueryString());
+            return GetResponse(HttpRequest.Get(url, options.GetQueryString()));
         }
 
         /// <summary>
@@ -37,7 +38,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Get(string url, IHttpQueryString queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Get, url, queryString);
+            return GetResponse(HttpRequest.Get(url, queryString));
         }
 
 #if NET_FRAMEWORK
@@ -50,7 +51,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Get(string url, NameValueCollection queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Get, url, queryString);
+            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Get(url, query));
         }
 
 #endif
