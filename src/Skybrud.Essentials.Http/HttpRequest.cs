@@ -105,6 +105,11 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         public string Body { get; set; }
 
+        /// <summary>
+        /// Gets or sets the binary body of the request.
+        /// </summary>
+        public byte[] BinaryBody { get; set; }
+
         #region HTTP Headers
 
         /// <summary>
@@ -401,6 +406,16 @@ namespace Skybrud.Essentials.Http {
                 Task<Stream> hest = request.GetRequestStreamAsync();
                 using (Stream stream = hest.Result) {
                     stream.Write(bytes, 0, bytes.Length);
+                }
+
+            } else if (this is HttpRequest implement && implement.BinaryBody != null) {
+
+                // Set the length of the request body
+                SetRequestContentLength(request, BinaryBody.Length);
+
+                // Write the body to the request stream
+                using (Stream stream = request.GetRequestStreamAsync().Result) {
+                    stream.Write(BinaryBody, 0, BinaryBody.Length);
                 }
 
             } else if (Method == HttpMethod.Post || Method == HttpMethod.Put || Method == HttpMethod.Patch || Method == HttpMethod.Delete) {

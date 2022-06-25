@@ -91,6 +91,32 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="body">The new body of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
+        public static T SetBody<T>(this T request, byte[] body) where T : HttpRequest {
+            if (request != null) request.BinaryBody = body;
+            return request;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="IHttpRequest.Body"/> property of <paramref name="request"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the request - eg. <see cref="HttpRequest"/>.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="body">The new body of the request.</param>
+        /// <param name="contentType">The new content type of the request.</param>
+        /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
+        public static T SetBody<T>(this T request, byte[] body, string contentType) where T : HttpRequest {
+            if (request != null) request.BinaryBody = body;
+            if (request != null) request.ContentType = contentType;
+            return request;
+        }
+
+        /// <summary>
+        /// Sets the <see cref="IHttpRequest.Body"/> property of <paramref name="request"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the request - eg. <see cref="HttpRequest"/>.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="body">The new body of the request.</param>
+        /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
         public static T SetBody<T>(this T request, JToken body) where T : IHttpRequest {
             return SetBody(request, body, Formatting.None);
         }
