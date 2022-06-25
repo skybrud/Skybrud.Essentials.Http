@@ -18,8 +18,8 @@
     <Description>.NET library for making HTTP requests.</Description>
   </PropertyGroup>
 
+  <!-- Information for the NuGet package -->
   <PropertyGroup>
-    <!-- Information for the NuGet package -->
     <PackageTags>Skybrud, HTTP, OAuth</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://packages.skybrud.dk/skybrud.essentials.http/</PackageProjectUrl>
@@ -39,7 +39,7 @@
   <PropertyGroup Condition="'$(TargetFramework)'=='net45' OR '$(TargetFramework)'=='net46' OR '$(TargetFramework)'=='net47'">
     <DefineConstants>NET_FRAMEWORK,NET_FRAMEWORK_OR_NET_STANDARD_2</DefineConstants>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <PackageReference Include="Skybrud.Essentials" Version="1.1.41" />
   </ItemGroup>
@@ -47,17 +47,18 @@
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.3'">
     <PackageReference Include="System.Net.Requests" Version="4.3.0" />
   </ItemGroup>
-  
+
+  <!-- Include package icon for NuGet -->
   <ItemGroup>
-    <!-- Include package icon for NuGet -->
     <Content Include="../build/Limbo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
+  <!-- Generate XML documentation -->
   <PropertyGroup>
-    <!-- Generate XML documentation -->
     <DocumentationFile>bin\$(ConfigurationName)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 
+  <!-- Post build event to generate ZIP file -->
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(ConfigurationName)'=='Release' AND '$(TargetFramework)'=='net47' AND '$(BuildTools)'=='1'">
     <Exec Command="&quot;$(ProjectDir)..\build\Skybrud.BuildTools.Tasks.exe&quot; &quot;postBuild&quot; &quot;$(ConfigurationName)&quot; &quot;$(ProjectPath)&quot; &quot;$(TargetPath)&quot;" />
   </Target>
