@@ -35,7 +35,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the item.</param>
         /// <returns>The <see cref="string"/> value of the item, or <c>null</c> if not found.</returns>
-        string this[string key] { get; set; }
+        string? this[string key] { get; set; }
 
         #endregion
 

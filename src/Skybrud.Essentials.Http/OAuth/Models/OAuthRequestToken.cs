@@ -45,8 +45,8 @@ namespace Skybrud.Essentials.Http.OAuth.Models {
         /// <param name="query">The query string as specified by the response body.</param>
         protected OAuthRequestToken(OAuthClient client, IHttpQueryString query) {
             Client = client;
-            Token = query["oauth_token"];
-            TokenSecret = query["oauth_token_secret"];
+            Token = query["oauth_token"]!;
+            TokenSecret = query["oauth_token_secret"]!;
             IsCallbackConfirmed = query["oauth_callback_confirmed"] == "true";
             AuthorizeUrl = client.AuthorizeUrl + "?oauth_token=" + query["oauth_token"];
         }

@@ -40,8 +40,8 @@ namespace Skybrud.Essentials.Http.OAuth.Models {
         /// <param name="query">The query string as specified by the response body.</param>
         protected OAuthAccessToken(OAuthClient client, IHttpQueryString query) {
             Client = client;
-            Token = query["oauth_token"];
-            TokenSecret = query["oauth_token_secret"];
+            Token = query["oauth_token"]!;
+            TokenSecret = query["oauth_token_secret"]!;
             Query = query;
         }
 

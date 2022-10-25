@@ -23,72 +23,72 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// <summary>
         /// Gets or sets the consumer key of your OAuth application.
         /// </summary>
-        public string ConsumerKey { get; set; }
+        public string? ConsumerKey { get; set; }
 
         /// <summary>
         /// Gets or sets the consumer secret of your OAuth application. The consumer secret is sensitive information used to
         /// identify your application. Users should never be shown this value.
         /// </summary>
-        public string ConsumerSecret { get; set; }
+        public string? ConsumerSecret { get; set; }
 
         /// <summary>
         /// Gets or sets a unique/random value specifying the <c>oauth_nonce</c> parameter in the OAuth protocol.
         /// Along with <c>oauth_timestamp</c>, it will make sure each request is only sent once to the OAuth
         /// server (provider).
-        /// 
+        ///
         /// If <see cref="AutoReset"/> is enabled (default), the value for this property will automatically be updated for each request.
         /// </summary>
-        public string Nonce { get; set; }
+        public string? Nonce { get; set; }
 
         /// <summary>
         /// Gets or sets the current Unix timestamp specifying the <c>oauth_timestamp</c> parameter in the OAuth
         /// protocol. Along with <see cref="Nonce"/>, it will make sure each request is only sent once to the OAuth server (provider).
-        /// 
+        ///
         /// If <see cref="AutoReset"/> is enabled (default), the value for this property will automatically be updated for each request.
         /// </summary>
-        public string Timestamp { get; set; }
+        public string? Timestamp { get; set; }
 
         /// <summary>
         /// Gets or sets the request token or access token used to access the OAuth server on behalf of a user.
         /// </summary>
-        public string Token { get; set; }
+        public string? Token { get; set; }
 
         /// <summary>
         /// Gets or sets the request token secret or access token secret used to access the OAuth server on behalf of a
         /// user.
         /// </summary>
-        public string TokenSecret { get; set; }
+        public string? TokenSecret { get; set; }
 
         /// <summary>
         /// Gets or sets the version of the OAuth protocol. Default is <c>1.0</c>.
         /// </summary>
-        public string Version { get; set; }
+        public string? Version { get; set; }
 
         /// <summary>
         /// Gets or sets the callback URL. This property specifies the <c>oauth_callback</c> parameter and is
         /// used for 3-legged logins. You only need to specify this property for authentication - it is not necessary
-        /// toset this property when just making calls to the API. 
+        /// toset this property when just making calls to the API.
         /// </summary>
-        public string Callback { get; set; }
+        public string? Callback { get; set; }
 
         /// <summary>
         /// Gets or sets the request token URL. As the first step of the 3-legged login process, the client must obtain
         /// a request token through this URL. If possible this URL should always use HTTPS.
         /// </summary>
-        public string RequestTokenUrl { get; set; }
+        public string? RequestTokenUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the authorization URL. As the second step of the 3-legged login process, the user is
         /// redirected to this URL for authorizing the login. If possible this URL should always use HTTPS.
         /// </summary>
-        public string AuthorizeUrl { get; set; }
+        public string? AuthorizeUrl { get; set; }
 
         /// <summary>
         /// Gets or sets the access token URL. In the final step of the 3-legged login process, the OAuth client will
         /// exchange the request token for an access token. It will do so using this URL. If possible this URL should
         /// always use HTTPS.
         /// </summary>
-        public string AccessTokenUrl { get; set; }
+        public string? AccessTokenUrl { get; set; }
 
         /// <summary>
         /// If <c>true</c>, new requests will automatically reset the <see cref="Timestamp"/> and <see cref="Nonce"/>
@@ -180,10 +180,10 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// <param name="queryString">Values representing the query string.</param>
         /// <param name="body">Values representing the POST body.</param>
         /// <returns>The generated parameter string.</returns>
-        public virtual string GenerateParameterString(IHttpQueryString queryString, IHttpPostData body) {
+        public virtual string GenerateParameterString(IHttpQueryString? queryString, IHttpPostData? body) {
 
             // The parameters must be alphabetically sorted
-            SortedDictionary<string, string> sorted = new SortedDictionary<string, string>();
+            SortedDictionary<string, string> sorted = new();
 
             // Add parameters from the query string
             if (queryString != null) {
@@ -220,7 +220,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// </summary>
         /// <returns>The generated signature key.</returns>
         public virtual string GenerateSignatureKey() {
-            return EscapeDataString(ConsumerSecret ?? "") + "&" + EscapeDataString(TokenSecret ?? "");
+            return EscapeDataString(ConsumerSecret ?? string.Empty) + "&" + EscapeDataString(TokenSecret ?? string.Empty);
         }
 
         /// <summary>
@@ -249,7 +249,7 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// <param name="body">The POST data.</param>
         /// <returns>The generated signature.</returns>
         public virtual string GenerateSignature(HttpMethod method, string url, IHttpQueryString queryString, IHttpPostData body) {
-            HMACSHA1 hasher = new HMACSHA1(new ASCIIEncoding().GetBytes(GenerateSignatureKey()));
+            HMACSHA1 hasher = new(new ASCIIEncoding().GetBytes(GenerateSignatureKey()));
             return Convert.ToBase64String(hasher.ComputeHash(new ASCIIEncoding().GetBytes(GenerateSignatureValue(method, url, queryString, body))));
         }
 
@@ -280,7 +280,7 @@ namespace Skybrud.Essentials.Http.OAuth {
             if (string.IsNullOrWhiteSpace(AuthorizeUrl)) throw new PropertyNotSetException(nameof(AuthorizeUrl));
 
             // Make the call to the API/provider
-            return Post(RequestTokenUrl);
+            return Post(RequestTokenUrl!);
 
         }
 
@@ -320,7 +320,7 @@ namespace Skybrud.Essentials.Http.OAuth {
             postData.Add("oauth_verifier", verifier);
 
             // Make the call to the API/provider
-            return Post(AccessTokenUrl, null, postData);
+            return Post(AccessTokenUrl!, null, postData);
 
         }
 
@@ -361,8 +361,8 @@ namespace Skybrud.Essentials.Http.OAuth {
         /// </summary>
         /// <param name="value">The value to be escaped.</param>
         /// <returns>The escaped string.</returns>
-        public virtual string EscapeDataString(string value) {
-            return Uri.EscapeDataString(value);
+        public virtual string EscapeDataString(string? value) {
+            return Uri.EscapeDataString(value ?? string.Empty);
         }
 
         #endregion

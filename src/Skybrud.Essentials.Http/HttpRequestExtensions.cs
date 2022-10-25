@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Skybrud.Essentials.Http {
 
@@ -17,7 +18,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="method">The new HTTP method of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetMethod<T>(this T request, HttpMethod method) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetMethod<T>(this T? request, HttpMethod method) where T : IHttpRequest {
             if (request != null) request.Method = method;
             return request;
         }
@@ -29,7 +31,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="url">The new URL of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetUrl<T>(this T request, string url) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetUrl<T>(this T? request, string url) where T : IHttpRequest {
             if (request != null) request.Url = url;
             return request;
         }
@@ -41,8 +44,9 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="queryString">The new query string of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetQueryString<T>(this T request, IHttpQueryString queryString) where T : IHttpRequest {
-            if (request != null) request.QueryString = queryString;
+        [return: NotNullIfNotNull("request")]
+        public static T? SetQueryString<T>(this T? request, IHttpQueryString? queryString) where T : IHttpRequest {
+            if (request != null) request.QueryString = queryString!;
             return request;
         }
 
@@ -53,8 +57,9 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="postData">The new POST data of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetPostData<T>(this T request, IHttpPostData postData) where T : IHttpRequest {
-            if (request != null) request.PostData = postData;
+        [return: NotNullIfNotNull("request")]
+        public static T? SetPostData<T>(this T? request, IHttpPostData? postData) where T : IHttpRequest {
+            if (request != null) request.PostData = postData!;
             return request;
         }
 
@@ -65,7 +70,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="body">The new body of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, string body) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, string? body) where T : IHttpRequest {
             if (request != null) request.Body = body;
             return request;
         }
@@ -78,7 +84,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="body">The new body of the request.</param>
         /// <param name="contentType">The new content type of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, string body, string contentType) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, string? body, string? contentType) where T : IHttpRequest {
             if (request != null) request.Body = body;
             if (request != null) request.ContentType = contentType;
             return request;
@@ -91,7 +98,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="body">The new body of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, byte[] body) where T : HttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, byte[]? body) where T : HttpRequest {
             if (request != null) request.BinaryBody = body;
             return request;
         }
@@ -104,7 +112,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="body">The new body of the request.</param>
         /// <param name="contentType">The new content type of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, byte[] body, string contentType) where T : HttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, byte[]? body, string? contentType) where T : HttpRequest {
             if (request != null) request.BinaryBody = body;
             if (request != null) request.ContentType = contentType;
             return request;
@@ -117,7 +126,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="body">The new body of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, JToken body) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, JToken? body) where T : IHttpRequest {
             return SetBody(request, body, Formatting.None);
         }
 
@@ -129,7 +139,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="body">The new body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, JToken body, Formatting formatting) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, JToken? body, Formatting formatting) where T : IHttpRequest {
             if (request == null) return default;
             request.ContentType = HttpConstants.ApplicationJson;
             request.Body = body?.ToString(formatting);
@@ -143,7 +154,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="value">The value of the header.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetAcceptHeader<T>(this T request, string value) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetAcceptHeader<T>(this T? request, string? value) where T : IHttpRequest {
             if (request != null) request.Accept = value;
             return request;
         }
@@ -155,7 +167,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="value">The value of the header.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetAcceptHeader<T>(this T request, IEnumerable<string> value) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetAcceptHeader<T>(this T? request, IEnumerable<string>? value) where T : IHttpRequest {
             if (request != null) request.Accept = value == null ? string.Empty : string.Join(",", value);
             return request;
         }
@@ -167,7 +180,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="value">The value of the header.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetAuthorizationHeader<T>(this T request, string value) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetAuthorizationHeader<T>(this T? request, string? value) where T : IHttpRequest {
             if (request != null) request.Headers.Authorization = value;
             return request;
         }
@@ -179,7 +193,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="value">The value of the header.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetContentType<T>(this T request, string value) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetContentType<T>(this T? request, string? value) where T : IHttpRequest {
             if (request != null) request.ContentType = value;
             return request;
         }
@@ -191,7 +206,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="value">The value of the header.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetUserAgent<T>(this T request, string value) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetUserAgent<T>(this T? request, string? value) where T : IHttpRequest {
             if (request != null) request.UserAgent = value;
             return request;
         }

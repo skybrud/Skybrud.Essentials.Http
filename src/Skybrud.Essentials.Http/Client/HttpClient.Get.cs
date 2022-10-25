@@ -49,9 +49,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public virtual IHttpResponse Get(string url, NameValueCollection queryString) {
+        public virtual IHttpResponse Get(string url, NameValueCollection? queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return GetResponse(HttpRequest.Get(url, query));
         }
 

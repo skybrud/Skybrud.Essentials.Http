@@ -5,9 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Skybrud.Essentials.Common;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Strings.Extensions;
 using System.Xml.Linq;
+
+#pragma warning disable SYSLIB0014
+
+// ReSharper disable ConvertToUsingDeclaration
+// ReSharper disable NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+// ReSharper disable ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
 
 namespace Skybrud.Essentials.Http {
 
@@ -35,7 +42,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets or sets the credentials (username and password) of the request.
         /// </summary>
-        public ICredentials Credentials { get; set; }
+        public ICredentials? Credentials { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the request. The query string can either be specified directly in the URL, or
@@ -47,7 +54,7 @@ namespace Skybrud.Essentials.Http {
         /// Gets or sets the HTTP host of the request. If left blank, the host will be based on <see cref="Url"/>
         /// instead.
         /// </summary>
-        public string Host { get; set; }
+        public string? Host { get; set; }
 
         /// <summary>
         /// Gets or sets the encoding of the request. Default is UTF-8.
@@ -98,17 +105,17 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets or sets the content type of the request.
         /// </summary>
-        public string ContentType { get; set; }
+        public string? ContentType { get; set; }
 
         /// <summary>
         /// Gets or sets the body of the request.
         /// </summary>
-        public string Body { get; set; }
+        public string? Body { get; set; }
 
         /// <summary>
         /// Gets or sets the binary body of the request.
         /// </summary>
-        public byte[] BinaryBody { get; set; }
+        public byte[]? BinaryBody { get; set; }
 
         #region HTTP Headers
 
@@ -120,13 +127,13 @@ namespace Skybrud.Essentials.Http {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/Content_negotiation</cref>
         /// </see>
-        public string Accept { get; set; }
+        public string? Accept { get; set; }
 
         /// <summary>
         /// Gets or sets the character sets that are acceptable - eg. <c>utf8</c>. This property corresponds to
         /// the <c>Accept-Charset</c> HTTP header.
         /// </summary>
-        public string AcceptCharset {
+        public string? AcceptCharset {
             get => Headers.AcceptCharset;
             set => Headers.AcceptCharset = value;
         }
@@ -138,7 +145,7 @@ namespace Skybrud.Essentials.Http {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/HTTP_compression</cref>
         /// </see>
-        public string AcceptEncoding {
+        public string? AcceptEncoding {
             get => Headers.AcceptEncoding;
             set => Headers.AcceptEncoding = value;
         }
@@ -150,7 +157,7 @@ namespace Skybrud.Essentials.Http {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/Content_negotiation</cref>
         /// </see>
-        public string AcceptLanguage {
+        public string? AcceptLanguage {
             get => Headers.AcceptLanguage;
             set => Headers.AcceptLanguage = value;
         }
@@ -159,7 +166,7 @@ namespace Skybrud.Essentials.Http {
         /// Gets or sets the authentication credentials for HTTP authentication. This property corresponds to the
         /// <c>Authorization</c> HTTP header.
         /// </summary>
-        public string Authorization {
+        public string? Authorization {
             get => Headers.Authorization;
             set => Headers.Authorization = value;
         }
@@ -170,17 +177,17 @@ namespace Skybrud.Essentials.Http {
         /// point that it has become standard usage and is considered correct terminology). This property corresponds
         /// to the <c>Referer</c> HTTP header.
         /// </summary>
-        public string Referer { get; set; }
+        public string? Referer { get; set; }
 
         /// <summary>
         /// Gets or sets a string representing the user agent. This property corresponds to the <c>User-Agent</c>
         /// HTTP header.
         /// </summary>
-        public string UserAgent { get; set; }
+        public string? UserAgent { get; set; }
 
         #endregion
 
-#if NET_FRAMEWORK_OR_NET_STANDARD_2
+#if NET_FRAMEWORK_OR_NET_STANDARD_2 || NET5_0_OR_GREATER
 
         /// <summary>
         /// Gets or sets the type of decompression that is used.
@@ -190,22 +197,22 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets or sets the media type of the request.
         /// </summary>
-        public string MediaType { get; set; }
+        public string? MediaType { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the <strong>Transfer-encoding</strong> HTTP header.
         /// </summary>
-        public string TransferEncoding { get; set; }
+        public string? TransferEncoding { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the <strong>Connection</strong> HTTP header.
         /// </summary>
-        public string Connection { get; set; }
+        public string? Connection { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the <strong>Expect</strong> HTTP header.
         /// </summary>
-        public string Expect { get; set; }
+        public string? Expect { get; set; }
 
 #endif
 
@@ -219,6 +226,7 @@ namespace Skybrud.Essentials.Http {
         public HttpRequest() {
             Method = HttpMethod.Get;
             Encoding = Encoding.UTF8;
+            Url = string.Empty;
 #if NET_FRAMEWORK
             Timeout = TimeSpan.FromSeconds(100);
 #endif
@@ -240,10 +248,10 @@ namespace Skybrud.Essentials.Http {
         /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString) : this() {
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString? queryString) : this() {
             Method = method;
             Url = url;
-            QueryString = queryString;
+            QueryString = queryString!;
         }
 
         /// <summary>
@@ -252,10 +260,10 @@ namespace Skybrud.Essentials.Http {
         /// <param name="method">The HTTP method for the request - eg. <see cref="HttpMethod.Get"/> or <see cref="HttpMethod.Post"/>.</param>
         /// <param name="url">The URL of the request.</param>
         /// <param name="postData">The HTTP POST data of the request.</param>
-        public HttpRequest(HttpMethod method, string url, IHttpPostData postData) : this() {
+        public HttpRequest(HttpMethod method, string url, IHttpPostData? postData) : this() {
             Method = method;
             Url = url;
-            PostData = postData;
+            PostData = postData!;
         }
 
         /// <summary>
@@ -265,11 +273,11 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The HTTP POST data of the request.</param>
-        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString, IHttpPostData postData) : this() {
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, IHttpPostData? postData) : this() {
             Method = method;
             Url = url;
-            QueryString = queryString;
-            PostData = postData;
+            QueryString = queryString!;
+            PostData = postData!;
         }
 
         /// <summary>
@@ -312,10 +320,10 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
-        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body) : this() {
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, JToken body) : this() {
             Method = method;
             Url = url;
-            QueryString = queryString;
+            QueryString = queryString!;
             ContentType = HttpConstants.ApplicationJson;
             Body = body?.ToString(Formatting.None);
         }
@@ -330,10 +338,10 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        public HttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body, Formatting formatting) : this() {
+        public HttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, JToken body, Formatting formatting) : this() {
             Method = method;
             Url = url;
-            QueryString = queryString;
+            QueryString = queryString!;
             ContentType = HttpConstants.ApplicationJson;
             Body = body?.ToString(formatting);
         }
@@ -355,11 +363,12 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="callback">Lets you specify a callback method for modifying the underlying <see cref="HttpWebRequest"/>.</param>
         /// <returns>An instance of <see cref="HttpResponse"/> representing the response.</returns>
-        public virtual IHttpResponse GetResponse(Action<HttpWebRequest> callback) {
+        public virtual IHttpResponse GetResponse(Action<HttpWebRequest>? callback) {
 
             // Build the URL
+            if (string.IsNullOrWhiteSpace(Url)) throw new PropertyNotSetException(nameof(Url));
             string url = Url;
-            if (QueryString != null && !QueryString.IsEmpty) url += (url.Contains("?") ? "&" : "?") + QueryString;
+            if (!QueryString.IsEmpty) url += (url.Contains("?") ? "&" : "?") + QueryString;
 
             // Initialize the request
             HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
@@ -367,19 +376,12 @@ namespace Skybrud.Essentials.Http {
             // Misc
             request.Method = Method.ToUpper();
             request.Credentials = Credentials;
-            if (Headers != null) request.Headers = Headers.Headers;
+            request.Headers = Headers.Headers;
             request.Accept = Accept;
-            if (Cookies != null) request.CookieContainer = Cookies.Container;
+            request.CookieContainer = Cookies.Container;
             if (string.IsNullOrWhiteSpace(ContentType) == false) request.ContentType = ContentType;
 
-#if NET_FRAMEWORK
-            request.Timeout = (int) Timeout.TotalMilliseconds;
-            if (string.IsNullOrWhiteSpace(Host) == false) request.Host = Host;
-            if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
-            if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
-#endif
-
-#if NET_STANDARD2
+#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
             request.AutomaticDecompression = AutomaticDecompression;
             request.MediaType = MediaType;
             request.TransferEncoding = TransferEncoding;
@@ -387,7 +389,12 @@ namespace Skybrud.Essentials.Http {
             request.Expect = Expect;
 #endif
 
-#if NET_STANDARD
+#if NET_FRAMEWORK
+            request.Timeout = (int) Timeout.TotalMilliseconds;
+            if (string.IsNullOrWhiteSpace(Host) == false) request.Host = Host;
+            if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
+            if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
+#else
             if (string.IsNullOrWhiteSpace(Host) == false) request.Headers["Host"] = Host;
             if (string.IsNullOrWhiteSpace(UserAgent) == false) request.Headers["User-Agent"] = UserAgent;
             if (string.IsNullOrWhiteSpace(Referer) == false) request.Headers["Referer"] = Referer;
@@ -397,7 +404,7 @@ namespace Skybrud.Essentials.Http {
             if (string.IsNullOrWhiteSpace(Body) == false) {
 
                 // Get the bytes for the request body
-                byte[] bytes = Encoding.UTF8.GetBytes(Body);
+                byte[] bytes = Encoding.UTF8.GetBytes(Body!);
 
                 // Set the length of the request body
                 SetRequestContentLength(request, bytes.Length);
@@ -408,7 +415,7 @@ namespace Skybrud.Essentials.Http {
                     stream.Write(bytes, 0, bytes.Length);
                 }
 
-            } else if (this is HttpRequest implement && implement.BinaryBody != null) {
+            } else if (BinaryBody != null) {
 
                 // Set the length of the request body
                 SetRequestContentLength(request, BinaryBody.Length);
@@ -418,10 +425,7 @@ namespace Skybrud.Essentials.Http {
                     stream.Write(BinaryBody, 0, BinaryBody.Length);
                 }
 
-            } else if (Method == HttpMethod.Post || Method == HttpMethod.Put || Method == HttpMethod.Patch || Method == HttpMethod.Delete) {
-
-                // Make sure we have a POST data instance
-                PostData = PostData ?? new HttpPostData();
+            } else if (Method is HttpMethod.Post or HttpMethod.Put or HttpMethod.Patch or HttpMethod.Delete) {
 
                 if (PostData.IsMultipart) {
 
@@ -441,13 +445,13 @@ namespace Skybrud.Essentials.Http {
                 } else {
 
                     // Convert the POST data to an URL encoded string
-                    string dataString = PostData.ToString();
+                    string dataString = PostData.ToString()!;
 
                     // Get the bytes for the request body
                     byte[] bytes = Encoding.UTF8.GetBytes(dataString);
 
                     // Set the content type
-                    request.ContentType = request.ContentType ?? HttpConstants.ApplicationFormEncoded;
+                    request.ContentType ??= HttpConstants.ApplicationFormEncoded;
 
                     // Set the length of the request body
                     SetRequestContentLength(request, bytes.Length);
@@ -469,33 +473,31 @@ namespace Skybrud.Essentials.Http {
             // Get the response
             try {
 
-#if NET_STANDARD
+#if NETSTANDARD || NET5_0_OR_GREATER
 
                 Task<WebResponse> responseTask = request.GetResponseAsync();
 
                 responseTask.Wait();
 
-                return HttpResponse.GetFromWebResponse(responseTask.Result as HttpWebResponse, this);
+                return HttpResponse.GetFromWebResponse((HttpWebResponse) responseTask.Result, this);
 
-#endif
+#else
 
-#if NET_FRAMEWORK
-                
-                return HttpResponse.GetFromWebResponse(request.GetResponse() as HttpWebResponse, this);
+                return HttpResponse.GetFromWebResponse((HttpWebResponse) request.GetResponse(), this);
 
 #endif
 
             } catch (AggregateException ex) {
 
-                if (ex.InnerException is WebException web && web.Status == WebExceptionStatus.ProtocolError) {
-                    return HttpResponse.GetFromWebResponse(web.Response as HttpWebResponse, this);
+                if (ex.InnerException is WebException { Status: WebExceptionStatus.ProtocolError } web) {
+                    return HttpResponse.GetFromWebResponse((HttpWebResponse) web.Response!, this);
                 }
 
                 throw;
 
             } catch (WebException ex) {
                 if (ex.Status != WebExceptionStatus.ProtocolError) throw;
-                return HttpResponse.GetFromWebResponse(ex.Response as HttpWebResponse, this);
+                return HttpResponse.GetFromWebResponse((HttpWebResponse) ex.Response!, this);
             }
 
         }
@@ -503,8 +505,7 @@ namespace Skybrud.Essentials.Http {
         private void SetRequestContentLength(HttpWebRequest request, int contentLength) {
 #if NET_FRAMEWORK
             request.ContentLength = contentLength;
-#endif
-#if NET_STANDARD
+#else
             request.Headers["Content-Length"] = contentLength.ToString();
 #endif
         }
@@ -534,7 +535,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        public static HttpRequest Get(string url, IHttpQueryString queryString) {
+        public static HttpRequest Get(string url, IHttpQueryString? queryString) {
             return new HttpRequest(HttpMethod.Get, url, queryString);
         }
 
@@ -551,7 +552,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        public static HttpRequest Post(string url, IHttpQueryString queryString) {
+        public static HttpRequest Post(string url, IHttpQueryString? queryString) {
             return new HttpRequest(HttpMethod.Post, url, queryString);
         }
 
@@ -560,7 +561,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="postData">The HTTP POST data of the request.</param>
-        public static HttpRequest Post(string url, IHttpPostData postData) {
+        public static HttpRequest Post(string url, IHttpPostData? postData) {
             return new HttpRequest(HttpMethod.Post, url, postData);
         }
 
@@ -570,7 +571,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The HTTP POST data of the request.</param>
-        public static HttpRequest Post(string url, IHttpQueryString queryString, IHttpPostData postData) {
+        public static HttpRequest Post(string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             return new HttpRequest(HttpMethod.Post, url, queryString, postData);
         }
 
@@ -582,7 +583,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="HttpRequest"/>.</returns>
-        public static HttpRequest Post(string url, IHttpQueryString queryString, string contentType, string body) {
+        public static HttpRequest Post(string url, IHttpQueryString? queryString, string? contentType, string? body) {
             return new HttpRequest(HttpMethod.Post, url, queryString).SetContentType(contentType).SetBody(body);
         }
 
@@ -617,7 +618,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
-        public static HttpRequest Post(string url, IHttpQueryString queryString, JToken body) {
+        public static HttpRequest Post(string url, IHttpQueryString? queryString, JToken body) {
             return new HttpRequest(HttpMethod.Post, url, queryString, body);
         }
 
@@ -630,7 +631,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        public static HttpRequest Post(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        public static HttpRequest Post(string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             return new HttpRequest(HttpMethod.Post, url, queryString, body, formatting);
         }
 
@@ -641,7 +642,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
-        public static HttpRequest Post(string url, XNode body) {
+        public static HttpRequest Post(string url, XNode? body) {
             return new HttpRequest(HttpMethod.Post, url).SetBody(body);
         }
 
@@ -653,7 +654,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        public static HttpRequest Post(string url, XNode body, SaveOptions options) {
+        public static HttpRequest Post(string url, XNode? body, SaveOptions options) {
             return new HttpRequest(HttpMethod.Post, url).SetBody(body, options);
         }
 
@@ -665,7 +666,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
-        public static HttpRequest Post(string url, IHttpQueryString queryString, XNode body) {
+        public static HttpRequest Post(string url, IHttpQueryString? queryString, XNode? body) {
             return new HttpRequest(HttpMethod.Post, url, queryString).SetBody(body);
         }
 
@@ -678,7 +679,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        public static HttpRequest Post(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public static HttpRequest Post(string url, IHttpQueryString? queryString, XNode? body, SaveOptions options) {
             return new HttpRequest(HttpMethod.Post, url, queryString).SetBody(body, options);
         }
 
@@ -695,7 +696,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        public static HttpRequest Put(string url, IHttpQueryString queryString) {
+        public static HttpRequest Put(string url, IHttpQueryString? queryString) {
             return new HttpRequest(HttpMethod.Put, url, queryString);
         }
 
@@ -704,7 +705,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="postData">The HTTP PUT data of the request.</param>
-        public static HttpRequest Put(string url, IHttpPostData postData) {
+        public static HttpRequest Put(string url, IHttpPostData? postData) {
             return new HttpRequest(HttpMethod.Put, url, postData);
         }
 
@@ -714,7 +715,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The HTTP PUT data of the request.</param>
-        public static HttpRequest Put(string url, IHttpQueryString queryString, IHttpPostData postData) {
+        public static HttpRequest Put(string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             return new HttpRequest(HttpMethod.Put, url, queryString, postData);
         }
 
@@ -726,7 +727,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="HttpRequest"/>.</returns>
-        public static HttpRequest Put(string url, IHttpQueryString queryString, string contentType, string body) {
+        public static HttpRequest Put(string url, IHttpQueryString? queryString, string? contentType, string? body) {
             return new HttpRequest(HttpMethod.Put, url, queryString).SetContentType(contentType).SetBody(body);
         }
 
@@ -761,7 +762,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the PUT body.</param>
-        public static HttpRequest Put(string url, IHttpQueryString queryString, JToken body) {
+        public static HttpRequest Put(string url, IHttpQueryString? queryString, JToken body) {
             return new HttpRequest(HttpMethod.Put, url, queryString, body);
         }
 
@@ -774,7 +775,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        public static HttpRequest Put(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        public static HttpRequest Put(string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             return new HttpRequest(HttpMethod.Put, url, queryString, body, formatting);
         }
 
@@ -809,7 +810,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
-        public static HttpRequest Put(string url, IHttpQueryString queryString, XNode body) {
+        public static HttpRequest Put(string url, IHttpQueryString? queryString, XNode body) {
             return new HttpRequest(HttpMethod.Put, url, queryString).SetBody(body);
         }
 
@@ -822,7 +823,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        public static HttpRequest Put(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public static HttpRequest Put(string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
             return new HttpRequest(HttpMethod.Put, url, queryString).SetBody(body, options);
         }
 
@@ -839,7 +840,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        public static HttpRequest Patch(string url, IHttpQueryString queryString) {
+        public static HttpRequest Patch(string url, IHttpQueryString? queryString) {
             return new HttpRequest(HttpMethod.Patch, url, queryString);
         }
 
@@ -848,7 +849,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="postData">The HTTP PATCH data of the request.</param>
-        public static HttpRequest Patch(string url, IHttpPostData postData) {
+        public static HttpRequest Patch(string url, IHttpPostData? postData) {
             return new HttpRequest(HttpMethod.Patch, url, postData);
         }
 
@@ -858,7 +859,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The HTTP PATCH data of the request.</param>
-        public static HttpRequest Patch(string url, IHttpQueryString queryString, IHttpPostData postData) {
+        public static HttpRequest Patch(string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             return new HttpRequest(HttpMethod.Patch, url, queryString, postData);
         }
 
@@ -870,7 +871,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="HttpRequest"/>.</returns>
-        public static HttpRequest Patch(string url, IHttpQueryString queryString, string contentType, string body) {
+        public static HttpRequest Patch(string url, IHttpQueryString? queryString, string? contentType, string? body) {
             return new HttpRequest(HttpMethod.Patch, url, queryString).SetContentType(contentType).SetBody(body);
         }
 
@@ -905,7 +906,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the PATCH body.</param>
-        public static HttpRequest Patch(string url, IHttpQueryString queryString, JToken body) {
+        public static HttpRequest Patch(string url, IHttpQueryString? queryString, JToken body) {
             return new HttpRequest(HttpMethod.Patch, url, queryString, body);
         }
 
@@ -918,7 +919,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        public static HttpRequest Patch(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        public static HttpRequest Patch(string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             return new HttpRequest(HttpMethod.Patch, url, queryString, body, formatting);
         }
 
@@ -953,7 +954,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
-        public static HttpRequest Patch(string url, IHttpQueryString queryString, XNode body) {
+        public static HttpRequest Patch(string url, IHttpQueryString? queryString, XNode body) {
             return new HttpRequest(HttpMethod.Patch, url, queryString).SetBody(body);
         }
 
@@ -966,7 +967,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">An instance of <see cref="JToken"/> representing the POST body.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        public static HttpRequest Patch(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public static HttpRequest Patch(string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
             return new HttpRequest(HttpMethod.Patch, url, queryString).SetBody(body, options);
         }
 
@@ -983,7 +984,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
-        public static HttpRequest Delete(string url, IHttpQueryString queryString) {
+        public static HttpRequest Delete(string url, IHttpQueryString? queryString) {
             return new HttpRequest(HttpMethod.Delete, url, queryString);
         }
 

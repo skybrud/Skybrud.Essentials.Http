@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Xml.Linq;
 
 namespace Skybrud.Essentials.Http {
 
@@ -6,7 +7,7 @@ namespace Skybrud.Essentials.Http {
     /// Various extension methods for <see cref="IHttpRequest"/>.
     /// </summary>
     public static class HttpRequestXmlExtensions {
-        
+
         /// <summary>
         /// Sets the <see cref="IHttpRequest.Body"/> property of <paramref name="request"/>.
         /// </summary>
@@ -14,7 +15,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="request">The request.</param>
         /// <param name="body">The new body of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, XNode body) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, XNode? body) where T : IHttpRequest {
             return SetBody(request, body, SaveOptions.None);
         }
 
@@ -26,7 +28,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="body">The new body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, XNode body, SaveOptions options) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, XNode? body, SaveOptions options) where T : IHttpRequest {
             if (request == null) return default;
             request.ContentType = HttpConstants.TextXml;
             request.Body = body?.ToString(options);
@@ -41,7 +44,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="contentType">The new content type of the request.</param>
         /// <param name="body">The new body of the request.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, string contentType, XNode body) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, string? contentType, XNode? body) where T : IHttpRequest {
             return SetBody(request, contentType, body, SaveOptions.None);
         }
 
@@ -54,7 +58,8 @@ namespace Skybrud.Essentials.Http {
         /// <param name="body">The new body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
-        public static T SetBody<T>(this T request, string contentType, XNode body, SaveOptions options) where T : IHttpRequest {
+        [return: NotNullIfNotNull("request")]
+        public static T? SetBody<T>(this T? request, string? contentType, XNode? body, SaveOptions options) where T : IHttpRequest {
             if (request == null) return default;
             request.ContentType = contentType;
             request.Body = body?.ToString(options);

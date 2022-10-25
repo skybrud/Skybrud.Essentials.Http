@@ -205,9 +205,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection queryString) {
+        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return GetResponse(HttpRequest.Patch(url, query));
         }
 
@@ -218,10 +218,10 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection queryString, NameValueCollection postData) {
+        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, NameValueCollection? postData) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
-            IHttpPostData post = postData == null ? null : new HttpPostData(postData);
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpPostData? post = postData == null ? null : new HttpPostData(postData);
             return GetResponse(HttpRequest.Patch(url, query, post));
         }
 
@@ -233,9 +233,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection queryString, string contentType, string body) {
+        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, string contentType, string body) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return GetResponse(HttpRequest.Patch(url, query).SetContentType(contentType).SetBody(body));
         }
 
@@ -246,10 +246,10 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection queryString, JToken body) {
+        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, JToken body) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return GetResponse(HttpRequest.Patch(url, query, body));
         }
 
@@ -261,10 +261,10 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection queryString, JToken body, Formatting formatting) {
+        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, JToken body, Formatting formatting) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return GetResponse(HttpRequest.Patch(url, query, body, formatting));
         }
 

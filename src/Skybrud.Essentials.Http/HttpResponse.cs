@@ -4,6 +4,11 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using Skybrud.Essentials.Http.Collections;
+using System.Diagnostics.CodeAnalysis;
+
+// ReSharper disable ConvertToUsingDeclaration
+
+#pragma warning disable SYSLIB0001
 
 namespace Skybrud.Essentials.Http {
 
@@ -12,16 +17,16 @@ namespace Skybrud.Essentials.Http {
     /// </summary>
     public class HttpResponse : IHttpResponse {
 
-        private HttpHeaderCollection _headers;
-        private byte[] _binary;
-        private string _body;
+        private HttpHeaderCollection? _headers;
+        private byte[]? _binary;
+        private string? _body;
 
         #region Properties
 
         /// <summary>
         /// Gets a reference to the <see cref="HttpRequest"/> that resulted in the response.
         /// </summary>
-        public IHttpRequest Request { get; }
+        public IHttpRequest? Request { get; }
 
         /// <summary>
         /// Gets a reference to the underlying <see cref="HttpWebResponse"/>.
@@ -51,7 +56,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets a collections of headers returned by the server.
         /// </summary>
-        public IHttpHeaderCollection Headers => _headers ?? (_headers = new HttpHeaderCollection(Response.Headers));
+        public IHttpHeaderCollection Headers => _headers ??= new HttpHeaderCollection(Response.Headers);
 
         /// <summary>
         /// Gets the URI of the response (eg. if the request was redirected).
@@ -71,7 +76,7 @@ namespace Skybrud.Essentials.Http {
         public string Body {
             get {
                 if (_body == null) ReadResponseBody();
-                return _body;
+                return _body!;
             }
         }
 
@@ -81,7 +86,7 @@ namespace Skybrud.Essentials.Http {
         public byte[] BinaryBody {
             get {
                 if (_binary == null) ReadResponseBody();
-                return _binary;
+                return _binary!;
             }
         }
 
@@ -89,7 +94,7 @@ namespace Skybrud.Essentials.Http {
 
         #region Constructor
 
-        private HttpResponse(IHttpRequest request, HttpWebResponse response) {
+        private HttpResponse(IHttpRequest? request, HttpWebResponse response) {
             Request = request;
             Response = response;
             Encoding = DetectResponseEncoding();
@@ -107,7 +112,7 @@ namespace Skybrud.Essentials.Http {
         private Encoding DetectResponseEncoding() {
 
             // Information in the header is seperated by ";"
-            foreach (string piece in (ContentType ?? "").Split(';')) {
+            foreach (string piece in ContentType.Split(';')) {
 
                 // Search for the charset
                 Match regex = Regex.Match(piece.Trim().ToLowerInvariant(), "^charset=(.+?)$");
@@ -142,13 +147,13 @@ namespace Skybrud.Essentials.Http {
             if (_binary != null) return;
 
             // Get a reference to the response stream (and dispose it once we're done)
-            using (Stream stream = Response.GetResponseStream()) {
+            using (Stream? stream = Response.GetResponseStream()) {
 
                 // The stream really shouldn't be NULL, but just to be sure
                 if (stream == null) return;
 
                 // Read the response stream into a binary array
-                using (BinaryReader reader = new BinaryReader(stream)) {
+                using (BinaryReader reader = new(stream)) {
                     byte[] allBytes;
                     const int bufferSize = 4096;
                     using (var ms = new MemoryStream()) {
@@ -177,7 +182,8 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <param name="response">The instance of <see cref="HttpWebResponse"/> to be parsed.</param>
         /// <returns>A new instance of <see cref="HttpWebResponse"/> based on the specified <paramref name="response"/>.</returns>
-        public static HttpResponse GetFromWebResponse(HttpWebResponse response) {
+        [return: NotNullIfNotNull("response")]
+        public static HttpResponse? GetFromWebResponse(HttpWebResponse? response) {
             return response == null ? null : new HttpResponse(null, response);
         }
 
@@ -187,7 +193,19 @@ namespace Skybrud.Essentials.Http {
         /// <param name="response">The instance of <see cref="HttpWebResponse"/> to be parsed.</param>
         /// <param name="request">The instance of <see cref="HttpWebRequest"/> that resulted in the response.</param>
         /// <returns>A new instance of <see cref="HttpWebResponse"/> based on the specified <paramref name="response"/>.</returns>
-        public static HttpResponse GetFromWebResponse(HttpWebResponse response, HttpRequest request) {
+        [return: NotNullIfNotNull("response")]
+        public static HttpResponse? GetFromWebResponse(HttpWebResponse? response, HttpRequest? request) {
+            return response == null ? null : new HttpResponse(request, response);
+        }
+
+        /// <summary>
+        /// Creates a new instance based on the specified <paramref name="response"/>.
+        /// </summary>
+        /// <param name="response">The instance of <see cref="HttpWebResponse"/> to be parsed.</param>
+        /// <param name="request">The instance of <see cref="HttpWebRequest"/> that resulted in the response.</param>
+        /// <returns>A new instance of <see cref="HttpWebResponse"/> based on the specified <paramref name="response"/>.</returns>
+        [return: NotNullIfNotNull("response")]
+        public static HttpResponse? GetFromWebResponse(HttpRequest? request, HttpWebResponse? response) {
             return response == null ? null : new HttpResponse(request, response);
         }
 

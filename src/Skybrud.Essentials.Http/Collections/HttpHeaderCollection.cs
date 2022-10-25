@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -17,13 +16,13 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <summary>
         /// Gets a reference to the internal instance of <see cref="WebHeaderCollection"/>.
         /// </summary>
-        public WebHeaderCollection Headers { get; private set; }
+        public WebHeaderCollection Headers { get; }
 
         /// <summary>
         /// Gets or sets the character sets that are acceptable - eg. <c>utf8</c>. This property corresponds to
         /// the <c>Accept-Charset</c> HTTP header.
         /// </summary>
-        public string AcceptCharset {
+        public string? AcceptCharset {
             get => Headers["Accept-Charset"];
             set => Headers["Accept-Charset"] = value;
         }
@@ -35,7 +34,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/HTTP_compression</cref>
         /// </see>
-        public string AcceptEncoding {
+        public string? AcceptEncoding {
             get => Headers["Accept-Encoding"];
             set => Headers["Accept-Encoding"] = value;
         }
@@ -47,7 +46,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/Content_negotiation</cref>
         /// </see>
-        public string AcceptLanguage {
+        public string? AcceptLanguage {
             get => Headers["Accept-Language"];
             set => Headers["Accept-Language"] = value;
         }
@@ -56,7 +55,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// Gets or sets the authentication credentials for HTTP authentication. This property corresponds to the
         /// <c>Authorization</c> HTTP header.
         /// </summary>
-        public string Authorization {
+        public string? Authorization {
             get => Headers["Authorization"];
             set => Headers["Authorization"] = value;
         }
@@ -76,7 +75,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the header.</param>
         /// <returns>The value of the header.</returns>
-        public string this[string key] {
+        public string? this[string key] {
             get => Headers[key];
             set => Headers[key] = value;
         }
@@ -95,7 +94,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <summary>
         /// Creates a new instance based on the specified <paramref name="headers"/>.
         /// </summary>
-        public HttpHeaderCollection(WebHeaderCollection headers) {
+        public HttpHeaderCollection(WebHeaderCollection? headers) {
             Headers = headers ?? new WebHeaderCollection();
         }
 
@@ -127,7 +126,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator() {
-            return Headers.AllKeys.Select(x => new KeyValuePair<string, string>(x, Headers[x])).GetEnumerator();
+            return Headers.AllKeys.Select(x => new KeyValuePair<string, string>(x, Headers[x]!)).GetEnumerator();
         }
 
         /// <summary>
@@ -146,12 +145,10 @@ namespace Skybrud.Essentials.Http.Collections {
         /// Creates a new instance from the specified <paramref name="headers"/>.
         /// </summary>
         /// <param name="headers">The <see cref="WebHeaderCollection"/> representing the headers.</param>
-        public static implicit operator HttpHeaderCollection(WebHeaderCollection headers) {
+        public static implicit operator HttpHeaderCollection(WebHeaderCollection? headers) {
 
             // Initialize a new instance of HttpHeaderCollection
-            HttpHeaderCollection collection = new HttpHeaderCollection {
-                Headers = headers ?? new WebHeaderCollection()
-            };
+            HttpHeaderCollection collection = new(headers);
 
             return collection;
 

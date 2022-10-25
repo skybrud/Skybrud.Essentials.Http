@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 using System.Xml.Linq;
 
 namespace Skybrud.Essentials.Http.Client {
-    
+
     /// <summary>
     /// Static class with various extension methods for <see cref="IHttpClient"/> .
     /// </summary>
@@ -30,7 +30,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Get(this IHttpClient client, string url, IHttpQueryString queryString) {
+        public static IHttpResponse Get(this IHttpClient client, string url, IHttpQueryString? queryString) {
             return client.GetResponse(HttpRequest.Get(url, queryString));
         }
 
@@ -43,8 +43,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Get(this IHttpClient client, string url, NameValueCollection queryString) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Get(this IHttpClient client, string url, NameValueCollection? queryString) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Get(url, query));
         }
 
@@ -71,7 +71,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString queryString) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString? queryString) {
             return client.GetResponse(HttpRequest.Post(url, queryString));
         }
 
@@ -82,7 +82,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="postData">The POST data.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpPostData postData) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpPostData? postData) {
             return client.GetResponse(HttpRequest.Post(url, null, postData));
         }
 
@@ -94,7 +94,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString queryString, IHttpPostData postData) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             return client.GetResponse(HttpRequest.Post(url, queryString, postData));
         }
 
@@ -107,7 +107,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString queryString, string contentType, string body) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString? queryString, string contentType, string body) {
             return client.GetResponse(HttpRequest.Post(url, queryString, contentType, body));
         }
 
@@ -142,7 +142,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString queryString, JToken body) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString? queryString, JToken body) {
             return client.GetResponse(HttpRequest.Post(url, queryString, body));
         }
 
@@ -155,7 +155,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             return client.GetResponse(HttpRequest.Post(url, queryString, body, formatting));
         }
 
@@ -190,7 +190,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString queryString, XNode body) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString? queryString, XNode body) {
             return client.GetResponse(HttpRequest.Post(url, queryString, body));
         }
 
@@ -203,7 +203,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public static IHttpResponse Post(this IHttpClient client, string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
             return client.GetResponse(HttpRequest.Post(url, queryString, body, options));
         }
 
@@ -216,8 +216,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection queryString) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection? queryString) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Post(url, query));
         }
 
@@ -229,9 +229,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection queryString, NameValueCollection postData) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
-            IHttpPostData post = postData == null ? null : new HttpPostData(postData);
+        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection? queryString, NameValueCollection? postData) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpPostData? post = postData == null ? null : new HttpPostData(postData);
             return client.GetResponse(HttpRequest.Post(url, query, post));
         }
 
@@ -244,8 +244,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection queryString, string contentType, string body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection? queryString, string contentType, string body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Post(url, query, contentType, body));
         }
 
@@ -257,8 +257,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection queryString, JToken body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection? queryString, JToken body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Post(url, query, body));
         }
 
@@ -271,8 +271,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection queryString, JToken body, Formatting formatting) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection? queryString, JToken body, Formatting formatting) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Post(url, query, body, formatting));
         }
 
@@ -284,8 +284,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection queryString, XNode body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection? queryString, XNode body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Post(url, query, body));
         }
 
@@ -298,8 +298,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection queryString, XNode body, SaveOptions options) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Post(this IHttpClient client, string url, NameValueCollection? queryString, XNode body, SaveOptions options) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Post(url, query, body, options));
         }
 
@@ -326,7 +326,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString queryString) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString? queryString) {
             return client.GetResponse(HttpRequest.Patch(url, queryString));
         }
 
@@ -337,7 +337,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="postData">The POST data.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpPostData postData) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpPostData? postData) {
             return client.GetResponse(HttpRequest.Patch(url, postData));
         }
 
@@ -349,7 +349,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString queryString, IHttpPostData postData) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             return client.GetResponse(HttpRequest.Patch(url, queryString, postData));
         }
 
@@ -362,7 +362,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString queryString, string contentType, string body) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString? queryString, string? contentType, string? body) {
             return client.GetResponse(HttpRequest.Patch(url, queryString, contentType, body));
         }
 
@@ -397,7 +397,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString queryString, JToken body) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString? queryString, JToken body) {
             return client.GetResponse(HttpRequest.Patch(url, queryString, body));
         }
 
@@ -410,7 +410,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             return client.GetResponse(HttpRequest.Patch(url, queryString, body, formatting));
         }
 
@@ -445,7 +445,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString queryString, XNode body) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString? queryString, XNode body) {
             return client.GetResponse(HttpRequest.Patch(url, queryString, body));
         }
 
@@ -458,7 +458,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public static IHttpResponse Patch(this IHttpClient client, string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
             return client.GetResponse(HttpRequest.Patch(url, queryString, body, options));
         }
 
@@ -471,8 +471,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection queryString) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection? queryString) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Patch(url, query));
         }
 
@@ -484,9 +484,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection queryString, NameValueCollection postData) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
-            IHttpPostData post = postData == null ? null : new HttpPostData(postData);
+        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection? queryString, NameValueCollection? postData) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpPostData? post = postData == null ? null : new HttpPostData(postData);
             return client.GetResponse(HttpRequest.Patch(url, query, post));
         }
 
@@ -499,8 +499,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection queryString, string contentType, string body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection? queryString, string? contentType, string? body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Patch(url, query, contentType, body));
         }
 
@@ -512,8 +512,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection queryString, JToken body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection? queryString, JToken body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Patch(url, query, body));
         }
 
@@ -526,8 +526,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection queryString, JToken body, Formatting formatting) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection? queryString, JToken body, Formatting formatting) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Patch(url, query, body, formatting));
         }
 
@@ -539,8 +539,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection queryString, XNode body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection? queryString, XNode body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Patch(url, query, body));
         }
 
@@ -553,8 +553,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection queryString, XNode body, SaveOptions options) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Patch(this IHttpClient client, string url, NameValueCollection? queryString, XNode body, SaveOptions options) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Patch(url, query, body, options));
         }
 
@@ -581,7 +581,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString queryString) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString? queryString) {
             return client.GetResponse(HttpRequest.Put(url, queryString));
         }
 
@@ -592,7 +592,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="postData">The POST data.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpPostData postData) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpPostData? postData) {
             return client.GetResponse(HttpRequest.Put(url, postData));
         }
 
@@ -604,7 +604,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString queryString, IHttpPostData postData) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             return client.GetResponse(HttpRequest.Put(url, queryString, postData));
         }
 
@@ -617,7 +617,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString queryString, string contentType, string body) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString? queryString, string? contentType, string? body) {
             return client.GetResponse(HttpRequest.Put(url, queryString, contentType, body));
         }
 
@@ -652,7 +652,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString queryString, JToken body) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString? queryString, JToken body) {
             return client.GetResponse(HttpRequest.Put(url, queryString, body));
         }
 
@@ -665,7 +665,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             return client.GetResponse(HttpRequest.Put(url, queryString, body, formatting));
         }
 
@@ -700,7 +700,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString queryString, XNode body) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString? queryString, XNode body) {
             return client.GetResponse(HttpRequest.Put(url, queryString, body));
         }
 
@@ -713,7 +713,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public static IHttpResponse Put(this IHttpClient client, string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
             return client.GetResponse(HttpRequest.Put(url, queryString, body, options));
         }
 
@@ -726,8 +726,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection queryString) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection? queryString) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Put(url, query));
         }
 
@@ -739,9 +739,9 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection queryString, NameValueCollection postData) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
-            IHttpPostData post = postData == null ? null : new HttpPostData(postData);
+        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection? queryString, NameValueCollection? postData) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+            IHttpPostData? post = postData == null ? null : new HttpPostData(postData);
             return client.GetResponse(HttpRequest.Put(url, query, post));
         }
 
@@ -754,8 +754,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection queryString, string contentType, string body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection? queryString, string? contentType, string? body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Put(url, query, contentType, body));
         }
 
@@ -767,8 +767,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection queryString, JToken body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection? queryString, JToken body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Put(url, query, body));
         }
 
@@ -781,8 +781,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection queryString, JToken body, Formatting formatting) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection? queryString, JToken body, Formatting formatting) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Put(url, query, body, formatting));
         }
 
@@ -794,8 +794,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection queryString, XNode body) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection? queryString, XNode body) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Put(url, query, body));
         }
 
@@ -808,8 +808,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection queryString, XNode body, SaveOptions options) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Put(this IHttpClient client, string url, NameValueCollection? queryString, XNode body, SaveOptions options) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Put(url, query, body, options));
         }
 
@@ -836,7 +836,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Delete(this IHttpClient client, string url, IHttpQueryString queryString) {
+        public static IHttpResponse Delete(this IHttpClient client, string url, IHttpQueryString? queryString) {
             return client.GetResponse(HttpRequest.Delete(url, queryString));
         }
 
@@ -849,8 +849,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="url">The URL of the request.</param>
         /// <param name="queryString">The query string of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public static IHttpResponse Delete(this IHttpClient client, string url, NameValueCollection queryString) {
-            IHttpQueryString query = queryString == null ? null : new HttpQueryString(queryString);
+        public static IHttpResponse Delete(this IHttpClient client, string url, NameValueCollection? queryString) {
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
             return client.GetResponse(HttpRequest.Delete(url, query));
         }
 

@@ -28,7 +28,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <summary>
         /// Creates a new instance based on the specified <paramref name="cookies"/>.
         /// </summary>
-        public HttpCookieCollection(CookieContainer cookies) {
+        public HttpCookieCollection(CookieContainer? cookies) {
             Container = cookies ?? new CookieContainer();
         }
 

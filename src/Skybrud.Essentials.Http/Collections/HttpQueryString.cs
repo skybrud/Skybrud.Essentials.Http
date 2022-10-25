@@ -46,9 +46,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the item to match.</param>
         /// <returns>The <see cref="string"/> value of the item, or <c>null</c> if not found.</returns>
-        public string this[string key] {
+        public string? this[string key] {
             get => GetString(key);
-            set => _values[key] = value;
+            set => Set(key, value);
         }
 
         /// <summary>
@@ -71,8 +71,8 @@ namespace Skybrud.Essentials.Http.Collections {
         /// Initializes a new instance based on the specified <paramref name="dictionary"/>.
         /// </summary>
         /// <param name="dictionary">The dictionary the query string should be based.</param>
-        public HttpQueryString(Dictionary<string, string> dictionary) {
-            _values = dictionary ?? throw new ArgumentNullException(nameof(dictionary));
+        public HttpQueryString(Dictionary<string, string>? dictionary) {
+            _values = dictionary ?? new Dictionary<string, string>();
         }
 
 #if NET_FRAMEWORK
@@ -81,9 +81,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// Initializes a new instance based on the specified <paramref name="collection"/>.
         /// </summary>
         /// <param name="collection">The collection the query string should be based.</param>
-        public HttpQueryString(NameValueCollection collection) {
-            if (collection == null) throw new ArgumentNullException(nameof(collection));
+        public HttpQueryString(NameValueCollection? collection) {
             _values = new Dictionary<string, string>();
+            if (collection == null) return;
             foreach (string key in collection.AllKeys) {
                 _values.Add(key, collection[key]);
             }
@@ -100,13 +100,13 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
-        public void Add(string key, object value) {
-            
+        public void Add(string key, object? value) {
+
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            
+
             // Abort if "value" is null
             if (value == null) return;
-            
+
             // Convert the value to a culture invariant string and add it to the dictionary
             _values.Add(key, string.Format(CultureInfo.InvariantCulture, "{0}", value));
 
@@ -117,10 +117,10 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the entry.</param>
         /// <param name="value">The value of the entry.</param>
-        public void Set(string key, object value) {
-            
+        public void Set(string key, object? value) {
+
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            
+
             // Specifying a null value should result in the item being removed
             if (value == null) {
                 _values.Remove(key);
@@ -181,9 +181,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the entry.</param>
         /// <returns>The <see cref="System.String"/> value of the entry, or <c>null</c> if not found.</returns>
-        public string GetString(string key) {
+        public string? GetString(string key) {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            return _values.TryGetValue(key, out string value) ? value : null;
+            return _values.TryGetValue(key, out string? value) ? value : null;
         }
 
         /// <summary>
@@ -236,9 +236,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the entry.</param>
         /// <returns>The <typeparamref name="T"/> value of the entry, or the default value of <typeparamref name="T"/> if not found.</returns>
-        private T GetValue<T>(string key) {
+        private T? GetValue<T>(string key) {
             if (string.IsNullOrWhiteSpace(key)) throw new ArgumentNullException(nameof(key));
-            if (!_values.TryGetValue(key, out string value)) return default;
+            if (!_values.TryGetValue(key, out string? value)) return default;
             return string.IsNullOrWhiteSpace(value) ? default : (T) Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
         }
 
@@ -310,7 +310,7 @@ namespace Skybrud.Essentials.Http.Collections {
             // Return an empty instance if "str" is NULL or empty
             if (string.IsNullOrWhiteSpace(str)) return new HttpQueryString();
 
-            Dictionary<string, string> values = new Dictionary<string, string>();
+            Dictionary<string, string> values = new();
 
             int length = str.Length;
 
@@ -335,7 +335,7 @@ namespace Skybrud.Essentials.Http.Collections {
                 }
 
                 // extract the name / value pair
-                string name = null;
+                string? name = null;
                 string value;
 
                 if (ti >= 0) {
@@ -349,9 +349,9 @@ namespace Skybrud.Essentials.Http.Collections {
 
                 // add name / value pair to the collection
                 if (urlencoded) {
-                    values.Add(StringUtils.UrlDecode(name), StringUtils.UrlDecode(value));
+                    values.Add(StringUtils.UrlDecode(name) ?? string.Empty, StringUtils.UrlDecode(value));
                 } else {
-                    values.Add(name ?? "", value);
+                    values.Add(name ?? string.Empty, value);
                 }
 
                 // trailing '&'
@@ -377,7 +377,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// to query string contained in <paramref name="str"/>, if the conversion succeeded, or <c>null</c> if the
         /// conversion failed. This parameter is passed uninitialized.</param>
         /// <returns><c>true</c> if the <paramref name="str"/> parameter was converted successfully; otherwise, <c>false</c>.</returns>
-        public bool TryParse(string str, out HttpQueryString result) {
+        public bool TryParse(string str, out HttpQueryString? result) {
             try {
                 result = Parse(str);
                 return true;
@@ -397,7 +397,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// conversion failed. This parameter is passed uninitialized.</param>
         /// <param name="urlencoded">Whether the query string is URL encoded</param>
         /// <returns><c>true</c> if the <paramref name="str"/> parameter was converted successfully; otherwise, <c>false</c>.</returns>
-        public bool TryParse(string str, bool urlencoded, out HttpQueryString result) {
+        public bool TryParse(string str, bool urlencoded, out HttpQueryString? result) {
             try {
                 result = Parse(str, urlencoded);
                 return true;
@@ -418,10 +418,10 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="collection">The instance of <see cref="NameValueCollection"/> the query string should be based on.</param>
         /// <returns>An instance of <see cref="HttpQueryString"/> based on the specified <paramref name="collection"/>.</returns>
-        public static implicit operator HttpQueryString(NameValueCollection collection) {
-            return collection == null ? null : new HttpQueryString(collection);
+        public static implicit operator HttpQueryString(NameValueCollection? collection) {
+            return new HttpQueryString(collection);
         }
-        
+
 #endif
 
         #endregion

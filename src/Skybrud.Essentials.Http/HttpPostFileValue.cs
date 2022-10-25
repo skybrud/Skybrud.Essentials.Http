@@ -18,12 +18,12 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets the content type of the file.
         /// </summary>
-        public string ContentType { get; }
+        public string? ContentType { get; }
 
         /// <summary>
         /// Gets the name of the file.
         /// </summary>
-        public string FileName { get; }
+        public string? FileName { get; }
 
         /// <summary>
         /// Gets the data of the file.
@@ -49,7 +49,7 @@ namespace Skybrud.Essentials.Http {
         /// <param name="path">The path to the file.</param>
         /// <param name="contentType">The content type of the file.</param>
         /// <param name="filename">The name of the file.</param>
-        public HttpPostFileValue(string name, string path, string contentType, string filename) {
+        public HttpPostFileValue(string name, string path, string? contentType, string? filename) {
 
             Name = name;
             Data = File.ReadAllBytes(path);
@@ -107,7 +107,7 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         /// <returns>The value as a string.</returns>
         public override string ToString() {
-            return FileName;
+            return FileName ?? Name;
         }
 
         #endregion

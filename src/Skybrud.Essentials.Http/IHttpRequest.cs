@@ -19,7 +19,7 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets or sets the credentials (username and password) of the request.
         /// </summary>
-        ICredentials Credentials { get; set; }
+        ICredentials? Credentials { get; set; }
 
         /// <summary>
         /// Gets or sets the URL of the request. The query string can either be specified directly in the URL, or
@@ -31,7 +31,7 @@ namespace Skybrud.Essentials.Http {
         /// Gets or sets the HTTP host of the request. If left blank, the host will be based on <see cref="Url"/>
         /// instead.
         /// </summary>
-        string Host { get; set; }
+        string? Host { get; set; }
 
         /// <summary>
         /// Gets or sets the encoding of the request. Default is UTF-8.
@@ -70,12 +70,12 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets or sets the content type of the request.
         /// </summary>
-        string ContentType { get; set; }
+        string? ContentType { get; set; }
 
         /// <summary>
         /// Gets or sets the body of the request.
         /// </summary>
-        string Body { get; set; }
+        string? Body { get; set; }
 
         /// <summary>
         /// Gets a or sets a list of content types that are acceptable for the response - eg. <c>text/html</c>,
@@ -85,13 +85,13 @@ namespace Skybrud.Essentials.Http {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/Content_negotiation</cref>
         /// </see>
-        string Accept { get; set; }
+        string? Accept { get; set; }
 
         /// <summary>
         /// Gets or sets the character sets that are acceptable - eg. <c>utf8</c>. This property corresponds to
         /// the <c>Accept-Charset</c> HTTP header.
         /// </summary>
-        string AcceptCharset { get; set; }
+        string? AcceptCharset { get; set; }
 
         /// <summary>
         /// Gets or sets the a list of acceptable encodings - eg. <c>gzip</c> or <c>gzip, deflate</c>. This
@@ -100,7 +100,7 @@ namespace Skybrud.Essentials.Http {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/HTTP_compression</cref>
         /// </see>
-        string AcceptEncoding { get; set; }
+        string? AcceptEncoding { get; set; }
 
         /// <summary>
         /// Gets or sets the accept language header of the request - eg. <c>en-US</c>, <c>en</c> or <c>da</c>. This
@@ -109,13 +109,13 @@ namespace Skybrud.Essentials.Http {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/Content_negotiation</cref>
         /// </see>
-        string AcceptLanguage { get; set; }
+        string? AcceptLanguage { get; set; }
 
         /// <summary>
         /// Gets or sets the authentication credentials for HTTP authentication. This property corresponds to the
         /// <c>Authorization</c> HTTP header.
         /// </summary>
-        string Authorization { get; set; }
+        string? Authorization { get; set; }
 
         /// <summary>
         /// Gets or sets the address of the previous web page from which a link to the currently requested page was
@@ -123,13 +123,13 @@ namespace Skybrud.Essentials.Http {
         /// point that it has become standard usage and is considered correct terminology). This property corresponds
         /// to the <c>Referer</c> HTTP header.
         /// </summary>
-        string Referer { get; set; }
+        string? Referer { get; set; }
 
         /// <summary>
         /// Gets or sets a string representing the user agent. This property corresponds to the <c>User-Agent</c>
         /// HTTP header.
         /// </summary>
-        string UserAgent { get; set; }
+        string? UserAgent { get; set; }
 
 #if NET_FRAMEWORK_OR_NET_STANDARD_2
 
@@ -141,22 +141,22 @@ namespace Skybrud.Essentials.Http {
         /// <summary>
         /// Gets or sets the media type of the request.
         /// </summary>
-        string MediaType { get; set; }
+        string? MediaType { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the <strong>Transfer-encoding</strong> HTTP header.
         /// </summary>
-        string TransferEncoding { get; set; }
+        string? TransferEncoding { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the <strong>Connection</strong> HTTP header.
         /// </summary>
-        string Connection { get; set; }
+        string? Connection { get; set; }
 
         /// <summary>
         /// Gets or sets the value of the <strong>Expect</strong> HTTP header.
         /// </summary>
-        string Expect { get; set; }
+        string? Expect { get; set; }
 
 #endif
 

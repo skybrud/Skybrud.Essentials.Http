@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
 using Skybrud.Essentials.Http.Options;
 using System.Threading.Tasks;
+// ReSharper disable ArrangeDefaultValueWhenTypeNotEvident
 
 namespace Skybrud.Essentials.Http.Client {
 
@@ -611,7 +612,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Use the Patch method instead.")]
-        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, XNode body) {
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString? queryString, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, body);
         }
@@ -625,7 +626,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Use the Patch method instead.")]
-        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public virtual IHttpResponse DoHttpPatchRequest(string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(HttpMethod.Patch, url, queryString, body, options);
         }
@@ -665,7 +666,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         [Obsolete("Use the Delete method instead.")]
-        public virtual IHttpResponse DoHttpDeleteRequest(string url, IHttpQueryString queryString) {
+        public virtual IHttpResponse DoHttpDeleteRequest(string url, IHttpQueryString? queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             return DoHttpRequest(HttpMethod.Delete, url, queryString);
         }
@@ -694,8 +695,8 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
         public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpGetOptions options) {
-            IHttpQueryString queryString = options?.GetQueryString();
-            return DoHttpRequest(method, url, queryString);
+            if (options == null) throw new ArgumentNullException(nameof(options));
+            return DoHttpRequest(method, url, options.GetQueryString());
         }
 
         /// <summary>
@@ -706,7 +707,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString) {
             return DoHttpRequest(method, url, queryString, default(IHttpPostData));
         }
 
@@ -718,7 +719,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="postData">The POST data.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpPostData postData) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpPostData? postData) {
             return DoHttpRequest(method, url, null, postData);
         }
 
@@ -731,19 +732,17 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="postData">The POST data.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, IHttpPostData postData) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, IHttpPostData? postData) {
 
             // Some input validation
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            if (queryString == null) queryString = new HttpQueryString();
-            if (postData == null) postData = new HttpPostData();
 
             // Initialize the request
-            HttpRequest request = new HttpRequest {
+            HttpRequest request = new() {
                 Method = method,
                 Url = url,
-                QueryString = queryString,
-                PostData = postData
+                QueryString = queryString!,
+                PostData = postData!
             };
 
             PrepareHttpRequest(request);
@@ -763,17 +762,16 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, string contentType, string body) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, string? contentType, string? body) {
 
             // Some input validation
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            if (queryString == null) queryString = new HttpQueryString();
 
             // Initialize the request
-            HttpRequest request = new HttpRequest {
+            HttpRequest request = new() {
                 Method = method,
                 Url = url,
-                QueryString = queryString,
+                QueryString = queryString!,
                 ContentType = contentType,
                 Body = body
             };
@@ -821,7 +819,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, JToken body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, HttpConstants.ApplicationJson, body.ToString(Formatting.None));
         }
@@ -836,7 +834,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, HttpConstants.ApplicationJson, body.ToString(formatting));
         }
@@ -877,7 +875,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="body">The body of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, XNode body) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, HttpConstants.TextXml, body.ToString(SaveOptions.None));
         }
@@ -892,7 +890,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         [Obsolete("Don't use. Method will be removed in a future release.")]
-        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+        public virtual IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
             if (body == null) throw new ArgumentNullException(nameof(body));
             return DoHttpRequest(method, url, queryString, HttpConstants.TextXml, body.ToString(options));
         }

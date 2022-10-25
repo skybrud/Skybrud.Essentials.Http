@@ -47,9 +47,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the item.</param>
         /// <returns>The <see cref="string"/> value of the item, or <c>null</c> if not found.</returns>
-        public string this[string key] {
-            get => _data.TryGetValue(key, out IHttpPostValue value) ? value.ToString() : null;
-            set => _data[key] = new HttpPostValue(key, value);
+        public string? this[string key] {
+            get => _data.TryGetValue(key, out IHttpPostValue? value) ? value.ToString() : null;
+            set => _data[key] = new HttpPostValue(key, value ?? string.Empty);
         }
 
         #endregion
@@ -69,9 +69,9 @@ namespace Skybrud.Essentials.Http.Collections {
         /// Initializes a new instance based on the specified <paramref name="collection"/>.
         /// </summary>
         /// <param name="collection">The collection the query string should be based.</param>
-        public HttpPostData(NameValueCollection collection) {
-            if (collection == null) throw new ArgumentNullException(nameof(collection));
+        public HttpPostData(NameValueCollection? collection) {
             _data = new Dictionary<string, IHttpPostValue>();
+            if (collection == null) return;
             foreach (string key in collection.AllKeys) {
                 _data.Add(key, new HttpPostValue(key, collection[key]));
             }
@@ -168,7 +168,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <returns><c>true</c> if the item with the specified <paramref name="key"/> is an instance of
         /// <see cref="HttpPostFileValue"/>, otherwise <c>false</c>.</returns>
         public bool IsFile(string key) {
-            return _data.TryGetValue(key, out IHttpPostValue value) && value is HttpPostFileValue;
+            return _data.TryGetValue(key, out IHttpPostValue? value) && value is HttpPostFileValue;
         }
 
         internal static void Write(Stream stream, string str) {
@@ -193,7 +193,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <returns>The POST data as an URL encoded string.</returns>
         public override string ToString() {
-            return string.Join("&", _data.Select(pair => Uri.EscapeDataString(pair.Key) + "=" + Uri.EscapeDataString(pair.Value.ToString())));
+            return string.Join("&", _data.Select(pair => Uri.EscapeDataString(pair.Key) + "=" + Uri.EscapeDataString(pair.Value.ToString()!)));
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <returns>An enumerator that can be used to iterate through the collection.</returns>
         public IEnumerator<KeyValuePair<string, string>> GetEnumerator() {
-            return _data.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString())).GetEnumerator();
+            return _data.Select(x => new KeyValuePair<string, string>(x.Key, x.Value.ToString()!)).GetEnumerator();
         }
 
         /// <summary>
@@ -223,8 +223,8 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="collection">The instance of <see cref="NameValueCollection"/> the POST data should be based on.</param>
         /// <returns>An instance of <see cref="HttpPostData"/> based on the specified <paramref name="collection"/>.</returns>
-        public static implicit operator HttpPostData(NameValueCollection collection) {
-            return collection == null ? null : new HttpPostData(collection);
+        public static implicit operator HttpPostData(NameValueCollection? collection) {
+            return new HttpPostData(collection);
         }
 
 #endif

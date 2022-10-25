@@ -14,7 +14,7 @@ namespace Skybrud.Essentials.Http.Options {
         /// <summary>
         /// Gets an instance of <see cref="IHttpPostData"/> representing the POST data.
         /// </summary>
-        IHttpPostData GetPostData();
+        IHttpPostData? GetPostData();
 
         #endregion
 

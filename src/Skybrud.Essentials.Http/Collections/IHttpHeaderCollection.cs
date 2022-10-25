@@ -19,7 +19,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// Gets or sets the character sets that are acceptable - eg. <c>utf8</c>. This property corresponds to
         /// the <c>Accept-Charset</c> HTTP header.
         /// </summary>
-        string AcceptCharset { get; set; }
+        string? AcceptCharset { get; set; }
 
         /// <summary>
         /// Gets or sets the a list of acceptable encodings - eg. <c>gzip</c> or <c>gzip, deflate</c>. This
@@ -28,7 +28,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/HTTP_compression</cref>
         /// </see>
-        string AcceptEncoding { get; set; }
+        string? AcceptEncoding { get; set; }
 
         /// <summary>
         /// Gets or sets the accept language header of the request - eg. <c>en-US</c>, <c>en</c> or
@@ -37,13 +37,13 @@ namespace Skybrud.Essentials.Http.Collections {
         /// <see>
         ///     <cref>https://en.wikipedia.org/wiki/Content_negotiation</cref>
         /// </see>
-        string AcceptLanguage { get; set; }
+        string? AcceptLanguage { get; set; }
 
         /// <summary>
         /// Gets or sets the authentication credentials for HTTP authentication. This property corresponds to the
         /// <c>Authorization</c> HTTP header.
         /// </summary>
-        string Authorization { get; set; }
+        string? Authorization { get; set; }
 
         /// <summary>
         /// Gets amount of headers added to the collection.
@@ -60,7 +60,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the header.</param>
         /// <returns>The value of the header.</returns>
-        string this[string key] { get; set; }
+        string? this[string key] { get; set; }
 
         #endregion
 

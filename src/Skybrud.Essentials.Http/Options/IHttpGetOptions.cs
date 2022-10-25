@@ -14,7 +14,7 @@ namespace Skybrud.Essentials.Http.Options {
         /// <summary>
         /// Gets an instance of <see cref="IHttpQueryString"/> representing the GET parameters.
         /// </summary>
-        IHttpQueryString GetQueryString();
+        IHttpQueryString? GetQueryString();
 
         #endregion
 

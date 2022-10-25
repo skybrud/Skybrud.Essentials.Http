@@ -35,7 +35,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the item to match.</param>
         /// <returns>The <see cref="string"/> value of the item, or <c>null</c> if not found.</returns>
-        string this[string key] { get; }
+        string? this[string key] { get; }
 
         /// <summary>
         /// Gets whether this implementation of <see cref="IHttpQueryString"/> supports duplicate keys.
@@ -93,7 +93,7 @@ namespace Skybrud.Essentials.Http.Collections {
         /// </summary>
         /// <param name="key">The key of the entry.</param>
         /// <returns>The <see cref="System.String"/> value of the entry, or <c>null</c> if not found.</returns>
-        string GetString(string key);
+        string? GetString(string key);
 
         /// <summary>
         /// Gets the <see cref="System.Int32"/> value of the entry with the specified <paramref name="key"/>.
