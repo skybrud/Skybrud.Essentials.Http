@@ -15,6 +15,7 @@ using System.Xml.Linq;
 // ReSharper disable ConvertToUsingDeclaration
 // ReSharper disable NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
 // ReSharper disable ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+// ReSharper disable once RedundantSuppressNullableWarningExpression
 
 namespace Skybrud.Essentials.Http {
 

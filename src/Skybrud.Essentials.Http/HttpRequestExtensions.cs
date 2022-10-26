@@ -169,7 +169,7 @@ namespace Skybrud.Essentials.Http {
         /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
         [return: NotNullIfNotNull("request")]
         public static T? SetAcceptHeader<T>(this T? request, IEnumerable<string>? value) where T : IHttpRequest {
-            if (request != null) request.Accept = value == null ? string.Empty : string.Join(",", value);
+            if (request != null) request.Accept = value == null ? null : string.Join(",", value);
             return request;
         }
 

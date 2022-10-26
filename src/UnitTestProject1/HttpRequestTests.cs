@@ -52,6 +52,22 @@ namespace UnitTestProject1 {
         }
 
         [TestMethod]
+        public void SetQueryStringNull() {
+
+            // PREMISE:
+            // The extension method allows null values, but the "QueryString" property doesn't. Nullable reference
+            // types are mostly just suggestions, so if passed a null value, the property will set it's value to a new
+            // "HttpQueryString" instance.
+
+            IHttpRequest request1 = HttpRequest.New().SetQueryString(null);
+            IHttpRequest request2 = HttpRequest.Post("/hello-there", default(IHttpQueryString));
+
+            Assert.IsNotNull(request1.QueryString);
+            Assert.IsNotNull(request2.QueryString);
+
+        }
+
+        [TestMethod]
         public void SetPostData() {
 
             IHttpPostData data = new HttpPostData {
@@ -63,6 +79,22 @@ namespace UnitTestProject1 {
                 .SetPostData(data);
 
             Assert.AreEqual("hello=there", request.PostData.ToString());
+
+        }
+
+        [TestMethod]
+        public void SetPostDataNull() {
+
+            // PREMISE:
+            // The extension method allows null values, but the "PostData" property doesn't. Nullable reference types
+            // are mostly just suggestions, so if passed a null value, the property will set it's value to a new
+            // "HttpPostData" instance.
+
+            IHttpRequest request1 = HttpRequest.New().SetPostData(null);
+            IHttpRequest request2 = HttpRequest.Post("/hello-there", default(IHttpPostData));
+
+            Assert.IsNotNull(request1.PostData);
+            Assert.IsNotNull(request2.PostData);
 
         }
 
@@ -110,55 +142,68 @@ namespace UnitTestProject1 {
         [TestMethod]
         public void SetAcceptHeader() {
 
-            IHttpRequest request = HttpRequest
-                .New()
-                .SetAcceptHeader("application/json");
+            IHttpRequest request1 = HttpRequest.New().SetAcceptHeader("application/json");
+            IHttpRequest request2 = HttpRequest.New().SetAcceptHeader(default(string));
 
-            Assert.AreEqual("application/json", request.Accept);
+            Assert.AreEqual("application/json", request1.Accept);
+            Assert.IsNull(request2.Accept);
 
         }
 
         [TestMethod]
         public void SetAcceptHeaderCollection() {
 
-            IHttpRequest request = HttpRequest
+            IHttpRequest request1 = HttpRequest
                 .New()
                 .SetAcceptHeader(new[] { "application/json", "text/xml" });
 
-            Assert.AreEqual("application/json,text/xml", request.Accept);
+            IHttpRequest request2 = HttpRequest
+                .New()
+                .SetAcceptHeader(default(string[]));
+
+            Assert.AreEqual("application/json,text/xml", request1.Accept);
+            Assert.IsNull(request2.Accept);
 
         }
 
         [TestMethod]
         public void SetAuthorizationHeader() {
 
-            IHttpRequest request = HttpRequest
+            IHttpRequest request1 = HttpRequest
                 .New()
                 .SetAuthorizationHeader("Bearer 1234");
 
-            Assert.AreEqual("Bearer 1234", request.Authorization);
+            IHttpRequest request2 = HttpRequest
+                .New()
+                .SetAuthorizationHeader(null);
+
+            Assert.AreEqual("Bearer 1234", request1.Authorization);
+
+            // Ideally the header value should be null because we set it to null, but the indexer of the underlying
+            // "WebHeaderCollection" returns an empty string if the header doesn't exist or was previosuly set to null.
+            Assert.AreEqual(string.Empty, request2.Authorization);
 
         }
 
         [TestMethod]
         public void SetContentType() {
 
-            IHttpRequest request = HttpRequest
-                .New()
-                .SetContentType("application/json");
+            IHttpRequest request1 = HttpRequest.New().SetContentType("application/json");
+            IHttpRequest request2 = HttpRequest.New().SetContentType(null);
 
-            Assert.AreEqual("application/json", request.ContentType);
+            Assert.AreEqual("application/json", request1.ContentType);
+            Assert.IsNull(request2.ContentType);
 
         }
 
         [TestMethod]
         public void SetUserAgent() {
 
-            IHttpRequest request = HttpRequest
-                .New()
-                .SetUserAgent("Hello There");
+            IHttpRequest request1 = HttpRequest.New().SetUserAgent("Hello There");
+            IHttpRequest request2 = HttpRequest.New().SetUserAgent(null);
 
-            Assert.AreEqual("Hello There", request.UserAgent);
+            Assert.AreEqual("Hello There", request1.UserAgent);
+            Assert.IsNull(request2.UserAgent);
 
         }
 
