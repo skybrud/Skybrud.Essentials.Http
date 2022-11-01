@@ -3,7 +3,7 @@ using System.Net;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
-using Skybrud.Essentials.Json;
+using Skybrud.Essentials.Json.Newtonsoft;
 using Skybrud.Essentials.Xml;
 using System.Diagnostics.CodeAnalysis;
 
