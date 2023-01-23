@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Skybrud.Essentials.Http.Collections;
+using Skybrud.Essentials.Security;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Skybrud.Essentials.Http {
@@ -183,6 +184,35 @@ namespace Skybrud.Essentials.Http {
         [return: NotNullIfNotNull("request")]
         public static T? SetAuthorizationHeader<T>(this T? request, string? value) where T : IHttpRequest {
             if (request != null) request.Headers.Authorization = value;
+            return request;
+        }
+
+        /// <summary>
+        /// Sets the <strong>Authorization</strong> header of <paramref name="request"/> to use <strong>Basic</strong>
+        /// authentication based on the specified <paramref name="username"/> and <paramref name="password"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the request - eg. <see cref="HttpRequest"/>.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="username">The username.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
+        [return: NotNullIfNotNull("request")]
+        public static T? SetAuthorizationBasic<T>(this T? request, string username, string password) where T : IHttpRequest {
+            if (request != null) request.Headers.Authorization = $"Basic {SecurityUtils.Base64Encode($"{username}:{password}")}";
+            return request;
+        }
+
+        /// <summary>
+        /// Sets the <strong>Authorization</strong> header of <paramref name="request"/> using the specified
+        /// <strong>Bearer</strong> <paramref name="token"/>.
+        /// </summary>
+        /// <typeparam name="T">The type of the request - eg. <see cref="HttpRequest"/>.</typeparam>
+        /// <param name="request">The request.</param>
+        /// <param name="token">The bearer token.</param>
+        /// <returns>The specified <paramref name="request"/> as an instance of <typeparamref name="T"/>.</returns>
+        [return: NotNullIfNotNull("request")]
+        public static T? SetAuthorizationBearer<T>(this T? request, string token) where T : IHttpRequest {
+            if (request != null) request.Headers.Authorization = $"Bearer {token}";
             return request;
         }
 
