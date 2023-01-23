@@ -12,18 +12,18 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <VersionPrefix>1.1.1</VersionPrefix>
+    <VersionPrefix>1.1.2</VersionPrefix>
     <VersionSuffix Condition="'$(Configuration)'=='Debug'">build$([System.DateTime]::UtcNow.ToString(`yyyyMMddHHmm`))</VersionSuffix>
     <Company>Limbo</Company>
     <Product>Skybrud.Essentials</Product>
     <Authors>Anders Bjerner</Authors>
-    <Copyright>Copyright © 2022</Copyright>
+    <Copyright>Copyright © 2023</Copyright>
     <Description>.NET library for making HTTP requests.</Description>
   </PropertyGroup>
 
   <!-- Information for the NuGet package -->
   <PropertyGroup>
-    <PackageTags>Skybrud, HTTP, OAuth</PackageTags>
+    <PackageTags>Skybrud, Limbo, HTTP, OAuth, API, REST</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://packages.skybrud.dk/skybrud.essentials.http/</PackageProjectUrl>
     <PackageIcon>Limbo.png</PackageIcon>
