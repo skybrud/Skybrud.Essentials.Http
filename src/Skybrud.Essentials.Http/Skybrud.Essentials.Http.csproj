@@ -43,7 +43,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Skybrud.Essentials" Version="1.1.43" />
+    <PackageReference Include="Skybrud.Essentials" Version="1.1.46" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net45' OR '$(TargetFramework)'=='net46' OR '$(TargetFramework)'=='net47'">
