@@ -2,16 +2,28 @@
 
 Skybrud.Essentials.Http is a small .NET library for making HTTP requests, as well as working with OAuth 1.0a and OAuth 2 service providers.
 
+
+
+
+<br /><br />
+
 ### Installation
 
-To install the Skybrud.Essentials.Http, simply pick one of the methods below:
+Install the package via [**NuGet**][NuGetPackage]. To install the package, you can use either .NET CLI:
 
-1. [**NuGet Package**][NuGetPackage]  
-   Install this NuGet package in your Visual Studio project. Makes updating easy.
-2. [**ZIP file**][GitHubRelease]  
-   Grab a ZIP file of the latest release; unzip and move both `Skybrud.Essentials.dll` and `Skybrud.Essentials.Http.dll` matching your target framework to the bin directory of your project.
+```
+dotnet add package Skybrud.Essentials.Http
+```
+
+or the older NuGet Package Manager:
+
+```
+Install-Package Skybrud.Essentials.Http
+```
 
 
+
+<br /><br />
 
 ### Dependencies
 
@@ -21,16 +33,26 @@ To install the Skybrud.Essentials.Http, simply pick one of the methods below:
 
 
 
+<br /><br />
+
 ### Found a bug? Have a question?
 
 * Please feel free to [**create an issue**][Issues], and I will get back to you ;)
 
 
 
+
+
+<br /><br />
+
 ### Changelog
 
 The [**releases page**][GitHubReleases] lists the relevant changes from each release.
 
+
+
+
+<br /><br />
 
 ### Documentation
 
