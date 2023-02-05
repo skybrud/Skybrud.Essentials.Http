@@ -40,7 +40,7 @@ namespace Skybrud.Essentials.Http {
         IHttpHeaderCollection Headers { get; }
 
         /// <summary>
-        /// Gets the URI of the response (eg. if the request was redirected).
+        /// Gets the URI of the response (may differ from the requested URI - eg. if the request was redirected).
         /// </summary>
         Uri ResponseUri { get; }
 

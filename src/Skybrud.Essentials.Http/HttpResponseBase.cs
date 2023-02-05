@@ -48,6 +48,11 @@ namespace Skybrud.Essentials.Http {
         /// </summary>
         public IHttpHeaderCollection Headers => Response.Headers;
 
+        /// <summary>
+        /// /// Gets the URI of the response (may differ from the requested URI - eg. if the request was redirected).
+        /// </summary>
+        public Uri ResponseUri => Response.ResponseUri;
+
         #endregion
 
         #region Constructors
