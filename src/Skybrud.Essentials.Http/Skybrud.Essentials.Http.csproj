@@ -6,7 +6,7 @@
     <TargetFrameworks>netstandard1.3;netstandard2.0;net45;net46;net47;net5.0;net6.0</TargetFrameworks>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <BuildInParallel>false</BuildInParallel>
-    <LangVersion>10.0</LangVersion>
+    <LangVersion>11.0</LangVersion>
     <Nullable>enable</Nullable>
     <CheckEolTargetFramework>false</CheckEolTargetFramework>
   </PropertyGroup>
