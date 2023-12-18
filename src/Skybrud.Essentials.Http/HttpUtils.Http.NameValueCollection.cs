@@ -1,4 +1,4 @@
-﻿#if NET_FRAMEWORK
+﻿#if NAME_VALUE_COLLECTION
 
 using System;
 using System.Collections.Specialized;
@@ -20,7 +20,7 @@ namespace Skybrud.Essentials.Http {
                 if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
                 return DoHttpRequest(HttpMethod.Get, url, queryString);
             }
-            
+
             /// <summary>
             /// Makes a POST request to the specified <paramref name="url"/>.
             /// </summary>
@@ -108,7 +108,7 @@ namespace Skybrud.Essentials.Http {
             public static IHttpResponse DoHttpRequest(HttpMethod method, string url, NameValueCollection? queryString) {
                 return DoHttpRequest(method, url, queryString == null ? null : new HttpQueryString(queryString), null);
             }
-            
+
             /// <summary>
             /// Makes a HTTP request using the specified <paramref name="url"/> and <paramref name="method"/>.
             /// </summary>

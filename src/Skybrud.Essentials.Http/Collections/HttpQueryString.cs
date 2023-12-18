@@ -75,7 +75,7 @@ namespace Skybrud.Essentials.Http.Collections {
             _values = dictionary ?? new Dictionary<string, string>();
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Initializes a new instance based on the specified <paramref name="collection"/>.

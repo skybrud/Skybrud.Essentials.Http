@@ -35,7 +35,7 @@ namespace Skybrud.Essentials.Http.Client {
             return await client.GetResponseAsync(HttpRequest.Get(url, queryString));
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Makes a GET request to the specified <paramref name="url"/>.
@@ -208,7 +208,7 @@ namespace Skybrud.Essentials.Http.Client {
             return await client.GetResponseAsync(HttpRequest.Post(url, queryString, body, options));
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Makes a POST request to the specified <paramref name="url"/>.
@@ -463,7 +463,7 @@ namespace Skybrud.Essentials.Http.Client {
             return await client.GetResponseAsync(HttpRequest.Patch(url, queryString, body, options));
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Makes a PATCH request to the specified <paramref name="url"/>.
@@ -718,7 +718,7 @@ namespace Skybrud.Essentials.Http.Client {
             return await client.GetResponseAsync(HttpRequest.Put(url, queryString, body, options));
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Makes a PUT request to the specified <paramref name="url"/>.
@@ -841,7 +841,7 @@ namespace Skybrud.Essentials.Http.Client {
             return await client.GetResponseAsync(HttpRequest.Delete(url, queryString));
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Makes a DELETE request to the specified <paramref name="url"/>.

@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 
 namespace Skybrud.Essentials.Http.Client {
-    
+
     /// <summary>
     /// Interface describing a client for making async HTTP requests.
     /// </summary>

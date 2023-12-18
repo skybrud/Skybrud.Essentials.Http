@@ -195,7 +195,7 @@ namespace Skybrud.Essentials.Http.Client {
             return GetResponse(HttpRequest.Post(url, queryString, body, options));
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Makes a POST request to the specified <paramref name="url"/>.

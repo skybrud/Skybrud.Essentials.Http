@@ -41,7 +41,7 @@ namespace Skybrud.Essentials.Http.Client {
             return GetResponse(HttpRequest.Get(url, queryString));
         }
 
-#if NET_FRAMEWORK
+#if NAME_VALUE_COLLECTION
 
         /// <summary>
         /// Makes a GET request to the specified <paramref name="url"/>.
