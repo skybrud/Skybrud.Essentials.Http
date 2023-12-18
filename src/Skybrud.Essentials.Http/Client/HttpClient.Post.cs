@@ -75,7 +75,7 @@ namespace Skybrud.Essentials.Http.Client {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public virtual IHttpResponse Post(string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return GetResponse(HttpRequest.Post(url, postData));
+            return GetResponse(HttpRequest.Post(url, queryString, postData));
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse Post(string url, IHttpQueryString? queryString, JToken body) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return GetResponse(HttpRequest.Post(url, body));
+            return GetResponse(HttpRequest.Post(url, queryString, body));
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse Post(string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return GetResponse(HttpRequest.Post(url, body, formatting));
+            return GetResponse(HttpRequest.Post(url, queryString, body, formatting));
         }
 
         /// <summary>
@@ -276,7 +276,8 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse Post(string url, NameValueCollection? queryString, XNode body) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return GetResponse(HttpRequest.Post(url, body));
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Post(url, query, body));
         }
 
         /// <summary>
@@ -290,7 +291,8 @@ namespace Skybrud.Essentials.Http.Client {
         public virtual IHttpResponse Post(string url, NameValueCollection? queryString, XNode body, SaveOptions options) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
             if (body == null) throw new ArgumentNullException(nameof(body));
-            return GetResponse(HttpRequest.Post(url, body, options));
+            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+            return GetResponse(HttpRequest.Post(url, query, body, options));
         }
 
 #endif
