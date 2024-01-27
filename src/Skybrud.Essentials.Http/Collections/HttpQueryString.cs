@@ -75,21 +75,18 @@ public class HttpQueryString : IHttpQueryString {
         _values = dictionary ?? new Dictionary<string, string>();
     }
 
-#if NAME_VALUE_COLLECTION
-
-        /// <summary>
-        /// Initializes a new instance based on the specified <paramref name="collection"/>.
-        /// </summary>
-        /// <param name="collection">The collection the query string should be based.</param>
-        public HttpQueryString(NameValueCollection? collection) {
-            _values = new Dictionary<string, string>();
-            if (collection == null) return;
-            foreach (string key in collection.AllKeys) {
-                _values.Add(key, collection[key]);
-            }
+    /// <summary>
+    /// Initializes a new instance based on the specified <paramref name="collection"/>.
+    /// </summary>
+    /// <param name="collection">The collection the query string should be based.</param>
+    public HttpQueryString(NameValueCollection? collection) {
+        _values = new Dictionary<string, string>();
+        if (collection == null) return;
+        foreach (string? key in collection.AllKeys) {
+            if (key is null) continue;
+            if (collection[key] is { } value) _values.Add(key, value);
         }
-
-#endif
+    }
 
     #endregion
 
@@ -411,18 +408,14 @@ public class HttpQueryString : IHttpQueryString {
 
     #region Operator overloading
 
-#if NET_FRAMEWORK
-
-        /// <summary>
-        /// Initializes a new query string based on the specified <paramref name="collection"/>.
-        /// </summary>
-        /// <param name="collection">The instance of <see cref="NameValueCollection"/> the query string should be based on.</param>
-        /// <returns>An instance of <see cref="HttpQueryString"/> based on the specified <paramref name="collection"/>.</returns>
-        public static implicit operator HttpQueryString(NameValueCollection? collection) {
-            return new HttpQueryString(collection);
-        }
-
-#endif
+    /// <summary>
+    /// Initializes a new query string based on the specified <paramref name="collection"/>.
+    /// </summary>
+    /// <param name="collection">The instance of <see cref="NameValueCollection"/> the query string should be based on.</param>
+    /// <returns>An instance of <see cref="HttpQueryString"/> based on the specified <paramref name="collection"/>.</returns>
+    public static implicit operator HttpQueryString(NameValueCollection? collection) {
+        return new HttpQueryString(collection);
+    }
 
     #endregion
 

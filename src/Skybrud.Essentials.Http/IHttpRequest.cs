@@ -38,14 +38,10 @@ public interface IHttpRequest {
     /// </summary>
     Encoding Encoding { get; set; }
 
-#if NET_FRAMEWORK
-
     /// <summary>
     /// Gets or sets the timeout of the request. Default is 100 seconds.
     /// </summary>
     TimeSpan Timeout { get; set; }
-
-#endif
 
     /// <summary>
     /// Gets or sets the collection of headers.
@@ -131,8 +127,6 @@ public interface IHttpRequest {
     /// </summary>
     string? UserAgent { get; set; }
 
-#if NET_FRAMEWORK_OR_NET_STANDARD_2
-
     /// <summary>
     /// Gets or sets the type of decompression that is used.
     /// </summary>
@@ -157,8 +151,6 @@ public interface IHttpRequest {
     /// Gets or sets the value of the <strong>Expect</strong> HTTP header.
     /// </summary>
     string? Expect { get; set; }
-
-#endif
 
     /// <summary>
     /// Executes the request and returns the corresponding response as an instance of <see cref="IHttpResponse"/>.

@@ -197,106 +197,102 @@ public partial class HttpClient {
         return GetResponse(HttpRequest.Patch(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
+    /// <summary>
+    /// Makes a PATCH request to the specified <paramref name="url"/>.
+    /// </summary>
+    /// <param name="url">The base URL of the request (no query string).</param>
+    /// <param name="queryString">The query string.</param>
+    /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+    public virtual IHttpResponse Patch(string url, NameValueCollection? queryString) {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+        IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+        return GetResponse(HttpRequest.Patch(url, query));
+    }
 
-        /// <summary>
-        /// Makes a PATCH request to the specified <paramref name="url"/>.
-        /// </summary>
-        /// <param name="url">The base URL of the request (no query string).</param>
-        /// <param name="queryString">The query string.</param>
-        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString) {
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
-            return GetResponse(HttpRequest.Patch(url, query));
-        }
+    /// <summary>
+    /// Makes a PATCH request to the specified <paramref name="url"/>.
+    /// </summary>
+    /// <param name="url">The URL of the request.</param>
+    /// <param name="queryString">The query string of the request.</param>
+    /// <param name="postData">The body of the request.</param>
+    /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+    public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, NameValueCollection? postData) {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+        IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+        IHttpPostData? post = postData == null ? null : new HttpPostData(postData);
+        return GetResponse(HttpRequest.Patch(url, query, post));
+    }
 
-        /// <summary>
-        /// Makes a PATCH request to the specified <paramref name="url"/>.
-        /// </summary>
-        /// <param name="url">The URL of the request.</param>
-        /// <param name="queryString">The query string of the request.</param>
-        /// <param name="postData">The body of the request.</param>
-        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, NameValueCollection? postData) {
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
-            IHttpPostData? post = postData == null ? null : new HttpPostData(postData);
-            return GetResponse(HttpRequest.Patch(url, query, post));
-        }
+    /// <summary>
+    /// Makes a HTTP PATCH request based on the specified parameters.
+    /// </summary>
+    /// <param name="url">The URL of the request.</param>
+    /// <param name="queryString">The query string of the request.</param>
+    /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
+    /// <param name="body">The body of the request.</param>
+    /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
+    public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, string contentType, string body) {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+        IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+        return GetResponse(HttpRequest.Patch(url, query).SetContentType(contentType).SetBody(body));
+    }
 
-        /// <summary>
-        /// Makes a HTTP PATCH request based on the specified parameters.
-        /// </summary>
-        /// <param name="url">The URL of the request.</param>
-        /// <param name="queryString">The query string of the request.</param>
-        /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
-        /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, string contentType, string body) {
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
-            return GetResponse(HttpRequest.Patch(url, query).SetContentType(contentType).SetBody(body));
-        }
+    /// <summary>
+    /// Makes a HTTP PATCH request based on the specified parameters.
+    /// </summary>
+    /// <param name="url">The base URL of the request (no query string).</param>
+    /// <param name="queryString">The query string.</param>
+    /// <param name="body">The body of the request.</param>
+    /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+    public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, JToken body) {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+        if (body == null) throw new ArgumentNullException(nameof(body));
+        IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+        return GetResponse(HttpRequest.Patch(url, query, body));
+    }
 
-        /// <summary>
-        /// Makes a HTTP PATCH request based on the specified parameters.
-        /// </summary>
-        /// <param name="url">The base URL of the request (no query string).</param>
-        /// <param name="queryString">The query string.</param>
-        /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, JToken body) {
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            if (body == null) throw new ArgumentNullException(nameof(body));
-            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
-            return GetResponse(HttpRequest.Patch(url, query, body));
-        }
+    /// <summary>
+    /// Makes a HTTP PATCH request based on the specified parameters.
+    /// </summary>
+    /// <param name="url">The base URL of the request (no query string).</param>
+    /// <param name="queryString">The query string.</param>
+    /// <param name="body">The body of the request.</param>
+    /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
+    /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+    public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, JToken body, Formatting formatting) {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+        if (body == null) throw new ArgumentNullException(nameof(body));
+        IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+        return GetResponse(HttpRequest.Patch(url, query, body, formatting));
+    }
 
-        /// <summary>
-        /// Makes a HTTP PATCH request based on the specified parameters.
-        /// </summary>
-        /// <param name="url">The base URL of the request (no query string).</param>
-        /// <param name="queryString">The query string.</param>
-        /// <param name="body">The body of the request.</param>
-        /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, JToken body, Formatting formatting) {
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            if (body == null) throw new ArgumentNullException(nameof(body));
-            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
-            return GetResponse(HttpRequest.Patch(url, query, body, formatting));
-        }
+    /// <summary>
+    /// Makes a HTTP PATCH request based on the specified parameters.
+    /// </summary>
+    /// <param name="url">The base URL of the request (no query string).</param>
+    /// <param name="queryString">The query string.</param>
+    /// <param name="body">The body of the request.</param>
+    /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+    public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, XNode body) {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+        if (body == null) throw new ArgumentNullException(nameof(body));
+        IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+        return GetResponse(HttpRequest.Patch(url, query, body));
+    }
 
-        /// <summary>
-        /// Makes a HTTP PATCH request based on the specified parameters.
-        /// </summary>
-        /// <param name="url">The base URL of the request (no query string).</param>
-        /// <param name="queryString">The query string.</param>
-        /// <param name="body">The body of the request.</param>
-        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, XNode body) {
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            if (body == null) throw new ArgumentNullException(nameof(body));
-            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
-            return GetResponse(HttpRequest.Patch(url, query, body));
-        }
-
-        /// <summary>
-        /// Makes a HTTP PATCH request based on the specified parameters.
-        /// </summary>
-        /// <param name="url">The base URL of the request (no query string).</param>
-        /// <param name="queryString">The query string.</param>
-        /// <param name="body">The body of the request.</param>
-        /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
-        /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, XNode body, SaveOptions options) {
-            if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            if (body == null) throw new ArgumentNullException(nameof(body));
-            IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
-            return GetResponse(HttpRequest.Patch(url, query, body, options));
-        }
-
-#endif
+    /// <summary>
+    /// Makes a HTTP PATCH request based on the specified parameters.
+    /// </summary>
+    /// <param name="url">The base URL of the request (no query string).</param>
+    /// <param name="queryString">The query string.</param>
+    /// <param name="body">The body of the request.</param>
+    /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
+    /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
+    public virtual IHttpResponse Patch(string url, NameValueCollection? queryString, XNode body, SaveOptions options) {
+        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
+        if (body == null) throw new ArgumentNullException(nameof(body));
+        IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
+        return GetResponse(HttpRequest.Patch(url, query, body, options));
+    }
 
 }

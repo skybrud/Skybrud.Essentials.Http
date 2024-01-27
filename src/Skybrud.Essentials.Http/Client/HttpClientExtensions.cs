@@ -34,8 +34,6 @@ public static class HttpClientExtensions {
         return client.GetResponse(HttpRequest.Get(url, queryString));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a GET request to the specified <paramref name="url"/>.
     /// </summary>
@@ -47,8 +45,6 @@ public static class HttpClientExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return client.GetResponse(HttpRequest.Get(url, query));
     }
-
-#endif
 
     #endregion
 
@@ -207,8 +203,6 @@ public static class HttpClientExtensions {
         return client.GetResponse(HttpRequest.Post(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a POST request to the specified <paramref name="url"/>.
     /// </summary>
@@ -302,8 +296,6 @@ public static class HttpClientExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return client.GetResponse(HttpRequest.Post(url, query, body, options));
     }
-
-#endif
 
     #endregion
 
@@ -462,8 +454,6 @@ public static class HttpClientExtensions {
         return client.GetResponse(HttpRequest.Patch(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a PATCH request to the specified <paramref name="url"/>.
     /// </summary>
@@ -557,8 +547,6 @@ public static class HttpClientExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return client.GetResponse(HttpRequest.Patch(url, query, body, options));
     }
-
-#endif
 
     #endregion
 
@@ -717,8 +705,6 @@ public static class HttpClientExtensions {
         return client.GetResponse(HttpRequest.Put(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a PUT request to the specified <paramref name="url"/>.
     /// </summary>
@@ -813,8 +799,6 @@ public static class HttpClientExtensions {
         return client.GetResponse(HttpRequest.Put(url, query, body, options));
     }
 
-#endif
-
     #endregion
 
     #region Delete(...)
@@ -840,8 +824,6 @@ public static class HttpClientExtensions {
         return client.GetResponse(HttpRequest.Delete(url, queryString));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a DELETE request to the specified <paramref name="url"/>.
     /// </summary>
@@ -853,8 +835,6 @@ public static class HttpClientExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return client.GetResponse(HttpRequest.Delete(url, query));
     }
-
-#endif
 
     #endregion
 

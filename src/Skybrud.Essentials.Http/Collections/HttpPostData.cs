@@ -63,8 +63,6 @@ public class HttpPostData : IHttpPostData {
         _data = new Dictionary<string, IHttpPostValue>();
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Initializes a new instance based on the specified <paramref name="collection"/>.
     /// </summary>
@@ -72,12 +70,11 @@ public class HttpPostData : IHttpPostData {
     public HttpPostData(NameValueCollection? collection) {
         _data = new Dictionary<string, IHttpPostValue>();
         if (collection == null) return;
-        foreach (string key in collection.AllKeys) {
-            _data.Add(key, new HttpPostValue(key, collection[key]));
+        foreach (string? key in collection.AllKeys) {
+            if (key is null) continue;
+            if (collection[key] is {} value) _data.Add(key, new HttpPostValue(key, value));
         }
     }
-
-#endif
 
     #endregion
 
@@ -216,8 +213,6 @@ public class HttpPostData : IHttpPostData {
 
     #region Operator overloading
 
-#if NET_FRAMEWORK
-
     /// <summary>
     /// Initializes a new POST data collection based on the specified <paramref name="collection"/>.
     /// </summary>
@@ -226,8 +221,6 @@ public class HttpPostData : IHttpPostData {
     public static implicit operator HttpPostData(NameValueCollection? collection) {
         return new HttpPostData(collection);
     }
-
-#endif
 
     #endregion
 

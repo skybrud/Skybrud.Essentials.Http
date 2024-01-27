@@ -35,8 +35,6 @@ public static class HttpClientAsyncExtensions {
         return await client.GetResponseAsync(HttpRequest.Get(url, queryString));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a GET request to the specified <paramref name="url"/>.
     /// </summary>
@@ -48,8 +46,6 @@ public static class HttpClientAsyncExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return await client.GetResponseAsync(HttpRequest.Get(url, query));
     }
-
-#endif
 
     #endregion
 
@@ -208,8 +204,6 @@ public static class HttpClientAsyncExtensions {
         return await client.GetResponseAsync(HttpRequest.Post(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a POST request to the specified <paramref name="url"/>.
     /// </summary>
@@ -303,8 +297,6 @@ public static class HttpClientAsyncExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return await client.GetResponseAsync(HttpRequest.Post(url, query, body, options));
     }
-
-#endif
 
     #endregion
 
@@ -463,8 +455,6 @@ public static class HttpClientAsyncExtensions {
         return await client.GetResponseAsync(HttpRequest.Patch(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a PATCH request to the specified <paramref name="url"/>.
     /// </summary>
@@ -558,8 +548,6 @@ public static class HttpClientAsyncExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return await client.GetResponseAsync(HttpRequest.Patch(url, query, body, options));
     }
-
-#endif
 
     #endregion
 
@@ -718,8 +706,6 @@ public static class HttpClientAsyncExtensions {
         return await client.GetResponseAsync(HttpRequest.Put(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a PUT request to the specified <paramref name="url"/>.
     /// </summary>
@@ -814,8 +800,6 @@ public static class HttpClientAsyncExtensions {
         return await client.GetResponseAsync(HttpRequest.Put(url, query, body, options));
     }
 
-#endif
-
     #endregion
 
     #region DeleteAsync(...)
@@ -841,8 +825,6 @@ public static class HttpClientAsyncExtensions {
         return await client.GetResponseAsync(HttpRequest.Delete(url, queryString));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a DELETE request to the specified <paramref name="url"/>.
     /// </summary>
@@ -854,8 +836,6 @@ public static class HttpClientAsyncExtensions {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return await client.GetResponseAsync(HttpRequest.Delete(url, query));
     }
-
-#endif
 
     #endregion
 

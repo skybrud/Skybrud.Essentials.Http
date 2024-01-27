@@ -62,14 +62,10 @@ public partial class HttpRequest : IHttpRequest {
     /// </summary>
     public Encoding Encoding { get; set; }
 
-#if NET_FRAMEWORK
-
-        /// <summary>
-        /// Gets or sets the timeout of the request. Default is 100 seconds.
-        /// </summary>
-        public TimeSpan Timeout { get; set; }
-
-#endif
+    /// <summary>
+    /// Gets or sets the timeout of the request. Default is 100 seconds.
+    /// </summary>
+    public TimeSpan Timeout { get; set; }
 
     /// <summary>
     /// Gets or sets the collection of headers.
@@ -188,34 +184,30 @@ public partial class HttpRequest : IHttpRequest {
 
     #endregion
 
-#if NET_FRAMEWORK_OR_NET_STANDARD_2 || NET5_0_OR_GREATER
+    /// <summary>
+    /// Gets or sets the type of decompression that is used.
+    /// </summary>
+    public DecompressionMethods AutomaticDecompression { get; set; }
 
-        /// <summary>
-        /// Gets or sets the type of decompression that is used.
-        /// </summary>
-        public DecompressionMethods AutomaticDecompression { get; set; }
+    /// <summary>
+    /// Gets or sets the media type of the request.
+    /// </summary>
+    public string? MediaType { get; set; }
 
-        /// <summary>
-        /// Gets or sets the media type of the request.
-        /// </summary>
-        public string? MediaType { get; set; }
+    /// <summary>
+    /// Gets or sets the value of the <strong>Transfer-encoding</strong> HTTP header.
+    /// </summary>
+    public string? TransferEncoding { get; set; }
 
-        /// <summary>
-        /// Gets or sets the value of the <strong>Transfer-encoding</strong> HTTP header.
-        /// </summary>
-        public string? TransferEncoding { get; set; }
+    /// <summary>
+    /// Gets or sets the value of the <strong>Connection</strong> HTTP header.
+    /// </summary>
+    public string? Connection { get; set; }
 
-        /// <summary>
-        /// Gets or sets the value of the <strong>Connection</strong> HTTP header.
-        /// </summary>
-        public string? Connection { get; set; }
-
-        /// <summary>
-        /// Gets or sets the value of the <strong>Expect</strong> HTTP header.
-        /// </summary>
-        public string? Expect { get; set; }
-
-#endif
+    /// <summary>
+    /// Gets or sets the value of the <strong>Expect</strong> HTTP header.
+    /// </summary>
+    public string? Expect { get; set; }
 
     #endregion
 
@@ -228,9 +220,7 @@ public partial class HttpRequest : IHttpRequest {
         Method = HttpMethod.Get;
         Encoding = Encoding.UTF8;
         Url = string.Empty;
-#if NET_FRAMEWORK
-            Timeout = TimeSpan.FromSeconds(100);
-#endif
+        Timeout = TimeSpan.FromSeconds(100);
     }
 
     /// <summary>
@@ -381,25 +371,15 @@ public partial class HttpRequest : IHttpRequest {
         request.Accept = Accept;
         request.CookieContainer = Cookies.Container;
         if (string.IsNullOrWhiteSpace(ContentType) == false) request.ContentType = ContentType;
-
-#if NETSTANDARD2_0_OR_GREATER || NET5_0_OR_GREATER
-            request.AutomaticDecompression = AutomaticDecompression;
-            request.MediaType = MediaType;
-            request.TransferEncoding = TransferEncoding;
-            request.Connection = Connection;
-            request.Expect = Expect;
-#endif
-
-#if NET_FRAMEWORK
-            request.Timeout = (int) Timeout.TotalMilliseconds;
-            if (string.IsNullOrWhiteSpace(Host) == false) request.Host = Host;
-            if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
-            if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
-#else
-        if (string.IsNullOrWhiteSpace(Host) == false) request.Headers["Host"] = Host;
-        if (string.IsNullOrWhiteSpace(UserAgent) == false) request.Headers["User-Agent"] = UserAgent;
-        if (string.IsNullOrWhiteSpace(Referer) == false) request.Headers["Referer"] = Referer;
-#endif
+        request.AutomaticDecompression = AutomaticDecompression;
+        request.MediaType = MediaType;
+        request.TransferEncoding = TransferEncoding;
+        request.Connection = Connection;
+        request.Expect = Expect;
+        request.Timeout = (int) Timeout.TotalMilliseconds;
+        if (string.IsNullOrWhiteSpace(Host) == false) request.Host = Host;
+        if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
+        if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
 
         // Handle various POST scenarios
         if (string.IsNullOrWhiteSpace(Body) == false) {
@@ -474,19 +454,7 @@ public partial class HttpRequest : IHttpRequest {
         // Get the response
         try {
 
-#if NETSTANDARD || NET5_0_OR_GREATER
-
-            Task<WebResponse> responseTask = request.GetResponseAsync();
-
-            responseTask.Wait();
-
-            return HttpResponse.GetFromWebResponse((HttpWebResponse) responseTask.Result, this);
-
-#else
-
-                return HttpResponse.GetFromWebResponse((HttpWebResponse) request.GetResponse(), this);
-
-#endif
+            return HttpResponse.GetFromWebResponse((HttpWebResponse) request.GetResponse(), this);
 
         } catch (AggregateException ex) {
 
@@ -504,11 +472,7 @@ public partial class HttpRequest : IHttpRequest {
     }
 
     private void SetRequestContentLength(HttpWebRequest request, int contentLength) {
-#if NET_FRAMEWORK
-            request.ContentLength = contentLength;
-#else
-        request.Headers["Content-Length"] = contentLength.ToString();
-#endif
+        request.ContentLength = contentLength;
     }
 
     #endregion

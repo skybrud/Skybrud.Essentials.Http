@@ -43,25 +43,15 @@ public partial class HttpRequest {
         request.Accept = Accept;
         request.CookieContainer = Cookies.Container;
         if (string.IsNullOrWhiteSpace(ContentType) == false) request.ContentType = ContentType;
-
-#if NET_STANDARD2
         request.AutomaticDecompression = AutomaticDecompression;
         request.MediaType = MediaType;
         request.TransferEncoding = TransferEncoding;
         request.Connection = Connection;
         request.Expect = Expect;
-#endif
-
-#if NET_FRAMEWORK
-            request.Timeout = (int) Timeout.TotalMilliseconds;
-            if (string.IsNullOrWhiteSpace(Host) == false) request.Host = Host;
-            if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
-            if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
-#else
-        if (string.IsNullOrWhiteSpace(Host) == false) request.Headers["Host"] = Host;
-        if (string.IsNullOrWhiteSpace(UserAgent) == false) request.Headers["User-Agent"] = UserAgent;
-        if (string.IsNullOrWhiteSpace(Referer) == false) request.Headers["Referer"] = Referer;
-#endif
+        request.Timeout = (int) Timeout.TotalMilliseconds;
+        if (string.IsNullOrWhiteSpace(Host) == false) request.Host = Host;
+        if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
+        if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
 
         // Handle various POST scenarios
         if (string.IsNullOrWhiteSpace(Body) == false) {

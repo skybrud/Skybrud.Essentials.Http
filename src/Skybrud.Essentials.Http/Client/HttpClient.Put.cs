@@ -195,8 +195,6 @@ public partial class HttpClient {
         return GetResponse(HttpRequest.Put(url, queryString, body, options));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a PUT request to the specified <paramref name="url"/>.
     /// </summary>
@@ -294,7 +292,5 @@ public partial class HttpClient {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return GetResponse(HttpRequest.Put(url, query, body, options));
     }
-
-#endif
 
 }

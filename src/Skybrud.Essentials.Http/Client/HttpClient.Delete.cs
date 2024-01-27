@@ -41,8 +41,6 @@ public partial class HttpClient {
         return GetResponse(HttpRequest.Delete(url, queryString));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a DELETE request to the specified <paramref name="url"/>.
     /// </summary>
@@ -54,7 +52,5 @@ public partial class HttpClient {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return GetResponse(HttpRequest.Delete(url, query));
     }
-
-#endif
 
 }

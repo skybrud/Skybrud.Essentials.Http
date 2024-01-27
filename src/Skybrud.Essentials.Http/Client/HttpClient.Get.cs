@@ -41,8 +41,6 @@ public partial class HttpClient {
         return GetResponse(HttpRequest.Get(url, queryString));
     }
 
-#if NAME_VALUE_COLLECTION
-
     /// <summary>
     /// Makes a GET request to the specified <paramref name="url"/>.
     /// </summary>
@@ -54,7 +52,5 @@ public partial class HttpClient {
         IHttpQueryString? query = queryString == null ? null : new HttpQueryString(queryString);
         return GetResponse(HttpRequest.Get(url, query));
     }
-
-#endif
 
 }
