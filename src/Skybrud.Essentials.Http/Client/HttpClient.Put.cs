@@ -73,7 +73,7 @@ public partial class HttpClient {
     /// <param name="queryString">The query string of the request.</param>
     /// <param name="postData">The body of the request.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-    public virtual IHttpResponse Put(string url, IHttpQueryString? queryString, IHttpPostData postData) {
+    public virtual IHttpResponse Put(string url, IHttpQueryString? queryString, IHttpPostData? postData) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         return GetResponse(HttpRequest.Put(url, queryString, postData));
     }

@@ -23,7 +23,7 @@ public partial class HttpClient {
     /// <param name="url">The URL of the request.</param>
     /// <param name="queryString">The query string of the request.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-    public virtual async Task<IHttpResponse> GetAsync(string url, IHttpQueryString queryString) {
+    public virtual async Task<IHttpResponse> GetAsync(string url, IHttpQueryString? queryString) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         return await GetResponseAsync(HttpRequest.Get(url, queryString));
     }

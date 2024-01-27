@@ -27,7 +27,7 @@ public partial class HttpClient {
     /// <param name="url">The base URL of the request (no query string).</param>
     /// <param name="queryString">The query string.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString queryString) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString? queryString) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         return await GetResponseAsync(HttpRequest.Patch(url, queryString));
     }
@@ -38,7 +38,7 @@ public partial class HttpClient {
     /// <param name="url">The base URL of the request (no query string).</param>
     /// <param name="postData">The POST data.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpPostData postData) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpPostData? postData) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         return await GetResponseAsync(HttpRequest.Patch(url, postData));
     }
@@ -50,7 +50,7 @@ public partial class HttpClient {
     /// <param name="queryString">The query string of the request.</param>
     /// <param name="postData">The body of the request.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString queryString, IHttpPostData postData) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString? queryString, IHttpPostData? postData) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         return await GetResponseAsync(HttpRequest.Patch(url, queryString, postData));
     }
@@ -63,7 +63,7 @@ public partial class HttpClient {
     /// <param name="contentType">The content type of the request - eg. <c>application/json</c>.</param>
     /// <param name="body">The body of the request.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString queryString, string contentType, string body) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString? queryString, string contentType, string body) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         return await GetResponseAsync(HttpRequest.Patch(url, queryString).SetContentType(contentType).SetBody(body));
     }
@@ -100,7 +100,7 @@ public partial class HttpClient {
     /// <param name="queryString">The query string.</param>
     /// <param name="body">The body of the request.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString queryString, JToken body) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString? queryString, JToken body) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         if (body == null) throw new ArgumentNullException(nameof(body));
         return await GetResponseAsync(HttpRequest.Patch(url, queryString, body));
@@ -114,7 +114,7 @@ public partial class HttpClient {
     /// <param name="body">The body of the request.</param>
     /// <param name="formatting">The formatting to be used when serializing <paramref name="body"/>.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString queryString, JToken body, Formatting formatting) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString? queryString, JToken body, Formatting formatting) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         if (body == null) throw new ArgumentNullException(nameof(body));
         return await GetResponseAsync(HttpRequest.Patch(url, queryString, body, formatting));
@@ -152,7 +152,7 @@ public partial class HttpClient {
     /// <param name="queryString">The query string.</param>
     /// <param name="body">The body of the request.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString queryString, XNode body) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString? queryString, XNode body) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         if (body == null) throw new ArgumentNullException(nameof(body));
         return await GetResponseAsync(HttpRequest.Patch(url, queryString, body));
@@ -166,7 +166,7 @@ public partial class HttpClient {
     /// <param name="body">The body of the request.</param>
     /// <param name="options">The options to be used when serializing <paramref name="body"/>.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString queryString, XNode body, SaveOptions options) {
+    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpQueryString? queryString, XNode body, SaveOptions options) {
         if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
         if (body == null) throw new ArgumentNullException(nameof(body));
         return await GetResponseAsync(HttpRequest.Patch(url, queryString, body, options));
