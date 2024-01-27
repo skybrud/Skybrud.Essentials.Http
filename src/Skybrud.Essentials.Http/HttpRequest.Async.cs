@@ -10,46 +10,46 @@ using System.Threading.Tasks;
 // ReSharper disable UseAwaitUsing
 // ReSharper disable ConvertToUsingDeclaration
 
-namespace Skybrud.Essentials.Http {
+namespace Skybrud.Essentials.Http;
 
-    public partial class HttpRequest {
+public partial class HttpRequest {
 
-        /// <summary>
-        /// Executes the request and returns the corresponding response as an instance of <see cref="HttpResponse"/>.
-        /// </summary>
-        /// <returns>An instance of <see cref="Task{HttpResponse}"/> representing the response.</returns>
-        public virtual async Task<IHttpResponse> GetResponseAsync() {
-            return await GetResponseAsync(null);
-        }
+    /// <summary>
+    /// Executes the request and returns the corresponding response as an instance of <see cref="HttpResponse"/>.
+    /// </summary>
+    /// <returns>An instance of <see cref="Task{HttpResponse}"/> representing the response.</returns>
+    public virtual async Task<IHttpResponse> GetResponseAsync() {
+        return await GetResponseAsync(null);
+    }
 
-        /// <summary>
-        /// Executes the request and returns the corresponding response as an instance of <see cref="HttpResponse"/>.
-        /// </summary>
-        /// <param name="callback">Lets you specify a callback method for modifying the underlying <see cref="HttpWebRequest"/>.</param>
-        /// <returns>An instance of <see cref="Task{HttpResponse}"/> representing the response.</returns>
-        public virtual async Task<IHttpResponse> GetResponseAsync(Action<HttpWebRequest>? callback) {
+    /// <summary>
+    /// Executes the request and returns the corresponding response as an instance of <see cref="HttpResponse"/>.
+    /// </summary>
+    /// <param name="callback">Lets you specify a callback method for modifying the underlying <see cref="HttpWebRequest"/>.</param>
+    /// <returns>An instance of <see cref="Task{HttpResponse}"/> representing the response.</returns>
+    public virtual async Task<IHttpResponse> GetResponseAsync(Action<HttpWebRequest>? callback) {
 
-            // Build the URL
-            string url = Url;
-            if (!QueryString.IsEmpty) url += (url.Contains("?") ? "&" : "?") + QueryString;
+        // Build the URL
+        string url = Url;
+        if (!QueryString.IsEmpty) url += (url.Contains("?") ? "&" : "?") + QueryString;
 
-            // Initialize the request
-            HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
+        // Initialize the request
+        HttpWebRequest request = (HttpWebRequest) WebRequest.Create(url);
 
-            // Misc
-            request.Method = Method.ToUpper();
-            request.Credentials = Credentials;
-            request.Headers = Headers.Headers;
-            request.Accept = Accept;
-            request.CookieContainer = Cookies.Container;
-            if (string.IsNullOrWhiteSpace(ContentType) == false) request.ContentType = ContentType;
+        // Misc
+        request.Method = Method.ToUpper();
+        request.Credentials = Credentials;
+        request.Headers = Headers.Headers;
+        request.Accept = Accept;
+        request.CookieContainer = Cookies.Container;
+        if (string.IsNullOrWhiteSpace(ContentType) == false) request.ContentType = ContentType;
 
 #if NET_STANDARD2
-            request.AutomaticDecompression = AutomaticDecompression;
-            request.MediaType = MediaType;
-            request.TransferEncoding = TransferEncoding;
-            request.Connection = Connection;
-            request.Expect = Expect;
+        request.AutomaticDecompression = AutomaticDecompression;
+        request.MediaType = MediaType;
+        request.TransferEncoding = TransferEncoding;
+        request.Connection = Connection;
+        request.Expect = Expect;
 #endif
 
 #if NET_FRAMEWORK
@@ -58,95 +58,93 @@ namespace Skybrud.Essentials.Http {
             if (string.IsNullOrWhiteSpace(UserAgent) == false) request.UserAgent = UserAgent;
             if (string.IsNullOrWhiteSpace(Referer) == false) request.Referer = Referer;
 #else
-            if (string.IsNullOrWhiteSpace(Host) == false) request.Headers["Host"] = Host;
-            if (string.IsNullOrWhiteSpace(UserAgent) == false) request.Headers["User-Agent"] = UserAgent;
-            if (string.IsNullOrWhiteSpace(Referer) == false) request.Headers["Referer"] = Referer;
+        if (string.IsNullOrWhiteSpace(Host) == false) request.Headers["Host"] = Host;
+        if (string.IsNullOrWhiteSpace(UserAgent) == false) request.Headers["User-Agent"] = UserAgent;
+        if (string.IsNullOrWhiteSpace(Referer) == false) request.Headers["Referer"] = Referer;
 #endif
 
-            // Handle various POST scenarios
-            if (string.IsNullOrWhiteSpace(Body) == false) {
+        // Handle various POST scenarios
+        if (string.IsNullOrWhiteSpace(Body) == false) {
+
+            // Get the bytes for the request body
+            byte[] bytes = Encoding.UTF8.GetBytes(Body!);
+
+            // Set the length of the request body
+            SetRequestContentLength(request, bytes.Length);
+
+            // Write the body to the request stream
+            Task<Stream> hest = request.GetRequestStreamAsync();
+            using (Stream stream = hest.Result) {
+                await stream.WriteAsync(bytes, 0, bytes.Length);
+            }
+
+        } else if (BinaryBody != null) {
+
+            // Set the length of the request body
+            SetRequestContentLength(request, BinaryBody.Length);
+
+            // Write the body to the request stream
+            using (Stream stream = request.GetRequestStreamAsync().Result) {
+                await stream.WriteAsync(BinaryBody, 0, BinaryBody.Length);
+            }
+
+        } else if (Method is HttpMethod.Post or HttpMethod.Put or HttpMethod.Patch or HttpMethod.Delete) {
+
+            if (PostData.IsMultipart) {
+
+                // Declare the boundary to be used for the multipart data
+                string boundary = Guid.NewGuid().ToString().Replace("-", "");
+
+                // Set the content type (including the boundary)
+                request.ContentType = "multipart/form-data; boundary=" + boundary;
+
+                // Write the multipart body to the request stream
+                Task<Stream> hest = request.GetRequestStreamAsync();
+                hest.Wait();
+                using (Stream stream = hest.Result) {
+                    PostData.WriteMultipartFormData(stream, boundary);
+                }
+
+            } else {
+
+                // Convert the POST data to an URL encoded string
+                string dataString = PostData.ToString() ?? string.Empty;
 
                 // Get the bytes for the request body
-                byte[] bytes = Encoding.UTF8.GetBytes(Body!);
+                byte[] bytes = Encoding.UTF8.GetBytes(dataString);
+
+                // Set the content type
+                request.ContentType ??= HttpConstants.ApplicationFormEncoded;
 
                 // Set the length of the request body
                 SetRequestContentLength(request, bytes.Length);
 
                 // Write the body to the request stream
                 Task<Stream> hest = request.GetRequestStreamAsync();
+                hest.Wait();
                 using (Stream stream = hest.Result) {
                     await stream.WriteAsync(bytes, 0, bytes.Length);
                 }
 
-            } else if (BinaryBody != null) {
-
-                // Set the length of the request body
-                SetRequestContentLength(request, BinaryBody.Length);
-
-                // Write the body to the request stream
-                using (Stream stream = request.GetRequestStreamAsync().Result) {
-                    await stream.WriteAsync(BinaryBody, 0, BinaryBody.Length);
-                }
-
-            } else if (Method is HttpMethod.Post or HttpMethod.Put or HttpMethod.Patch or HttpMethod.Delete) {
-
-                if (PostData.IsMultipart) {
-
-                    // Declare the boundary to be used for the multipart data
-                    string boundary = Guid.NewGuid().ToString().Replace("-", "");
-
-                    // Set the content type (including the boundary)
-                    request.ContentType = "multipart/form-data; boundary=" + boundary;
-
-                    // Write the multipart body to the request stream
-                    Task<Stream> hest = request.GetRequestStreamAsync();
-                    hest.Wait();
-                    using (Stream stream = hest.Result) {
-                        PostData.WriteMultipartFormData(stream, boundary);
-                    }
-
-                } else {
-
-                    // Convert the POST data to an URL encoded string
-                    string dataString = PostData.ToString() ?? string.Empty;
-
-                    // Get the bytes for the request body
-                    byte[] bytes = Encoding.UTF8.GetBytes(dataString);
-
-                    // Set the content type
-                    request.ContentType ??= HttpConstants.ApplicationFormEncoded;
-
-                    // Set the length of the request body
-                    SetRequestContentLength(request, bytes.Length);
-
-                    // Write the body to the request stream
-                    Task<Stream> hest = request.GetRequestStreamAsync();
-                    hest.Wait();
-                    using (Stream stream = hest.Result) {
-                        await stream.WriteAsync(bytes, 0, bytes.Length);
-                    }
-
-                }
-
             }
 
-            // Call the callback
-            callback?.Invoke(request);
+        }
 
-            // Get the response
-            try {
+        // Call the callback
+        callback?.Invoke(request);
 
-                WebResponse response = await request.GetResponseAsync();
+        // Get the response
+        try {
 
-                return HttpResponse.GetFromWebResponse((HttpWebResponse) response, this);
+            WebResponse response = await request.GetResponseAsync();
 
-            } catch (WebException ex) {
+            return HttpResponse.GetFromWebResponse((HttpWebResponse) response, this);
 
-                if (ex.Status != WebExceptionStatus.ProtocolError) throw;
+        } catch (WebException ex) {
 
-                return HttpResponse.GetFromWebResponse((HttpWebResponse) ex.Response!, this);
+            if (ex.Status != WebExceptionStatus.ProtocolError) throw;
 
-            }
+            return HttpResponse.GetFromWebResponse((HttpWebResponse) ex.Response!, this);
 
         }
 

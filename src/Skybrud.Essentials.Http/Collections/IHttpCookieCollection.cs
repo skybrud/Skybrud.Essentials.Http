@@ -1,21 +1,19 @@
 ﻿using System.Net;
 
-namespace Skybrud.Essentials.Http.Collections {
+namespace Skybrud.Essentials.Http.Collections;
+
+/// <summary>
+/// Interface describing a collection of cookies.
+/// </summary>
+public interface IHttpCookieCollection {
+
+    #region Properties
 
     /// <summary>
-    /// Interface describing a collection of cookies.
+    /// Gets a reference to the internal instance of <see cref="CookieContainer"/>.
     /// </summary>
-    public interface IHttpCookieCollection {
+    CookieContainer Container { get; }
 
-        #region Properties
-
-        /// <summary>
-        /// Gets a reference to the internal instance of <see cref="CookieContainer"/>.
-        /// </summary>
-        CookieContainer Container { get; }
-
-        #endregion
-
-    }
+    #endregion
 
 }

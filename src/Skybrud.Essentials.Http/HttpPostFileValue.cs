@@ -1,117 +1,115 @@
 ﻿using System.IO;
 using Skybrud.Essentials.Http.Collections;
 
-namespace Skybrud.Essentials.Http {
+namespace Skybrud.Essentials.Http;
+
+/// <summary>
+/// Class representing a HTTP POST value based on a local file.
+/// </summary>
+public class HttpPostFileValue : IHttpPostValue {
+
+    #region Properties
 
     /// <summary>
-    /// Class representing a HTTP POST value based on a local file.
+    /// Gets the name/key of the value.
     /// </summary>
-    public class HttpPostFileValue : IHttpPostValue {
+    public string Name { get; }
 
-        #region Properties
+    /// <summary>
+    /// Gets the content type of the file.
+    /// </summary>
+    public string? ContentType { get; }
 
-        /// <summary>
-        /// Gets the name/key of the value.
-        /// </summary>
-        public string Name { get; }
+    /// <summary>
+    /// Gets the name of the file.
+    /// </summary>
+    public string? FileName { get; }
 
-        /// <summary>
-        /// Gets the content type of the file.
-        /// </summary>
-        public string? ContentType { get; }
+    /// <summary>
+    /// Gets the data of the file.
+    /// </summary>
+    public byte[] Data { get; }
 
-        /// <summary>
-        /// Gets the name of the file.
-        /// </summary>
-        public string? FileName { get; }
+    #endregion
 
-        /// <summary>
-        /// Gets the data of the file.
-        /// </summary>
-        public byte[] Data { get; }
+    #region Constructors
 
-        #endregion
+    /// <summary>
+    /// Initializea a new instance from the specified <paramref name="name"/> and <paramref name="path"/>.
+    /// </summary>
+    /// <param name="name">The name of the value.</param>
+    /// <param name="path">The path to the file.</param>
+    public HttpPostFileValue(string name, string path) : this(name, path, null, null) { }
 
-        #region Constructors
+    /// <summary>
+    /// Initializes a new instance from the specified <paramref name="name"/>, <paramref name="path"/>,
+    /// <paramref name="contentType"/> and <paramref name="filename"/>.
+    /// </summary>
+    /// <param name="name">The name of the value.</param>
+    /// <param name="path">The path to the file.</param>
+    /// <param name="contentType">The content type of the file.</param>
+    /// <param name="filename">The name of the file.</param>
+    public HttpPostFileValue(string name, string path, string? contentType, string? filename) {
 
-        /// <summary>
-        /// Initializea a new instance from the specified <paramref name="name"/> and <paramref name="path"/>.
-        /// </summary>
-        /// <param name="name">The name of the value.</param>
-        /// <param name="path">The path to the file.</param>
-        public HttpPostFileValue(string name, string path) : this(name, path, null, null) { }
+        Name = name;
+        Data = File.ReadAllBytes(path);
+        ContentType = contentType;
+        FileName = filename ?? Path.GetFileName(path);
 
-        /// <summary>
-        /// Initializes a new instance from the specified <paramref name="name"/>, <paramref name="path"/>,
-        /// <paramref name="contentType"/> and <paramref name="filename"/>.
-        /// </summary>
-        /// <param name="name">The name of the value.</param>
-        /// <param name="path">The path to the file.</param>
-        /// <param name="contentType">The content type of the file.</param>
-        /// <param name="filename">The name of the file.</param>
-        public HttpPostFileValue(string name, string path, string? contentType, string? filename) {
+        if (ContentType != null) return;
 
-            Name = name;
-            Data = File.ReadAllBytes(path);
-            ContentType = contentType;
-            FileName = filename ?? Path.GetFileName(path);
-
-            if (ContentType != null) return;
-
-            switch (Path.GetExtension(path).ToLower()) {
-                case ".jpg":
-                case ".jpeg":
-                    ContentType = "image/jpeg";
-                    break;
-                case ".png":
-                    ContentType = "image/png";
-                    break;
-                case ".gif":
-                    ContentType = "image/gif";
-                    break;
-                case ".tiff":
-                    ContentType = "image/tiff";
-                    break;
-            }
-
+        switch (Path.GetExtension(path).ToLower()) {
+            case ".jpg":
+            case ".jpeg":
+                ContentType = "image/jpeg";
+                break;
+            case ".png":
+                ContentType = "image/png";
+                break;
+            case ".gif":
+                ContentType = "image/gif";
+                break;
+            case ".tiff":
+                ContentType = "image/tiff";
+                break;
         }
-
-        #endregion
-
-        #region Member methods
-
-        /// <summary>
-        /// Writes the value to the specified <paramref name="stream"/>.
-        /// </summary>
-        /// <param name="stream">The stream the value should be written to.</param>
-        /// <param name="boundary">The multipart boundary.</param>
-        /// <param name="newLine">The characters used to indicate a new line.</param>
-        /// <param name="isLast">Whether the value is the last in the request body.</param>
-        public void WriteToMultipartStream(Stream stream, string boundary, string newLine, bool isLast) {
-
-            HttpPostData.Write(stream, "--" + boundary + newLine);
-            HttpPostData.Write(stream, "Content-Disposition: form-data; name=\"" + Name + "\"; filename=\"" + FileName + "\"" + newLine);
-            HttpPostData.Write(stream, "Content-Type: " + ContentType + newLine);
-            HttpPostData.Write(stream, newLine);
-
-            stream.Write(Data, 0, Data.Length);
-
-            HttpPostData.Write(stream, newLine);
-            HttpPostData.Write(stream, newLine);
-            HttpPostData.Write(stream, "--" + boundary + (isLast ? "--" : "") + newLine);
-
-        }
-
-        /// <summary>
-        /// Gets a string representation of the value.
-        /// </summary>
-        /// <returns>The value as a string.</returns>
-        public override string ToString() {
-            return FileName ?? Name;
-        }
-
-        #endregion
 
     }
+
+    #endregion
+
+    #region Member methods
+
+    /// <summary>
+    /// Writes the value to the specified <paramref name="stream"/>.
+    /// </summary>
+    /// <param name="stream">The stream the value should be written to.</param>
+    /// <param name="boundary">The multipart boundary.</param>
+    /// <param name="newLine">The characters used to indicate a new line.</param>
+    /// <param name="isLast">Whether the value is the last in the request body.</param>
+    public void WriteToMultipartStream(Stream stream, string boundary, string newLine, bool isLast) {
+
+        HttpPostData.Write(stream, "--" + boundary + newLine);
+        HttpPostData.Write(stream, "Content-Disposition: form-data; name=\"" + Name + "\"; filename=\"" + FileName + "\"" + newLine);
+        HttpPostData.Write(stream, "Content-Type: " + ContentType + newLine);
+        HttpPostData.Write(stream, newLine);
+
+        stream.Write(Data, 0, Data.Length);
+
+        HttpPostData.Write(stream, newLine);
+        HttpPostData.Write(stream, newLine);
+        HttpPostData.Write(stream, "--" + boundary + (isLast ? "--" : "") + newLine);
+
+    }
+
+    /// <summary>
+    /// Gets a string representation of the value.
+    /// </summary>
+    /// <returns>The value as a string.</returns>
+    public override string ToString() {
+        return FileName ?? Name;
+    }
+
+    #endregion
 
 }

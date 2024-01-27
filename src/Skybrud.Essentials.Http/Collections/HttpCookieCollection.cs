@@ -1,39 +1,37 @@
 ﻿using System.Net;
 
-namespace Skybrud.Essentials.Http.Collections {
+namespace Skybrud.Essentials.Http.Collections;
+
+/// <summary>
+/// Collection of cookies.
+/// </summary>
+public class HttpCookieCollection : IHttpCookieCollection {
+
+    #region Properties
 
     /// <summary>
-    /// Collection of cookies.
+    /// Gets a reference to the internal instance of <see cref="CookieContainer"/>.
     /// </summary>
-    public class HttpCookieCollection : IHttpCookieCollection {
+    public CookieContainer Container { get; private set; }
 
-        #region Properties
+    #endregion
 
-        /// <summary>
-        /// Gets a reference to the internal instance of <see cref="CookieContainer"/>.
-        /// </summary>
-        public CookieContainer Container { get; private set; }
+    #region Constructors
 
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Creates an empty collection of headers.
-        /// </summary>
-        public HttpCookieCollection() {
-            Container = new CookieContainer();
-        }
-
-        /// <summary>
-        /// Creates a new instance based on the specified <paramref name="cookies"/>.
-        /// </summary>
-        public HttpCookieCollection(CookieContainer? cookies) {
-            Container = cookies ?? new CookieContainer();
-        }
-
-        #endregion
-
+    /// <summary>
+    /// Creates an empty collection of headers.
+    /// </summary>
+    public HttpCookieCollection() {
+        Container = new CookieContainer();
     }
+
+    /// <summary>
+    /// Creates a new instance based on the specified <paramref name="cookies"/>.
+    /// </summary>
+    public HttpCookieCollection(CookieContainer? cookies) {
+        Container = cookies ?? new CookieContainer();
+    }
+
+    #endregion
 
 }

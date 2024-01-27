@@ -1,22 +1,20 @@
 ﻿using System.Net;
 
-namespace Skybrud.Essentials.Http.Exceptions {
+namespace Skybrud.Essentials.Http.Exceptions;
+
+/// <summary>
+/// Interface representing an error response as the result of a HTTP request.
+/// </summary>
+public interface IHttpException {
 
     /// <summary>
-    /// Interface representing an error response as the result of a HTTP request.
+    /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
     /// </summary>
-    public interface IHttpException {
+    IHttpResponse Response { get; }
 
-        /// <summary>
-        /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
-        /// </summary>
-        IHttpResponse Response { get; }
-
-        /// <summary>
-        /// Gets the HTTP status code of the response.
-        /// </summary>
-        HttpStatusCode StatusCode { get; }
-
-    }
+    /// <summary>
+    /// Gets the HTTP status code of the response.
+    /// </summary>
+    HttpStatusCode StatusCode { get; }
 
 }

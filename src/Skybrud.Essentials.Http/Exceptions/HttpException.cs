@@ -1,39 +1,37 @@
 ﻿using System;
 using System.Net;
 
-namespace Skybrud.Essentials.Http.Exceptions {
+namespace Skybrud.Essentials.Http.Exceptions;
+
+/// <summary>
+/// Class representing a basic HTTP exception.
+/// </summary>
+public class HttpException : Exception, IHttpException {
+
+    #region Properties
 
     /// <summary>
-    /// Class representing a basic HTTP exception.
+    /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
     /// </summary>
-    public class HttpException : Exception, IHttpException {
+    public IHttpResponse Response { get; }
 
-        #region Properties
+    /// <summary>
+    /// Gets the HTTP status code returned by the Toggl API.
+    /// </summary>
+    public HttpStatusCode StatusCode => Response.StatusCode;
 
-        /// <summary>
-        /// Gets a reference to the underlying <see cref="IHttpResponse"/>.
-        /// </summary>
-        public IHttpResponse Response { get; }
+    #endregion
 
-        /// <summary>
-        /// Gets the HTTP status code returned by the Toggl API.
-        /// </summary>
-        public HttpStatusCode StatusCode => Response.StatusCode;
+    #region Constructors
 
-        #endregion
-
-        #region Constructors
-
-        /// <summary>
-        /// Initializes a new exception based on the specified <paramref name="response"/>.
-        /// </summary>
-        /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
-        public HttpException(IHttpResponse response) : base($"Invalid response received (status: {(int) response.StatusCode})") {
-            Response = response;
-        }
-
-        #endregion
-
+    /// <summary>
+    /// Initializes a new exception based on the specified <paramref name="response"/>.
+    /// </summary>
+    /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+    public HttpException(IHttpResponse response) : base($"Invalid response received (status: {(int) response.StatusCode})") {
+        Response = response;
     }
+
+    #endregion
 
 }
