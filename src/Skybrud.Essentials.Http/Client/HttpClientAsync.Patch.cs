@@ -24,32 +24,6 @@ public partial class HttpClient {
     /// <summary>
     /// Makes a PATCH request to the specified <paramref name="url"/>.
     /// </summary>
-    /// <param name="url">The URL of the request.</param>
-    /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-    /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-    [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpGetOptions options) {
-        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-        if (options == null) throw new ArgumentNullException(nameof(options));
-        return await GetResponseAsync(HttpRequest.Patch(url, options.GetQueryString()));
-    }
-
-    /// <summary>
-    /// Makes a PATCH request to the specified <paramref name="url"/>.
-    /// </summary>
-    /// <param name="url">The URL of the request.</param>
-    /// <param name="options">The options for the call to the specified <paramref name="url"/>.</param>
-    /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-    [Obsolete("Use 'GetResponse' method and 'IHttpRequestOptions' class as parameter instead.")]
-    public virtual async Task<IHttpResponse> PatchAsync(string url, IHttpPostOptions options) {
-        if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-        if (options == null) throw new ArgumentNullException(nameof(options));
-        return await GetResponseAsync(HttpRequest.Patch(url, options.GetQueryString(), options.GetPostData()));
-    }
-
-    /// <summary>
-    /// Makes a PATCH request to the specified <paramref name="url"/>.
-    /// </summary>
     /// <param name="url">The base URL of the request (no query string).</param>
     /// <param name="queryString">The query string.</param>
     /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
