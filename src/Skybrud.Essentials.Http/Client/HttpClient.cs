@@ -2,16 +2,12 @@
 using Skybrud.Essentials.Http.Options;
 using System.Threading.Tasks;
 
-// ReSharper disable ArrangeDefaultValueWhenTypeNotEvident
-
 namespace Skybrud.Essentials.Http.Client;
 
 /// <summary>
 /// Class representing a client for making HTTP requests.
 /// </summary>
 public partial class HttpClient : IHttpClient, IHttpClientAsync {
-
-    #region Other
 
     /// <summary>
     /// Returns the response of the request identified by the specified <paramref name="options"/>.
@@ -65,7 +61,5 @@ public partial class HttpClient : IHttpClient, IHttpClientAsync {
     /// </summary>
     /// <param name="request">The request.</param>
     protected virtual void PrepareHttpRequest(IHttpRequest request) { }
-
-    #endregion
 
 }
