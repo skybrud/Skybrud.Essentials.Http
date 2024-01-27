@@ -32,6 +32,15 @@ public class HttpException : Exception, IHttpException {
         Response = response;
     }
 
+    /// <summary>
+    /// Initializes a new exception based on the specified <paramref name="response"/> and <paramref name="message"/>.
+    /// </summary>
+    /// <param name="response">The instance of <see cref="IHttpResponse"/> representing the raw response.</param>
+    /// <param name="message">The message for the exception.</param>
+    public HttpException(IHttpResponse response, string message) : base(message) {
+        Response = response;
+    }
+
     #endregion
 
 }
