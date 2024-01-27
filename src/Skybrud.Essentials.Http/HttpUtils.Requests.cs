@@ -299,7 +299,7 @@ public static partial class HttpUtils {
 
         #endregion
 
-        #region DoHttpRequest
+        #region GetResponse
 
         /// <summary>
         /// Makes a HTTP request using the specified <paramref name="url"/> and <paramref name="method"/>.
@@ -309,7 +309,7 @@ public static partial class HttpUtils {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        private static IHttpResponse DoHttpRequest(HttpMethod method, string url, IHttpQueryString? queryString, IHttpPostData? postData) {
+        private static IHttpResponse GetResponse(HttpMethod method, string url, IHttpQueryString? queryString, IHttpPostData? postData) {
             return new HttpRequest(method, url, queryString, postData).GetResponse();
         }
 

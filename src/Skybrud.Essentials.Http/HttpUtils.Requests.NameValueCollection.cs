@@ -16,7 +16,7 @@ public static partial class HttpUtils {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public static IHttpResponse Get(string url, NameValueCollection? queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Get, url, queryString);
+            return GetResponse(HttpMethod.Get, url, queryString);
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ public static partial class HttpUtils {
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public static IHttpResponse Post(string url, NameValueCollection? queryString) {
-            return DoHttpRequest(HttpMethod.Post, url, queryString, null);
+            return GetResponse(HttpMethod.Post, url, queryString, null);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ public static partial class HttpUtils {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public static IHttpResponse Post(string url, NameValueCollection? queryString, NameValueCollection? postData) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Post, url, queryString, postData);
+            return GetResponse(HttpMethod.Post, url, queryString, postData);
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ public static partial class HttpUtils {
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public static IHttpResponse Put(string url, NameValueCollection? queryString) {
-            return DoHttpRequest(HttpMethod.Put, url, queryString, null);
+            return GetResponse(HttpMethod.Put, url, queryString, null);
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ public static partial class HttpUtils {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public static IHttpResponse Put(string url, NameValueCollection? queryString, NameValueCollection? postData) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Put, url, queryString, postData);
+            return GetResponse(HttpMethod.Put, url, queryString, postData);
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ public static partial class HttpUtils {
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
         public static IHttpResponse Patch(string url, NameValueCollection? queryString) {
-            return DoHttpRequest(HttpMethod.Patch, url, queryString, null);
+            return GetResponse(HttpMethod.Patch, url, queryString, null);
         }
 
         /// <summary>
@@ -82,7 +82,7 @@ public static partial class HttpUtils {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public static IHttpResponse Patch(string url, NameValueCollection? queryString, NameValueCollection? postData) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Patch, url, queryString, postData);
+            return GetResponse(HttpMethod.Patch, url, queryString, postData);
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ public static partial class HttpUtils {
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
         public static IHttpResponse Delete(string url, NameValueCollection? queryString) {
             if (string.IsNullOrWhiteSpace(url)) throw new ArgumentNullException(nameof(url));
-            return DoHttpRequest(HttpMethod.Delete, url, queryString);
+            return GetResponse(HttpMethod.Delete, url, queryString);
         }
 
         /// <summary>
@@ -103,8 +103,8 @@ public static partial class HttpUtils {
         /// <param name="url">The base URL of the request (no query string).</param>
         /// <param name="queryString">The query string.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the raw response.</returns>
-        private static IHttpResponse DoHttpRequest(HttpMethod method, string url, NameValueCollection? queryString) {
-            return DoHttpRequest(method, url, queryString == null ? null : new HttpQueryString(queryString), null);
+        private static IHttpResponse GetResponse(HttpMethod method, string url, NameValueCollection? queryString) {
+            return GetResponse(method, url, queryString == null ? null : new HttpQueryString(queryString), null);
         }
 
         /// <summary>
@@ -115,8 +115,8 @@ public static partial class HttpUtils {
         /// <param name="queryString">The query string of the request.</param>
         /// <param name="postData">The POST data of the request.</param>
         /// <returns>An instance of <see cref="IHttpResponse"/> representing the response.</returns>
-        private static IHttpResponse DoHttpRequest(HttpMethod method, string url, NameValueCollection? queryString, NameValueCollection? postData) {
-            return DoHttpRequest(method, url, queryString == null ? null : new HttpQueryString(queryString), postData == null ? null : new HttpPostData(postData));
+        private static IHttpResponse GetResponse(HttpMethod method, string url, NameValueCollection? queryString, NameValueCollection? postData) {
+            return GetResponse(method, url, queryString == null ? null : new HttpQueryString(queryString), postData == null ? null : new HttpPostData(postData));
         }
 
     }
