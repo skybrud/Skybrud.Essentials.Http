@@ -1,3 +1,7 @@
+---
+icon: fa-regular fa-file-code
+---
+
 # HttpRequest
 
 In .NET we have the `HttpWebRequest` class, but using it is not super user friendly. So in this package, the <code type="Skybrud.Essentials.Http.HttpRequest, Skybrud.Essentials.Http">HttpRequest</code> class wraps the `HttpWebRequest` class, while hopefully also making it easier to use.
