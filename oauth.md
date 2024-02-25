@@ -1,3 +1,7 @@
+---
+icon: fa fa-shield-halved
+---
+
 # OAuth
 
 To get started with OAuth and understanding what OAuth is, the following intro from the [Wikipedia article on OAuth](https://en.wikipedia.org/wiki/OAuth) explains it quite well:

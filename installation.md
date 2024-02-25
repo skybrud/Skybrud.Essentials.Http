@@ -1,5 +1,6 @@
 ---
 order: -1
+icon: fa fa-download
 ---
 
 # Installation
