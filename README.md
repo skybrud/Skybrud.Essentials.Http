@@ -3,6 +3,7 @@
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/skybrud/Skybrud.Essentials.Http/blob/v1/main/LICENSE.md)
 [![NuGet](https://img.shields.io/nuget/v/Skybrud.Essentials.Http.svg)](https://www.nuget.org/packages/Skybrud.Essentials.Http)
 [![NuGet](https://img.shields.io/nuget/dt/Skybrud.Essentials.Http.svg)](https://www.nuget.org/packages/Skybrud.Essentials.Http)
+[![Skybrud.Essentials.Http at packages.limbo.works](https://img.shields.io/badge/limbo-packages-blue)](https://packages.limbo.works/skybrud.essentials.http/)
 
 `Skybrud.Essentials.Http` is a small .NET library for making HTTP requests, as well as working with OAuth 1.0a and OAuth 2 service providers.
 
