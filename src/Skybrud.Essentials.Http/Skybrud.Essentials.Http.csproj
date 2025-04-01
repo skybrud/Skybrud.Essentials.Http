@@ -25,7 +25,7 @@
   <PropertyGroup>
     <PackageTags>Skybrud, Limbo, HTTP, OAuth, API, REST</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://packages.skybrud.dk/skybrud.essentials.http/</PackageProjectUrl>
+    <PackageProjectUrl>https://packages.limbo.works/skybrud.essentials.http/</PackageProjectUrl>
     <PackageIcon>Limbo.png</PackageIcon>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/skybrud/Skybrud.Essentials.Http</RepositoryUrl>
