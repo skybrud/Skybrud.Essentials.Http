@@ -61,7 +61,7 @@ The [**releases page**][GitHubReleases] lists the relevant changes from each rel
 
 ### Documentation
 
-You can find documentation and examples at the [**packages.skybrud.dk** website](https://packages.skybrud.dk/skybrud.essentials.http/) :wink:
+You can find documentation and examples at the [**packages.skybrud.dk** website](https://packages.limbo.works/skybrud.essentials.http/) :wink:
 
 
    
