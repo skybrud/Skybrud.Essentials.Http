@@ -17,7 +17,7 @@ public class HttpQueryStringTests {
 
         string str = query.ToString();
 
-        Assert.AreEqual("r%c3%b8d=gr%c3%b8d", str);
+        Assert.AreEqual("r%C3%B8d=gr%C3%B8d", str);
 
     }
 
