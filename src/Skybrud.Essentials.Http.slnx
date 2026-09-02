@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../.gitignore" />
+    <File Path="../debug.bat" />
+    <File Path="../LICENSE.md" />
+    <File Path="../README.md" />
+    <File Path="../release.bat" />
+    <File Path=".editorconfig" />
+  </Folder>
+  <Project Path="Skybrud.Essentials.Http/Skybrud.Essentials.Http.csproj" />
+  <Project Path="TestProject1/TestProject1.csproj" />
+  <Project Path="UnitTestProject1/UnitTestProject1.csproj" Id="0deb8be5-c8ae-431b-8e45-6da0306d228f" />
+</Solution>

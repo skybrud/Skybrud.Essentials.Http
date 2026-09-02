@@ -3,7 +3,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net45;net46;net47;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net45;net46;net47;net5.0;net6.0;net8.0;net10.0</TargetFrameworks>
     <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
     <BuildInParallel>false</BuildInParallel>
     <LangVersion>12.0</LangVersion>
@@ -31,8 +31,21 @@
     <RepositoryUrl>https://github.com/skybrud/Skybrud.Essentials.Http</RepositoryUrl>
   </PropertyGroup>
 
+  <!-- Include additional metadata in the assembly -->
   <ItemGroup>
-    <PackageReference Include="Skybrud.Essentials" Version="1.1.59" NoWarn="NU1903" />
+    <AssemblyMetadata Include="Authors" Value="$(Authors)" />
+    <AssemblyMetadata Include="PackageProjectUrl" Value="https://packages.limbo.works/skybrud.essentials.http/" />
+    <AssemblyMetadata Include="DocumentationUrl" Value="https://packages.limbo.works/skybrud.essentials.http/docs/" />
+    <AssemblyMetadata Include="NuGetUrl" Value="https://www.nuget.org/packages/Skybrud.Essentials.Http" />
+  </ItemGroup>
+
+  <!-- Ignore vulnerabilities from transient dependencies -->
+  <PropertyGroup>
+	  <NuGetAuditMode>direct</NuGetAuditMode>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Skybrud.Essentials" Version="1.1.69" NoWarn="NU1903" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)'=='net45' OR '$(TargetFramework)'=='net46' OR '$(TargetFramework)'=='net47' OR '$(TargetFramework)'=='netstandard2.0'">
